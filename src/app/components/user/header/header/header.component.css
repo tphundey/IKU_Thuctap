@@ -1,0 +1,40 @@
+.flex {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.container {
+    width: 1200px;
+    padding: 0px;
+    margin: 0px auto;
+}
+
+header img {
+    width: 100px;
+}
+
+
+form {
+    border: 2px solid gainsboro;
+    border-radius: 2px;
+}
+
+input {
+    border: none;
+    padding: 10px;
+    width: 450px;
+}
+
+button {
+    border: none;
+    padding: 9.7px;
+    background-color: white;
+}
+
+.thongtin {
+    display: flex;
+    font-size: 24px;
+    gap: 30px;
+    color: rgb(135, 135, 135);
+}
