@@ -12,6 +12,7 @@ import { FooterComponent } from './components/user/footer/footer/footer.componen
 import { HeaderComponent } from './components/user/header/header/header.component';
 import { SidebarComponent } from './components/user/sidebar/sidebar/sidebar.component';
 import { HomepageComponent } from './pages/user/homepage/homepage.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -24,11 +25,14 @@ import { HomepageComponent } from './pages/user/homepage/homepage.component';
     FooterComponent,
     HeaderComponent,
     SidebarComponent,
-    HomepageComponent
+    HomepageComponent,
+    
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    
   ],
   providers: [],
   bootstrap: [AppComponent]

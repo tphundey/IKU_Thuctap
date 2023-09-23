@@ -3,17 +3,16 @@
 
   </app-header>
 
-  <div style="display: flex;">
+  <div style="width: 1200px;padding: 0px;margin: 0px auto;">
     <div>
       <app-sidebar></app-sidebar>
     </div>
-    <div style="width: 100%;margin-top: 70px;margin-left: 0px; height:auto;">
-      <main class="res">
+    <div style="margin-top: 70px;margin-left: 0px; height:auto;">
+      <main>
         <router-outlet />
+       
       </main>
     </div>
-    <div>
-      <app-footer></app-footer>
-    </div>
   </div>
+  <app-footer></app-footer>
 </div>

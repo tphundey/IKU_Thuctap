@@ -1,1 +1,23 @@
-<p>sidebar works!</p>
+<div class="sidebar">
+    <div class="saiba">
+        <div class="danhmuc"><i class="fa-solid fa-bars"></i>Danh mục sản phẩm</div>
+        <div>
+            <ul>
+                <li><a href="">Truyện tranh dài tập</a></li>
+                <li><a href="">Truyện tranh dài tập</a></li>
+                <li><a href="">Truyện tranh dài tập</a></li>
+                <li><a href="">Truyện tranh dài tập</a></li>
+                <li><a href="">Truyện tranh dài tập</a></li>
+                <li><a href="">Truyện tranh dài tập</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="slideshow-container" (mousedown)="onMouseDown($event)" (mousemove)="onMouseMove($event)" (mouseup)="onMouseUp($event)">
+        <div *ngFor="let image of images; let i = index" class="mySlides fade" [class.show]="i === currentIndex">
+          <img [src]="image" alt="Slide {{i + 1}}">
+        </div>
+        <button (click)="showPreviousImage()" class="prev">&#10094;</button>
+        <button (click)="showNextImage()" class="next">&#10095;</button>
+      </div>
+
+</div>

@@ -1,0 +1,95 @@
+.sidebar {
+  width: 100%;
+  display: flex;
+}
+
+.saiba {
+  width: 25%;
+}
+
+.danhmuc {
+  display: flex;
+  gap: 10px;
+  padding: 10px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  border: 1px solid gainsboro;
+  border-radius: 4px;
+}
+
+ul li {
+  width: 111%;
+  list-style-type: none;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  transition: 0.5s;
+  position: relative;
+  left: -30px;
+}
+
+ul li:hover {
+  background-color: gainsboro;
+  padding-left: 20px;
+  transition: 0.5s;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
+.slideshow-container {
+  width: 70%;
+  padding: 0px;
+  margin: 0px auto;
+}
+
+.slideshow-container img {
+  width: 100%;
+}
+
+.mySlides {
+  display: none;
+  opacity: 0;
+  /* Bắt đầu ở mức không hiển thị và không trong suốt */
+  transition: opacity 0.5s;
+  /* Thời gian chuyển đổi và hiệu ứng */
+}
+
+.mySlides.show {
+  display: block;
+  opacity: 1;
+  /* Hiển thị và trong suốt */
+}
+
+.prev,
+.next {
+  cursor: pointer;
+  position: relative;
+  top: -40%;
+  width: 40px;
+  padding: 4px;
+  border: white;
+  background: none;
+  margin-top: -22px;
+  color: black;
+  font-weight: bold;
+  font-size: 20px;
+  transition: 0.3s ease;
+  border-radius: 0 3px 3px 0;
+  user-select: none;
+}
+
+.prev {
+  right: -10px;
+}
+
+.next {
+  right: -90%;
+  border-radius: 3px 0 0 3px;
+}
+
+.prev:hover,
+.next:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+}
