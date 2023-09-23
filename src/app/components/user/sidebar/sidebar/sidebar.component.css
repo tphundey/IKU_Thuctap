@@ -1,6 +1,7 @@
 .sidebar {
   width: 100%;
   display: flex;
+  background-color: white;
 }
 
 .saiba {
@@ -92,4 +93,13 @@ a {
 .prev:hover,
 .next:hover {
   background-color: rgba(0, 0, 0, 0.8);
+}
+
+
+.im {
+  background-image: url('https://tse3.mm.bing.net/th?id=OIP.EPhNzz6OG3ywdkmcfyd5UgHaEK&pid=Api&P=0&h=180');
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center center;
+  height: 100px;
 }
