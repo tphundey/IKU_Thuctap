@@ -13,7 +13,7 @@ import { HeaderComponent } from './components/user/header/header/header.componen
 import { SidebarComponent } from './components/user/sidebar/sidebar/sidebar.component';
 import { HomepageComponent } from './pages/user/homepage/homepage.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
+import { CarouselModule } from 'ngx-bootstrap/carousel';
 @NgModule({
   declarations: [
     AppComponent,
@@ -32,6 +32,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    CarouselModule.forRoot() 
     
   ],
   providers: [],
