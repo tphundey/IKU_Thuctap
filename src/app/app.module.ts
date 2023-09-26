@@ -1,7 +1,12 @@
+//import module
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { CarouselModule } from 'ngx-bootstrap/carousel';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { SwiperModule } from 'swiper/angular';
 import { AppRoutingModule } from './app-routing.module';
+
+//import component
 import { AppComponent } from './app.component';
 import { AdminLayoutComponent } from './layouts/adminLayout/admin-layout/admin-layout.component';
 import { UserLayoutComponent } from './layouts/userLayout/user-layout/user-layout.component';
@@ -13,7 +18,8 @@ import { HeaderComponent } from './components/user/header/header/header.componen
 import { SidebarComponent } from './components/user/sidebar/sidebar/sidebar.component';
 import { HomepageComponent } from './pages/user/homepage/homepage.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { CarouselModule } from 'ngx-bootstrap/carousel';
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -26,14 +32,16 @@ import { CarouselModule } from 'ngx-bootstrap/carousel';
     HeaderComponent,
     SidebarComponent,
     HomepageComponent,
-    
+
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    CarouselModule.forRoot() 
-    
+    CarouselModule.forRoot(),
+    NgbModule,
+    SwiperModule,
+
   ],
   providers: [],
   bootstrap: [AppComponent]
