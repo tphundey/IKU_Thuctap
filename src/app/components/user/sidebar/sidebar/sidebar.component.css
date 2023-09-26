@@ -4,6 +4,11 @@
   background-color: white;
 }
 
+.wip-container {
+  width: 75%;
+  margin-left: 20px;
+}
+
 .saiba {
   width: 25%;
 }
@@ -45,7 +50,7 @@ a {
   margin: 0px auto;
 }
 
-.slideshow-container img {
+.sidebar img {
   width: 100%;
 }
 

@@ -12,13 +12,17 @@
             </ul>
         </div>
     </div>
-    <div class="slideshow-container" (mousedown)="onMouseDown($event)" (mousemove)="onMouseMove($event)"
-        (mouseup)="onMouseUp($event)">
-        <div *ngFor="let image of images; let i = index" class="mySlides fade" [class.show]="i === currentIndex">
-            <img [src]="image" alt="Slide {{i + 1}}">
-        </div>
-        <button (click)="showPreviousImage()" class="prev">&#10094;</button>
-        <button (click)="showNextImage()" class="next">&#10095;</button>
+    <div class="wip-container">
+        <swiper class="test" [slidesPerView]="1" (swiper)="onSwiper($event)" (slideChange)="onSlideChange()"
+            [navigation]="true" [scrollbar]="{ draggable: true }">
+
+            <ng-template swiperSlide>
+                <img src="https://theme.hstatic.net/200000343865/1001052087/14/ms_banner_img2.jpg?v=337" alt="">
+            </ng-template>
+            <ng-template swiperSlide>
+                <img src="https://theme.hstatic.net/200000343865/1001052087/14/ms_banner_img2.jpg?v=357" alt="">
+            </ng-template>
+        </swiper>
     </div>
 </div>
 <div class="im">
