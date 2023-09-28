@@ -18,6 +18,7 @@ import { HeaderComponent } from './components/user/header/header/header.componen
 import { SidebarComponent } from './components/user/sidebar/sidebar/sidebar.component';
 import { HomepageComponent } from './pages/user/homepage/homepage.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { DetailpageComponent } from './pages/user/detailpage/detailpage/detailpage.component';
 
 
 @NgModule({
@@ -32,6 +33,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     HeaderComponent,
     SidebarComponent,
     HomepageComponent,
+    DetailpageComponent,
 
   ],
   imports: [

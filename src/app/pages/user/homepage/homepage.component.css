@@ -30,13 +30,13 @@ h3 a {
     color: rgb(55, 162, 159);
 }
 
-.test{
+.test {
     padding: 0px;
     margin: 0px auto;
     width: 95%;
 }
 
-.new-week-header{
+.new-week-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -45,13 +45,23 @@ h3 a {
     padding-bottom: 10px;
 }
 
-.new-week-header h2 a{
+.new-week-header h2 a {
     font-size: 23px;
     text-decoration: none;
     color: black;
 }
 
-.new-week-header a{
+.new-week-header a {
     color: burlywood;
     text-decoration: none;
+}
+
+
+
+swiper {
+    background-image: url('https://i.pinimg.com/originals/2f/e3/1d/2fe31dc6ff482361b9f42e6a1bc01b0d.jpg');
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center center;
+
 }
