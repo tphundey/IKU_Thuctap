@@ -1,5 +1,12 @@
-<div class="new-week-header waka-box-header-2 relative"><h2><a href="/moi-trong-tuan">Mới trong tuần</a></h2><a href="/moi-trong-tuan" class="new-week-see-all absolute green-text ga_click" data-gacategory="" data-gaaction="Click Xemtatca" data-galabel="Mới trong tuần" rel="nofollow">Xem tất cả</a></div>
-<swiper class="test" [slidesPerView]="5"  [spaceBetween]="46" (swiper)="onSwiper($event)" (slideChange)="onSlideChange()"
+<div>
+    <app-sidebar></app-sidebar>
+</div>
+<div class="new-week-header waka-box-header-2 relative">
+    <h2><a href="/moi-trong-tuan">Mới trong tuần</a></h2><a href="/moi-trong-tuan"
+        class="new-week-see-all absolute green-text ga_click" data-gacategory="" data-gaaction="Click Xemtatca"
+        data-galabel="Mới trong tuần" rel="nofollow">Xem tất cả</a>
+</div>
+<swiper class="test" [slidesPerView]="5" [spaceBetween]="46" (swiper)="onSwiper($event)" (slideChange)="onSlideChange()"
     [navigation]="true" [scrollbar]="{ draggable: true }">
 
     <ng-template swiperSlide>
