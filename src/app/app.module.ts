@@ -5,6 +5,7 @@ import { CarouselModule } from 'ngx-bootstrap/carousel';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SwiperModule } from 'swiper/angular';
 import { AppRoutingModule } from './app-routing.module';
+import { BreadcrumbModule } from 'primeng/breadcrumb';
 
 //import component
 import { AppComponent } from './app.component';
@@ -43,6 +44,7 @@ import { DetailpageComponent } from './pages/user/detailpage/detailpage/detailpa
     CarouselModule.forRoot(),
     NgbModule,
     SwiperModule,
+    BreadcrumbModule
 
   ],
   providers: [],

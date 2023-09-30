@@ -4,6 +4,10 @@ body {
     margin: 0px auto;
     font-family: Arial, Helvetica, sans-serif;
 }
+
 @import 'swiper/less';
 @import 'swiper/less/navigation';
 @import 'swiper/less/pagination';
+
+@import "primeng/resources/themes/lara-light-blue/theme.css";
+@import "primeng/resources/primeng.css";
