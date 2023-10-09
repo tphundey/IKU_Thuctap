@@ -6,6 +6,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SwiperModule } from 'swiper/angular';
 import { AppRoutingModule } from './app-routing.module';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
+import { PaginatorModule } from 'primeng/paginator';
 
 //import component
 import { AppComponent } from './app.component';
@@ -20,6 +21,7 @@ import { SidebarComponent } from './components/user/sidebar/sidebar/sidebar.comp
 import { HomepageComponent } from './pages/user/homepage/homepage.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DetailpageComponent } from './pages/user/detailpage/detailpage/detailpage.component';
+import { ListbookComponent } from './pages/user/listbook/listbook.component';
 
 
 @NgModule({
@@ -35,6 +37,7 @@ import { DetailpageComponent } from './pages/user/detailpage/detailpage/detailpa
     SidebarComponent,
     HomepageComponent,
     DetailpageComponent,
+    ListbookComponent,
 
   ],
   imports: [
@@ -44,7 +47,8 @@ import { DetailpageComponent } from './pages/user/detailpage/detailpage/detailpa
     CarouselModule.forRoot(),
     NgbModule,
     SwiperModule,
-    BreadcrumbModule
+    BreadcrumbModule,
+    PaginatorModule
 
   ],
   providers: [],
