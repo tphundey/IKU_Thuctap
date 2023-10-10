@@ -7,7 +7,7 @@ import { SwiperModule } from 'swiper/angular';
 import { AppRoutingModule } from './app-routing.module';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { PaginatorModule } from 'primeng/paginator';
-
+import { HttpClientModule } from '@angular/common/http';
 //import component
 import { AppComponent } from './app.component';
 import { AdminLayoutComponent } from './layouts/adminLayout/admin-layout/admin-layout.component';
@@ -48,8 +48,8 @@ import { ListbookComponent } from './pages/user/listbook/listbook.component';
     NgbModule,
     SwiperModule,
     BreadcrumbModule,
-    PaginatorModule
-
+    PaginatorModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
