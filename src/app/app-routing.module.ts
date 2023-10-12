@@ -6,6 +6,7 @@ import { DetailpageComponent } from './pages/user/detailpage/detailpage/detailpa
 import { ListbookComponent } from './pages/user/listbook/listbook.component';
 import { AdminLayoutComponent } from './layouts/adminLayout/admin-layout/admin-layout.component';
 import { DashboardComponent } from './pages/admin/dashboard/dashboard/dashboard.component';
+import { AddProductComponent } from './pages/admin/products/add-product/add-product.component';
 
 const routes: Routes = [
   {
@@ -20,6 +21,7 @@ const routes: Routes = [
     path: 'admin', component: AdminLayoutComponent, children: [
       { path: "", redirectTo: "home", pathMatch: "full" },
       { path: "dashboard", component: DashboardComponent },
+      { path: "addproduct", component: AddProductComponent },
     ]
   },
 ];
