@@ -1,8 +1,10 @@
 export interface Product {
-    _id: string;
-    id: string;
-    name: string;
-    audio: string,
-    author: string,
-    image: string
-  }
+  id: number;
+  Title: string;
+  Author: string;
+  Description: string;
+  Price: number;
+  CategoryID: number;
+  ImageURL: string;
+  Reviews: string;
+}

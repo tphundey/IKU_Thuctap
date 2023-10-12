@@ -23,7 +23,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DetailpageComponent } from './pages/user/detailpage/detailpage/detailpage.component';
 import { ListbookComponent } from './pages/user/listbook/listbook.component';
 import { FormsModule } from '@angular/forms';
-
+import { DashboardComponent } from './pages/admin/dashboard/dashboard/dashboard.component';
+import { TableModule } from 'primeng/table';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { FormsModule } from '@angular/forms';
     HomepageComponent,
     DetailpageComponent,
     ListbookComponent,
+    DashboardComponent,
 
   ],
   imports: [
@@ -51,7 +53,8 @@ import { FormsModule } from '@angular/forms';
     BreadcrumbModule,
     PaginatorModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    TableModule
   ],
   providers: [],
   bootstrap: [AppComponent]

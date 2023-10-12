@@ -4,6 +4,8 @@ import { UserLayoutComponent } from './layouts/userLayout/user-layout/user-layou
 import { HomepageComponent } from './pages/user/homepage/homepage.component';
 import { DetailpageComponent } from './pages/user/detailpage/detailpage/detailpage.component';
 import { ListbookComponent } from './pages/user/listbook/listbook.component';
+import { AdminLayoutComponent } from './layouts/adminLayout/admin-layout/admin-layout.component';
+import { DashboardComponent } from './pages/admin/dashboard/dashboard/dashboard.component';
 
 const routes: Routes = [
   {
@@ -12,6 +14,12 @@ const routes: Routes = [
       { path: "home", component: HomepageComponent },
       { path: ":id/detailpage", component: DetailpageComponent },
       { path: "listpage", component: ListbookComponent },
+    ]
+  },
+  {
+    path: 'admin', component: AdminLayoutComponent, children: [
+      { path: "", redirectTo: "home", pathMatch: "full" },
+      { path: "dashboard", component: DashboardComponent },
     ]
   },
 ];
