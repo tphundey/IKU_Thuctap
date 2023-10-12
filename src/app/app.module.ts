@@ -22,6 +22,7 @@ import { HomepageComponent } from './pages/user/homepage/homepage.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DetailpageComponent } from './pages/user/detailpage/detailpage/detailpage.component';
 import { ListbookComponent } from './pages/user/listbook/listbook.component';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -49,7 +50,8 @@ import { ListbookComponent } from './pages/user/listbook/listbook.component';
     SwiperModule,
     BreadcrumbModule,
     PaginatorModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -39,3 +39,29 @@ button {
     gap: 30px;
     color: rgb(135, 135, 135);
 }
+
+.hud {
+    position: absolute;
+    background-color: white;
+    z-index: 9;
+    width: 450px;
+}
+
+.hud li {
+    list-style-type: none;
+    padding: 5px 0px ;
+}
+
+.hud img {
+    width: 60px;
+}
+
+.tecc {
+    z-index: 999;
+}
+
+.search-nook {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
