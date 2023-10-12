@@ -5,8 +5,9 @@
         </div>
         <div>
             <form action="" method="get">
-                <input type="text" [(ngModel)]="searchQuery" name="searchQuery" placeholder="Bạn cần tìm gì ?" (focus)="showSearchResults = true" (blur)="showSearchResults = false">
-
+                <!-- <input type="text" [(ngModel)]="searchQuery" name="searchQuery" placeholder="Bạn cần tìm gì ?"
+                    (focus)="showSearchResults = true" (blur)="showSearchResults = false"> -->
+                    <input type="text" [(ngModel)]="searchQuery" name="searchQuery" placeholder="Bạn cần tìm gì ?">
                 <button (click)="searchBooks()"><svg xmlns="http://www.w3.org/2000/svg" height="1em"
                         viewBox="0 0 512 512">
                         <path
@@ -15,7 +16,7 @@
             </form>
             <ul class="hud" *ngIf="showSearchResults">
                 <li *ngFor="let book of filteredBooks.slice(0, maxProductsToShow)">
-                    <a  (click)="showProductDetails(book)">
+                    <a (click)="showProductDetails(book)">
                         <div class="search-nook">
                             <div><img [src]="book.ImageURL" alt=""></div>
                             <div>
