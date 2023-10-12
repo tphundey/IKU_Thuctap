@@ -1,0 +1,29 @@
+ li {
+     padding: 20px;
+     background-color: rgb(58, 58, 58);
+     list-style-type: none;
+ }
+
+ li:hover {
+     padding: 20px;
+     background-color: rgb(86, 86, 86);
+     list-style-type: none;
+ }
+
+ li a {
+     text-decoration: none;
+     color: white;
+     padding-left: 30px;
+ }
+
+ div {
+     padding: 0px;
+     margin: 0px auto;
+     background-color: rgb(58, 58, 58);
+ }
+
+ label {
+     color: white;
+     font-weight: 600;
+     padding: 20px;
+ }
