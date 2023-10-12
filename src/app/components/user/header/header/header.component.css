@@ -49,7 +49,7 @@ button {
 
 .hud li {
     list-style-type: none;
-    padding: 5px 0px ;
+    padding: 5px 0px;
 }
 
 .hud img {
@@ -64,4 +64,9 @@ button {
     display: flex;
     align-items: center;
     gap: 30px;
+    cursor: pointer;
+}
+
+.search-nook:hover{
+    text-decoration: underline;
 }

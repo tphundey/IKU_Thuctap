@@ -10,7 +10,7 @@ const routes: Routes = [
     path: '', component: UserLayoutComponent, children: [
       { path: "", redirectTo: "home", pathMatch: "full" },
       { path: "home", component: HomepageComponent },
-      { path: "detailpage", component: DetailpageComponent },
+      { path: ":id/detailpage", component: DetailpageComponent },
       { path: "listpage", component: ListbookComponent },
     ]
   },
