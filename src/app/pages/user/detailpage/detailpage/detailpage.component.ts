@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProductService } from 'src/services/products/product.service';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-detailpage',
@@ -13,6 +12,7 @@ export class DetailpageComponent implements OnInit {
   productId: string = '';
   product: any;
   categories: any[] = [];
+  relatedProducts: any[] = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -25,10 +25,11 @@ export class DetailpageComponent implements OnInit {
       this.productId = params['id'];
       this.getProductDetail(this.productId);
 
-      // Thực hiện cuộc gọi API để lấy danh mục và gán vào biến categories
       this.http.get<any[]>('http://localhost:3000/Categories').subscribe((data: any[]) => {
         this.categories = data;
         console.log('Danh sách danh mục từ API:', data);
+
+        this.showRelatedProducts();
       });
     });
   }
@@ -40,9 +41,19 @@ export class DetailpageComponent implements OnInit {
   }
 
   getCategoryName(categoryID: number): string {
-    console.log('Category ID:', categoryID);
     const category = this.categories.find(cat => cat.id === categoryID);
-    console.log('Found Category:', category);
     return category ? category.Name : 'Unknown';
+  }
+
+  showRelatedProducts() {
+    if (this.product && this.categories) {
+      const categoryId = this.product.CategoryID;
+  
+      // Sử dụng subscribe để lấy dữ liệu từ Observable
+      this.productService.getProducts().subscribe((products: any[]) => {
+        // Lọc sản phẩm cùng loại "Khóa học" (CategoryID = 1)
+        this.relatedProducts = products.filter(product => product.CategoryID === 1);
+      });
+    }
   }
 }

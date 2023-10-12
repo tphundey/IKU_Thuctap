@@ -14,7 +14,7 @@
    <div class="center">
       <div class="book-info">
          <div class="book-info-text" *ngIf="product">
-            <!-- <h1>{{ product.Title }}</h1> -->
+            <h1>{{ product.Title }}</h1>
             <p>Tác giả: <a href="">{{ product.Author }}</a></p>
             <p>Thể loại: <a href=""> {{ getCategoryName(product.CategoryID) }}</a></p>
             <p>Nhà xuất bản: <a href="">{{ product.Title }}</a></p>
@@ -36,86 +36,26 @@
    <div class="right">
       <div class="p20 pbt20 full-w">
          <h2 class="text-center">Sách cùng loại</h2>
-         <div class="recommend-list-book">
-            <div class="recommend-book-item">
+
+         <div *ngIf="relatedProducts.length > 0" class="recommend-list-book">
+            <div *ngFor="let product of relatedProducts" class="recommend-book-item">
                <div class="image-book"><a class="recommend-book-link ga_click" data-gacategory="Cate 2 Book"
                      data-gaaction="Click Detail" data-galabel="Có thể bạn thích - Dám nghĩ lại" data-type="book"
                      href="https://ebook.waka.vn/dam-nghi-lai-adam-grant-bGrZRW.html" data-recommend="bl"
-                     data-pid="39950"><img class="img-fluid box-shadow-bold"
-                        src="https://307a0e78.vws.vegacdn.vn/view/v2/image/img.book/0/0/1/39950.jpg?v=1&amp;w=200&amp;h=292"
-                        alt="Dam nghi lai" title="Dam nghi lai"></a></div>
+                     data-pid="39950"><img class="img-fluid box-shadow-bold" [src]="product.ImageURL" alt="Dam nghi lai"
+                        title="Dam nghi lai"></a></div>
                <div class="card-body card-body-book">
                   <div class="book-title"><a class="recommend-book-link" data-type="book" data-recommend="bl"
-                        data-pid="39950" href="https://ebook.waka.vn/dam-nghi-lai-adam-grant-bGrZRW.html">Dám nghĩ
-                        lại</a></div>
+                        data-pid="39950" href="https://ebook.waka.vn/dam-nghi-lai-adam-grant-bGrZRW.html">
+                        {{product.Title}}</a></div>
                   <div class="author">
                      <h3><a class="author-detail hightlight click_author_info"
-                           href="https://ebook.waka.vn/tac-gia/adam-grant-aGnLWW.html">Adam Grant</a></h3>
+                           href="https://ebook.waka.vn/tac-gia/adam-grant-aGnLWW.html">{{product.Author}}</a></h3>
                   </div>
                </div>
             </div>
-            <div class="recommend-book-item">
-               <div class="image-book"><a class="recommend-book-link ga_click" data-gacategory="Cate 2 Book"
-                     data-gaaction="Click Detail"
-                     data-galabel="Có thể bạn thích - Life 3.0 - Con người trong kỷ nguyên trí tuệ nhân tạo"
-                     data-type="book"
-                     href="https://ebook.waka.vn/life-3-0-con-nguoi-trong-ky-nguyen-tri-tue-nhan-tao-max-tegmark-b0de8W.html"
-                     data-recommend="bl" data-pid="23736"><img class="img-fluid box-shadow-bold"
-                        src="https://307a0e78.vws.vegacdn.vn/view/v2/image/img.book/0/0/0/23736.jpg?v=1&amp;w=200&amp;h=292"
-                        alt="Life 3_0 - Con nguoi trong ky nguyen tri tue nhan tao"
-                        title="Life 3_0 - Con nguoi trong ky nguyen tri tue nhan tao"></a></div>
-               <div class="card-body card-body-book">
-                  <div class="book-title"><a class="recommend-book-link" data-type="book" data-recommend="bl"
-                        data-pid="23736"
-                        href="https://ebook.waka.vn/life-3-0-con-nguoi-trong-ky-nguyen-tri-tue-nhan-tao-max-tegmark-b0de8W.html">Life
-                        3.0 - Con người trong kỷ nguyên trí tuệ nhân tạo</a></div>
-                  <div class="author">
-                     <h3><a class="author-detail hightlight click_author_info"
-                           href="https://ebook.waka.vn/tac-gia/max-tegmark-aE85rW.html">Max Tegmark</a></h3>
-                  </div>
-               </div>
-            </div>
-            <div class="recommend-book-item">
-               <div class="image-book"><a class="recommend-book-link ga_click" data-gacategory="Cate 2 Book"
-                     data-gaaction="Click Detail"
-                     data-galabel="Có thể bạn thích - A mind for numbers – Cách chinh phục toán và khoa học"
-                     data-type="book"
-                     href="https://ebook.waka.vn/a-mind-for-numbers-cach-chinh-phuc-toan-va-khoa-hoc-barbara-oakley-bpAEmW.html"
-                     data-recommend="bl" data-pid="19201"><img class="img-fluid box-shadow-bold"
-                        src="https://307a0e78.vws.vegacdn.vn/view/v2/image/img.book/0/0/0/19201.jpg?v=1&amp;w=200&amp;h=292"
-                        alt="A mind for numbers – Cach chinh phuc toan va khoa hoc"
-                        title="A mind for numbers – Cach chinh phuc toan va khoa hoc"></a></div>
-               <div class="card-body card-body-book">
-                  <div class="book-title"><a class="recommend-book-link" data-type="book" data-recommend="bl"
-                        data-pid="19201"
-                        href="https://ebook.waka.vn/a-mind-for-numbers-cach-chinh-phuc-toan-va-khoa-hoc-barbara-oakley-bpAEmW.html">A
-                        mind for numbers – Cách chinh phục toán và khoa học</a></div>
-                  <div class="author">
-                     <h3><a class="author-detail hightlight click_author_info"
-                           href="https://ebook.waka.vn/tac-gia/barbara-oakley-agvmRW.html">Barbara Oakley</a></h3>
-                  </div>
-               </div>
-            </div>
-            <div class="recommend-book-item">
-               <div class="image-book"><a class="recommend-book-link ga_click" data-gacategory="Cate 2 Book"
-                     data-gaaction="Click Detail"
-                     data-galabel="Có thể bạn thích - Bạn đang ở đây - Cuốn sách ngắn về thế giới" data-type="book"
-                     href="https://ebook.waka.vn/ban-dang-o-day-cuon-sach-ngan-ve-the-gioi-nicholas-crane-baO7DW.html"
-                     data-recommend="bl" data-pid="33347"><img class="img-fluid box-shadow-bold"
-                        src="https://307a0e78.vws.vegacdn.vn/view/v2/image/img.book/0/0/1/33347.jpg?v=1&amp;w=200&amp;h=292"
-                        alt="Ban dang o day - Cuon sach ngan ve the gioi"
-                        title="Ban dang o day - Cuon sach ngan ve the gioi"></a></div>
-               <div class="card-body card-body-book">
-                  <div class="book-title"><a class="recommend-book-link" data-type="book" data-recommend="bl"
-                        data-pid="33347"
-                        href="https://ebook.waka.vn/ban-dang-o-day-cuon-sach-ngan-ve-the-gioi-nicholas-crane-baO7DW.html">Bạn
-                        đang ở đây - Cuốn sách ngắn về thế giới</a></div>
-                  <div class="author">
-                     <h3><a class="author-detail hightlight click_author_info"
-                           href="https://ebook.waka.vn/tac-gia/nicholas-crane-aAozQW.html">Nicholas Crane</a></h3>
-                  </div>
-               </div>
-            </div>
+
+
          </div>
       </div>
    </div>
