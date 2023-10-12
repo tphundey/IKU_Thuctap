@@ -10,9 +10,12 @@ import { Observable } from 'rxjs';
 export class ProductService {
   private apiUrl = 'http://localhost:3000'; // Thay YOUR_API_URL_HERE bằng URL của API
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   getProducts(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/Books`);
+  }
+  getProductById(id: string): Observable<any> {
+    return this.http.get(`${this.apiUrl}/Books/${id}`);
   }
 }

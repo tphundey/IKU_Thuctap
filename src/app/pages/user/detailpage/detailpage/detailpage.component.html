@@ -13,11 +13,11 @@
    </div>
    <div class="center">
       <div class="book-info">
-         <div class="book-info-text">
-            <h1>[Tóm tắt sách] Tiểu sử Elon Musk</h1>
-            <p>Tác giả: <a href="">Walter Isaacson</a></p>
-            <p>Thể loại: <a href="">Tiểu thuyết</a></p>
-            <p>Nhà xuất bản: <a href="">Kim Đồng</a></p>
+         <div class="book-info-text" *ngIf="product">
+            <!-- <h1>{{ product.Title }}</h1> -->
+            <p>Tác giả: <a href="">{{ product.Author }}</a></p>
+            <p>Thể loại: <a href=""> {{ getCategoryName(product.CategoryID) }}</a></p>
+            <p>Nhà xuất bản: <a href="">{{ product.Title }}</a></p>
             <p>Ngày cập nhật: <a href="">20/09/2023</a></p>
 
          </div>
@@ -27,16 +27,7 @@
          <div class="clearfix"></div>
          <div id="book-desc" class="boxcontentdesc text-justify short radio-b-desc pb20 book-info-desc">
             <div class="desc-full">
-               <p>Cuốn sách <em><strong>"Tiểu sử Elon Musk"</strong> </em>là một trong những tác phẩm nổi tiếng của
-                  Walter Isaacson, trong đó ông khám phá cuộc sống và sự nghiệp của Elon Musk, một doanh nhân và nhà
-                  phát minh công nghệ tiêu biểu của thời đại hiện đại.</p>
-               <p>Chiến công hoành tráng. Thất bại kinh điển. Một câu chuyện sử thi. Walter Isaacson kể lại hành trình
-                  của Elon Musk từ khởi đầu khiêm tốn trở thành một trong những người giàu có nhất hành tinh – nhưng
-                  liệu Musk là thiên tài hay một kẻ ngốc? Đây là câu chuyện sâu sắc đến kinh ngạc của Elon Musk, nhà đổi
-                  mới hấp dẫn và gây tranh cãi nhất trong thời đại chúng ta – một người có tầm nhìn phá vỡ các quy tắc,
-                  người đã giúp dẫn dắt thế giới vào kỷ nguyên xe điện, thám hiểm không gian và trí tuệ nhân tạo. Và giờ
-                  trở thành ông chủ mới của Twitter - một mạng xã hội khổng lồ của Thế Giới.</p>
-               <p>Đừng bỏ lỡ cuốn sách hấp dẫn mang tên <em><strong>"Tiểu sử Elon Musk"!</strong></em></p>
+               {{ product.Description }}
             </div>
          </div>
 

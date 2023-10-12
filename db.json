@@ -1,7 +1,28 @@
 {
     "Books": [
       {
-        "ID": 1,
+        "id": 1,
+        "Title": "Yếu đuối cho ai xem",
+        "Author": "Tác giả 1",
+        "Description": "Mô tả sách 1",
+        "Price": 25.99,
+        "CategoryID": 2,
+        "ImageURL": "https://307a0e78.vws.vegacdn.vn/view/v2/image/img.book/0/0/1/46111.jpg?v=1&w=200&h=292",
+        "Reviews": [
+          {
+            "UserID": 1,
+            "Rating": 4,
+            "Comment": "Sách hay!"
+          },
+          {
+            "UserID": 2,
+            "Rating": 5,
+            "Comment": "Tuyệt vời!"
+          }
+        ]
+      },
+      {
+        "id": 2,
         "Title": "Yếu đuối cho ai xem",
         "Author": "Tác giả 1",
         "Description": "Mô tả sách 1",
@@ -22,7 +43,7 @@
         ]
       },
       {
-        "ID": 2,
+        "id": 3,
         "Title": "Yếu đuối cho ai xem",
         "Author": "Tác giả 1",
         "Description": "Mô tả sách 1",
@@ -43,7 +64,7 @@
         ]
       },
       {
-        "ID": 3,
+        "id": 4,
         "Title": "Yếu đuối cho ai xem",
         "Author": "Tác giả 1",
         "Description": "Mô tả sách 1",
@@ -64,7 +85,7 @@
         ]
       },
       {
-        "ID": 4,
+        "id": 5,
         "Title": "Yếu đuối cho ai xem",
         "Author": "Tác giả 1",
         "Description": "Mô tả sách 1",
@@ -85,7 +106,7 @@
         ]
       },
       {
-        "ID": 5,
+        "id": 6,
         "Title": "Yếu đuối cho ai xem",
         "Author": "Tác giả 1",
         "Description": "Mô tả sách 1",
@@ -106,7 +127,7 @@
         ]
       },
       {
-        "ID": 6,
+        "id": 7,
         "Title": "Yếu đuối cho ai xem",
         "Author": "Tác giả 1",
         "Description": "Mô tả sách 1",
@@ -127,28 +148,7 @@
         ]
       },
       {
-        "ID": 7,
-        "Title": "Yếu đuối cho ai xem",
-        "Author": "Tác giả 1",
-        "Description": "Mô tả sách 1",
-        "Price": 25.99,
-        "CategoryID": 1,
-        "ImageURL": "https://307a0e78.vws.vegacdn.vn/view/v2/image/img.book/0/0/1/46111.jpg?v=1&w=200&h=292",
-        "Reviews": [
-          {
-            "UserID": 1,
-            "Rating": 4,
-            "Comment": "Sách hay!"
-          },
-          {
-            "UserID": 2,
-            "Rating": 5,
-            "Comment": "Tuyệt vời!"
-          }
-        ]
-      },
-      {
-        "ID": 8,
+        "id": 8,
         "Title": "Mạnh đuối cho ai xem",
         "Author": "Tác giả 1",
         "Description": "Mô tả sách 1",
@@ -171,12 +171,12 @@
     ],
     "Categories": [
       {
-        "ID": 1,
+        "id": 1,
         "Name": "Khoa học",
         "Description": "Danh mục sách về khoa học"
       },
       {
-        "ID": 2,
+        "id": 2,
         "Name": "Tiểu thuyết",
         "Description": "Danh mục sách tiểu thuyết"
       }

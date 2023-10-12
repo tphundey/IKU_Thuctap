@@ -18,7 +18,7 @@ export class HeaderComponent {
   }
   showProductDetails(book: any) {
     // Thay đổi URL để chuyển đến trang chi tiết sản phẩm và load lại trang
-    window.location.href = `/${book.ID}/detailpage`;
+    window.location.href = `/${book.id}/detailpage`;
   }
 
   searchBooks() {
