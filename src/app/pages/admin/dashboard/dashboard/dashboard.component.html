@@ -11,7 +11,7 @@
 				<th>Mô tả</th>
 				<th>Giá</th>
 				<th>Danh mục</th>
-
+				<th>Thao tác</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -25,7 +25,10 @@
 				<td>{{ product.Description }}</td>
 				<td>{{ product.Price | currency: 'USD' }}</td>
 				<td>{{ product.CategoryID }}</td>
-
+				<td>
+					<button class="btn btn-primary" (click)="editBook(product)">Sửa</button>
+					<button class="btn btn-danger m-1" (click)="deleteBook(product)">Xóa</button>
+				</td>
 			</tr>
 		</tbody>
 	</table>

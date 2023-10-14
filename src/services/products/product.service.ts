@@ -18,4 +18,9 @@ export class ProductService {
   getProductById(id: string): Observable<any> {
     return this.http.get(`${this.apiUrl}/Books/${id}`);
   }
+   // Phương thức để xóa sách dựa trên ID
+   deleteProduct(bookId: number): Observable<any> {
+    const deleteUrl = `${this.apiUrl}/Books/${bookId}`;
+    return this.http.delete(deleteUrl);
+  }
 }
