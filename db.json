@@ -1,252 +1,258 @@
 {
-    "Books": [
-      {
-        "id": 1,
-        "Title": "Yếu đuối cho ai xem",
-        "Author": "Tác giả 1",
-        "Description": "Mô tả sách 1",
-        "Price": 25.99,
-        "CategoryID": 2,
-        "ImageURL": "https://307a0e78.vws.vegacdn.vn/view/v2/image/img.book/0/0/1/46111.jpg?v=1&w=200&h=292",
-        "Reviews": [
-          {
-            "UserID": 1,
-            "Rating": 4,
-            "Comment": "Sách hay!"
-          },
-          {
-            "UserID": 2,
-            "Rating": 5,
-            "Comment": "Tuyệt vời!"
-          }
-        ]
-      },
-      {
-        "id": 2,
-        "Title": "Yếu đuối cho ai xem",
-        "Author": "Tác giả 1",
-        "Description": "Mô tả sách 1",
-        "Price": 25.99,
-        "CategoryID": 1,
-        "ImageURL": "https://307a0e78.vws.vegacdn.vn/view/v2/image/img.book/0/0/1/46111.jpg?v=1&w=200&h=292",
-        "Reviews": [
-          {
-            "UserID": 1,
-            "Rating": 4,
-            "Comment": "Sách hay!"
-          },
-          {
-            "UserID": 2,
-            "Rating": 5,
-            "Comment": "Tuyệt vời!"
-          }
-        ]
-      },
-      {
-        "id": 3,
-        "Title": "Yếu đuối cho ai xem",
-        "Author": "Tác giả 1",
-        "Description": "Mô tả sách 1",
-        "Price": 25.99,
-        "CategoryID": 1,
-        "ImageURL": "https://307a0e78.vws.vegacdn.vn/view/v2/image/img.book/0/0/1/46111.jpg?v=1&w=200&h=292",
-        "Reviews": [
-          {
-            "UserID": 1,
-            "Rating": 4,
-            "Comment": "Sách hay!"
-          },
-          {
-            "UserID": 2,
-            "Rating": 5,
-            "Comment": "Tuyệt vời!"
-          }
-        ]
-      },
-      {
-        "id": 4,
-        "Title": "Yếu đuối cho ai xem",
-        "Author": "Tác giả 1",
-        "Description": "Mô tả sách 1",
-        "Price": 25.99,
-        "CategoryID": 1,
-        "ImageURL": "https://307a0e78.vws.vegacdn.vn/view/v2/image/img.book/0/0/1/46111.jpg?v=1&w=200&h=292",
-        "Reviews": [
-          {
-            "UserID": 1,
-            "Rating": 4,
-            "Comment": "Sách hay!"
-          },
-          {
-            "UserID": 2,
-            "Rating": 5,
-            "Comment": "Tuyệt vời!"
-          }
-        ]
-      },
-      {
-        "id": 5,
-        "Title": "Yếu đuối cho ai xem",
-        "Author": "Tác giả 1",
-        "Description": "Mô tả sách 1",
-        "Price": 25.99,
-        "CategoryID": 1,
-        "ImageURL": "https://307a0e78.vws.vegacdn.vn/view/v2/image/img.book/0/0/1/46111.jpg?v=1&w=200&h=292",
-        "Reviews": [
-          {
-            "UserID": 1,
-            "Rating": 4,
-            "Comment": "Sách hay!"
-          },
-          {
-            "UserID": 2,
-            "Rating": 5,
-            "Comment": "Tuyệt vời!"
-          }
-        ]
-      },
-      {
-        "id": 6,
-        "Title": "Yếu đuối cho ai xem",
-        "Author": "Tác giả 1",
-        "Description": "Mô tả sách 1",
-        "Price": 25.99,
-        "CategoryID": 1,
-        "ImageURL": "https://307a0e78.vws.vegacdn.vn/view/v2/image/img.book/0/0/1/46111.jpg?v=1&w=200&h=292",
-        "Reviews": [
-          {
-            "UserID": 1,
-            "Rating": 4,
-            "Comment": "Sách hay!"
-          },
-          {
-            "UserID": 2,
-            "Rating": 5,
-            "Comment": "Tuyệt vời!"
-          }
-        ]
-      },
-      {
-        "id": 7,
-        "Title": "Yếu đuối cho ai xem",
-        "Author": "Tác giả 1",
-        "Description": "Mô tả sách 1",
-        "Price": 25.99,
-        "CategoryID": 1,
-        "ImageURL": "https://307a0e78.vws.vegacdn.vn/view/v2/image/img.book/0/0/1/46111.jpg?v=1&w=200&h=292",
-        "Reviews": [
-          {
-            "UserID": 1,
-            "Rating": 4,
-            "Comment": "Sách hay!"
-          },
-          {
-            "UserID": 2,
-            "Rating": 5,
-            "Comment": "Tuyệt vời!"
-          }
-        ]
-      },
-      {
-        "id": 8,
-        "Title": "Mạnh đuối cho ai xem",
-        "Author": "Tác giả 1",
-        "Description": "Mô tả sách 1",
-        "Price": 25.99,
-        "CategoryID": 1,
-        "ImageURL": "https://307a0e78.vws.vegacdn.vn/view/v2/image/img.book/0/0/1/46111.jpg?v=1&w=200&h=292",
-        "Reviews": [
-          {
-            "UserID": 1,
-            "Rating": 4,
-            "Comment": "Sách hay!"
-          },
-          {
-            "UserID": 2,
-            "Rating": 5,
-            "Comment": "Tuyệt vời!"
-          }
-        ]
-      }
-    ],
-    "Categories": [
-      {
-        "id": 1,
-        "Name": "Khoa học",
-        "Description": "Danh mục sách về khoa học"
-      },
-      {
-        "id": 2,
-        "Name": "Tiểu thuyết",
-        "Description": "Danh mục sách tiểu thuyết"
-      }
-    ],
-    "Users": [
-      {
-        "ID": 1,
-        "Username": "nguoidung1",
-        "Password": "hashed_password_1",
-        "Email": "user1@example.com",
-        "FullName": "Người dùng 1",
-        "Address": "Địa chỉ 1",
-        "Phone": "123456789"
-      },
-      {
-        "ID": 2,
-        "Username": "nguoidung2",
-        "Password": "hashed_password_2",
-        "Email": "user2@example.com",
-        "FullName": "Người dùng 2",
-        "Address": "Địa chỉ 2",
-        "Phone": "987654321"
-      }
-    ],
-    "Carts": [
-      {
-        "ID": 1,
-        "UserID": 1,
-        "BooksInCart": [1, 2]
-      },
-      {
-        "ID": 2,
-        "UserID": 2,
-        "BooksInCart": [1]
-      }
-    ],
-    "Orders": [
-      {
-        "ID": 1,
-        "UserID": 1,
-        "OrderedBooks": [1],
-        "TotalPrice": 25.99,
-        "OrderDate": "2023-10-10",
-        "Status": "Đã nhận đơn"
-      }
-    ],
-    "Reviews": [],
-    "Promotions": [
-      {
-        "ID": 1,
-        "Name": "Giảm giá mùa hè",
-        "Description": "Ưu đãi giảm giá cho sách mùa hè",
-        "Discount": 10,
-        "StartDate": "2023-06-01",
-        "EndDate": "2023-08-31"
-      }
-    ],
-    "SearchHistory": [
-      {
-        "ID": 1,
-        "UserID": 1,
-        "Keyword": "Khoa học",
-        "SearchDate": "2023-10-05"
-      },
-      {
-        "ID": 2,
-        "UserID": 2,
-        "Keyword": "Tiểu thuyết",
-        "SearchDate": "2023-10-08"
-      }
-    ]
-  }
-  
+  "Books": [
+    {
+      "id": 1,
+      "Title": "Yếu đuối cho ai xem  updated",
+      "Author": "Tác giả 122",
+      "Description": "Mô tả sách 1",
+      "Price": 25.99,
+      "CategoryID": "1",
+      "ImageURL": "https://307a0e78.vws.vegacdn.vn/view/v2/image/img.book/0/0/1/46111.jpg?v=1&w=200&h=292",
+      "Reviews": [
+        {
+          "UserID": 1,
+          "Rating": 4,
+          "Comment": "Sách hay!"
+        },
+        {
+          "UserID": 2,
+          "Rating": 5,
+          "Comment": "Tuyệt vời!"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "Title": "Yếu đuối cho ai xem",
+      "Author": "Tác giả 1",
+      "Description": "Mô tả sách 1",
+      "Price": 25.99,
+      "CategoryID": 1,
+      "ImageURL": "https://307a0e78.vws.vegacdn.vn/view/v2/image/img.book/0/0/1/46111.jpg?v=1&w=200&h=292",
+      "Reviews": [
+        {
+          "UserID": 1,
+          "Rating": 4,
+          "Comment": "Sách hay!"
+        },
+        {
+          "UserID": 2,
+          "Rating": 5,
+          "Comment": "Tuyệt vời!"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "Title": "Yếu đuối cho ai xem",
+      "Author": "Tác giả 1",
+      "Description": "Mô tả sách 1",
+      "Price": 25.99,
+      "CategoryID": 1,
+      "ImageURL": "https://307a0e78.vws.vegacdn.vn/view/v2/image/img.book/0/0/1/46111.jpg?v=1&w=200&h=292",
+      "Reviews": [
+        {
+          "UserID": 1,
+          "Rating": 4,
+          "Comment": "Sách hay!"
+        },
+        {
+          "UserID": 2,
+          "Rating": 5,
+          "Comment": "Tuyệt vời!"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "Title": "Yếu đuối cho ai xem",
+      "Author": "Tác giả 1",
+      "Description": "Mô tả sách 1",
+      "Price": 25.99,
+      "CategoryID": 1,
+      "ImageURL": "https://307a0e78.vws.vegacdn.vn/view/v2/image/img.book/0/0/1/46111.jpg?v=1&w=200&h=292",
+      "Reviews": [
+        {
+          "UserID": 1,
+          "Rating": 4,
+          "Comment": "Sách hay!"
+        },
+        {
+          "UserID": 2,
+          "Rating": 5,
+          "Comment": "Tuyệt vời!"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "Title": "Yếu đuối cho ai xem",
+      "Author": "Tác giả 1",
+      "Description": "Mô tả sách 1",
+      "Price": 25.99,
+      "CategoryID": 1,
+      "ImageURL": "https://307a0e78.vws.vegacdn.vn/view/v2/image/img.book/0/0/1/46111.jpg?v=1&w=200&h=292",
+      "Reviews": [
+        {
+          "UserID": 1,
+          "Rating": 4,
+          "Comment": "Sách hay!"
+        },
+        {
+          "UserID": 2,
+          "Rating": 5,
+          "Comment": "Tuyệt vời!"
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "Title": "Yếu đuối cho ai xem",
+      "Author": "Tác giả 1",
+      "Description": "Mô tả sách 1",
+      "Price": 25.99,
+      "CategoryID": 1,
+      "ImageURL": "https://307a0e78.vws.vegacdn.vn/view/v2/image/img.book/0/0/1/46111.jpg?v=1&w=200&h=292",
+      "Reviews": [
+        {
+          "UserID": 1,
+          "Rating": 4,
+          "Comment": "Sách hay!"
+        },
+        {
+          "UserID": 2,
+          "Rating": 5,
+          "Comment": "Tuyệt vời!"
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "Title": "Yếu đuối cho ai xem",
+      "Author": "Tác giả 1",
+      "Description": "Mô tả sách 1",
+      "Price": 25.99,
+      "CategoryID": 1,
+      "ImageURL": "https://307a0e78.vws.vegacdn.vn/view/v2/image/img.book/0/0/1/46111.jpg?v=1&w=200&h=292",
+      "Reviews": [
+        {
+          "UserID": 1,
+          "Rating": 4,
+          "Comment": "Sách hay!"
+        },
+        {
+          "UserID": 2,
+          "Rating": 5,
+          "Comment": "Tuyệt vời!"
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "Title": "Mạnh đuối cho ai xem",
+      "Author": "Tác giả 1",
+      "Description": "Mô tả sách 1",
+      "Price": 25.99,
+      "CategoryID": 1,
+      "ImageURL": "https://307a0e78.vws.vegacdn.vn/view/v2/image/img.book/0/0/1/46111.jpg?v=1&w=200&h=292",
+      "Reviews": [
+        {
+          "UserID": 1,
+          "Rating": 4,
+          "Comment": "Sách hay!"
+        },
+        {
+          "UserID": 2,
+          "Rating": 5,
+          "Comment": "Tuyệt vời!"
+        }
+      ]
+    }
+  ],
+  "Categories": [
+    {
+      "id": 1,
+      "Name": "Khoa học",
+      "Description": "Danh mục sách về khoa học"
+    },
+    {
+      "id": 2,
+      "Name": "Tiểu thuyết",
+      "Description": "Danh mục sách tiểu thuyết"
+    }
+  ],
+  "Users": [
+    {
+      "ID": 1,
+      "Username": "nguoidung1",
+      "Password": "hashed_password_1",
+      "Email": "user1@example.com",
+      "FullName": "Người dùng 1",
+      "Address": "Địa chỉ 1",
+      "Phone": "123456789"
+    },
+    {
+      "ID": 2,
+      "Username": "nguoidung2",
+      "Password": "hashed_password_2",
+      "Email": "user2@example.com",
+      "FullName": "Người dùng 2",
+      "Address": "Địa chỉ 2",
+      "Phone": "987654321"
+    }
+  ],
+  "Carts": [
+    {
+      "ID": 1,
+      "UserID": 1,
+      "BooksInCart": [
+        1,
+        2
+      ]
+    },
+    {
+      "ID": 2,
+      "UserID": 2,
+      "BooksInCart": [
+        1
+      ]
+    }
+  ],
+  "Orders": [
+    {
+      "ID": 1,
+      "UserID": 1,
+      "OrderedBooks": [
+        1
+      ],
+      "TotalPrice": 25.99,
+      "OrderDate": "2023-10-10",
+      "Status": "Đã nhận đơn"
+    }
+  ],
+  "Reviews": [],
+  "Promotions": [
+    {
+      "ID": 1,
+      "Name": "Giảm giá mùa hè",
+      "Description": "Ưu đãi giảm giá cho sách mùa hè",
+      "Discount": 10,
+      "StartDate": "2023-06-01",
+      "EndDate": "2023-08-31"
+    }
+  ],
+  "SearchHistory": [
+    {
+      "ID": 1,
+      "UserID": 1,
+      "Keyword": "Khoa học",
+      "SearchDate": "2023-10-05"
+    },
+    {
+      "ID": 2,
+      "UserID": 2,
+      "Keyword": "Tiểu thuyết",
+      "SearchDate": "2023-10-08"
+    }
+  ]
+}

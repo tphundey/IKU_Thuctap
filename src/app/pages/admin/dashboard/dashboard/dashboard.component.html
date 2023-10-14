@@ -26,7 +26,7 @@
 				<td>{{ product.Price | currency: 'USD' }}</td>
 				<td>{{ product.CategoryID }}</td>
 				<td>
-					<button class="btn btn-primary" (click)="editBook(product)">Sửa</button>
+					<a class="btn btn-primary" [routerLink]="['/admin/updateproduct/', product.id]">Sửa</a>
 					<button class="btn btn-danger m-1" (click)="deleteBook(product)">Xóa</button>
 				</td>
 			</tr>

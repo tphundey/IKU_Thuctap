@@ -7,6 +7,7 @@ import { ListbookComponent } from './pages/user/listbook/listbook.component';
 import { AdminLayoutComponent } from './layouts/adminLayout/admin-layout/admin-layout.component';
 import { DashboardComponent } from './pages/admin/dashboard/dashboard/dashboard.component';
 import { AddProductComponent } from './pages/admin/products/add-product/add-product.component';
+import { UpdateProductComponent } from './pages/admin/products/update-product/update-product/update-product.component';
 
 const routes: Routes = [
   {
@@ -22,6 +23,7 @@ const routes: Routes = [
       { path: "", redirectTo: "home", pathMatch: "full" },
       { path: "dashboard", component: DashboardComponent },
       { path: "addproduct", component: AddProductComponent },
+      { path: "updateproduct/:id", component: UpdateProductComponent },
     ]
   },
 ];

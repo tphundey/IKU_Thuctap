@@ -26,6 +26,7 @@ import { FormsModule } from '@angular/forms';
 import { DashboardComponent } from './pages/admin/dashboard/dashboard/dashboard.component';
 import { TableModule } from 'primeng/table';
 import { AddProductComponent } from './pages/admin/products/add-product/add-product.component';
+import { UpdateProductComponent } from './pages/admin/products/update-product/update-product/update-product.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { AddProductComponent } from './pages/admin/products/add-product/add-prod
     ListbookComponent,
     DashboardComponent,
     AddProductComponent,
+    UpdateProductComponent,
 
   ],
   imports: [

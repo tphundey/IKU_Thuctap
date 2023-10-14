@@ -1,0 +1,42 @@
+<div class="container-fluid bg-white">
+  <h4>Sửa sản phẩm</h4>
+  <div class="row bg-white">
+    <div class="col-md-12">
+      <form role="form" (ngSubmit)="updateProduct()">
+        <div class="form-group">
+          <label for="bookTitle">Tên sách</label>
+          <input type="text" class="form-control" id="bookTitle" [(ngModel)]="product.Title" name="Title" />
+        </div>
+        <div class="form-group">
+          <label for="bookAuthor">Tác giả</label>
+          <input type="text" class="form-control" id="bookAuthor" [(ngModel)]="product.Author" name="Author" />
+        </div>
+        <div class="form-group">
+          <label for="bookDescription">Mô tả</label>
+          <textarea class="form-control" id="bookDescription" [(ngModel)]="product.Description"
+            name="Description"></textarea>
+        </div>
+        <div class="form-group">
+          <label for="bookPrice">Giá</label>
+          <input type="number" class="form-control" id="bookPrice" [(ngModel)]="product.Price" name="Price" />
+        </div>
+        <div class="form-group">
+          <label for="bookCategory">Danh mục</label>
+          <select class="form-control" id="bookCategory" [(ngModel)]="product.CategoryID" name="CategoryID">
+            <option value="1">Danh mục 1</option>
+            <option value="2">Danh mục 2</option>
+            <!-- Thêm các tùy chọn danh mục khác -->
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="bookImage">URL Ảnh</label>
+          <input type="text" class="form-control" id="bookImage" [(ngModel)]="product.ImageURL" name="ImageURL" />
+        </div>
+
+        <button type="submit" class="btn btn-primary">Lưu Sửa Đổi</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div style="height: 150px;width: 100%;"></div>
