@@ -12,8 +12,7 @@
 
 .sidebar {
     width: 22%;
-    max-height: 820px;
-
+    height: auto;
     background-color: #181824;
 }
 
@@ -26,5 +25,5 @@ app-admin-header {
     width: 100%;
     margin-top: 65px;
     background-color: #F0F1F6;
-    max-height: 780px;
+    height: auto;
 }

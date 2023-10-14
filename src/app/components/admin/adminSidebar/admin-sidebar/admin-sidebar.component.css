@@ -1,6 +1,6 @@
  li {
      padding: 20px;
-     background-color: rgb(58, 58, 58);
+     background-color: #181824;
      list-style-type: none;
  }
 
@@ -19,7 +19,7 @@
  div {
      padding: 0px;
      margin: 0px auto;
-     background-color: rgb(58, 58, 58);
+     background-color: #181824;
  }
 
  label {
