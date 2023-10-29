@@ -71,7 +71,7 @@ const Header = () => {
                 <div className="container">
                     <div className="header">
                         <div className="logo">
-                            <img src="../../../public/img/logo.png" alt="" />
+                            <img src="https://f11-zpcloud.zdn.vn/3582383015173649842/d49467afac3e7b60222f.jpg" alt="" />
                         </div>
                         <div className="tab">
                             <ul>

@@ -125,7 +125,9 @@ nav {
 .tencart {
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
-
+.logo img{
+    width: 120px;
+}
 .carttt {
     display: flex;
     margin-top: 30%;

@@ -1,11 +1,19 @@
 import "./style.css"
 import React, { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from "@/store/hook";
-import { getProduct, removeProduct, updateProduct } from '@/actions/product';
+import { getProduct } from '@/actions/product';
 import Skeleton from "react-loading-skeleton";
 import { Link } from 'react-router-dom';
-const Home = () => {
 
+import { Carousel } from 'antd';
+const Home = () => {
+    const contentStyle: React.CSSProperties = {
+        height: '460px',
+        width: '90%',
+        color: '#fff',
+        textAlign: 'center',
+        background: '#364d79',
+    };
     const dispatch = useAppDispatch();
     const { products, isLoading, error } = useAppSelector((state: any) => state.products);
 
@@ -16,14 +24,20 @@ const Home = () => {
 
     return (
         <div>
-            <div className="banner">
-                <img src="https://kinhmatanna.com/wp-content/uploads/2023/02/Untitled-3-02-1-2048x665.png" alt="" />
+            <div className="carou-ntd">
+                <Carousel autoplay>
+                    <div>
+                        <img src="https://theme.hstatic.net/200000343865/1001052087/14/ms_banner_img1.jpg?v=411" alt="" />
+                    </div>
+                    <div>
+                        <img src="https://theme.hstatic.net/200000343865/1001052087/14/ms_banner_img2.jpg?v=411" alt="" />
+                    </div>
+                </Carousel>
             </div>
 
             <div className="container">
-                <div className="title">
-                    <div className="tl1">HOT TREND</div>
-                    <div className="tl2">HÀNG MỚI LÊN KỆ</div>
+                <div className="mockup-window border bg-base-300 mt-4 mb-4">
+                    <div className="text-lg font-semibold px-4 py-4 bg-base-200">Sản phẩm nổi bật</div>
                 </div>
                 <div className="list-tc">
                     {products.map((item: any) => (
@@ -37,18 +51,6 @@ const Home = () => {
                     ))}
 
 
-                </div>
-                <div className="title">
-                    <div className="tl1">ĐỊA ĐIỂM</div>
-                    <div className="tl2">HỆ THỐNG CỬA HÀNG</div>
-                </div>
-                <div className="diadiem">
-                    <div className="left">
-                        <img src="https://kinhmatanna.com/wp-content/uploads/2022/10/Untitled-1.png" alt="" />
-                    </div>
-                    <div className="right">
-                        <img src="https://kinhmatanna.com/wp-content/uploads/2022/10/756daa592822ed7cb433-768x1365.jpg" alt="" />
-                    </div>
                 </div>
             </div>
 
