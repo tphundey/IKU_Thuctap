@@ -1,258 +1,232 @@
 {
-  "Books": [
+  "users": [],
+  "hoadon": [
     {
-      "id": 1,
-      "Title": "Yếu đuối cho ai xem  updated",
-      "Author": "Tác giả 122",
-      "Description": "Mô tả sách 1",
-      "Price": 25.99,
-      "CategoryID": "1",
-      "ImageURL": "https://307a0e78.vws.vegacdn.vn/view/v2/image/img.book/0/0/1/46111.jpg?v=1&w=200&h=292",
-      "Reviews": [
+      "name": "Tai dinh",
+      "email": "bosstrum4x@gmail.com",
+      "phone": "0916523",
+      "city": "Hà Nội",
+      "ward": "Ba Đình",
+      "address": "giaothuy",
+      "voucher": "GIAMGIA50",
+      "paymentMethod": "cash",
+      "cartItems": [
         {
-          "UserID": 1,
-          "Rating": 4,
-          "Comment": "Sách hay!"
+          "product": {
+            "name": "Kínhsố2",
+            "price": 120,
+            "img": "https://kinhmatanna.com/wp-content/uploads/2023/06/DSC_4017-1-300x300.jpg",
+            "categoriesId": 2,
+            "color": "red",
+            "quantity": "2",
+            "info": "test",
+            "id": 2
+          },
+          "quantity": 1,
+          "userProfile": {
+            "email": "anhnek033@gmail.com",
+            "name": "Xế biết code",
+            "img": "https://lh3.googleusercontent.com/a/AAcHTtdQrW_PX3riN9qotN_24lK0M3ahKnWCxbwjvA8VpfKIyQ=s96-c"
+          },
+          "id": 3
         },
         {
-          "UserID": 2,
-          "Rating": 5,
-          "Comment": "Tuyệt vời!"
+          "product": {
+            "name": "kinhmat",
+            "price": 250,
+            "img": "https://kinhmatanna.com/wp-content/uploads/2023/06/DSC_4094-copy-1-300x300.jpg",
+            "materialId": "1",
+            "color": "fé",
+            "quantity": "34",
+            "info": "fé",
+            "categoriesId": 1,
+            "id": 1
+          },
+          "quantity": 1,
+          "userProfile": {
+            "email": "anhnek033@gmail.com",
+            "name": "Xế biết code",
+            "img": "https://lh3.googleusercontent.com/a/AAcHTtdQrW_PX3riN9qotN_24lK0M3ahKnWCxbwjvA8VpfKIyQ=s96-c"
+          },
+          "id": 4
         }
-      ]
-    },
-    {
-      "id": 2,
-      "Title": "Yếu đuối cho ai xem",
-      "Author": "Tác giả 1",
-      "Description": "Mô tả sách 1",
-      "Price": 25.99,
-      "CategoryID": 1,
-      "ImageURL": "https://307a0e78.vws.vegacdn.vn/view/v2/image/img.book/0/0/1/46111.jpg?v=1&w=200&h=292",
-      "Reviews": [
-        {
-          "UserID": 1,
-          "Rating": 4,
-          "Comment": "Sách hay!"
-        },
-        {
-          "UserID": 2,
-          "Rating": 5,
-          "Comment": "Tuyệt vời!"
-        }
-      ]
-    },
-    {
-      "id": 3,
-      "Title": "Yếu đuối cho ai xem",
-      "Author": "Tác giả 1",
-      "Description": "Mô tả sách 1",
-      "Price": 25.99,
-      "CategoryID": 1,
-      "ImageURL": "https://307a0e78.vws.vegacdn.vn/view/v2/image/img.book/0/0/1/46111.jpg?v=1&w=200&h=292",
-      "Reviews": [
-        {
-          "UserID": 1,
-          "Rating": 4,
-          "Comment": "Sách hay!"
-        },
-        {
-          "UserID": 2,
-          "Rating": 5,
-          "Comment": "Tuyệt vời!"
-        }
-      ]
-    },
-    {
-      "id": 4,
-      "Title": "Yếu đuối cho ai xem",
-      "Author": "Tác giả 1",
-      "Description": "Mô tả sách 1",
-      "Price": 25.99,
-      "CategoryID": 1,
-      "ImageURL": "https://307a0e78.vws.vegacdn.vn/view/v2/image/img.book/0/0/1/46111.jpg?v=1&w=200&h=292",
-      "Reviews": [
-        {
-          "UserID": 1,
-          "Rating": 4,
-          "Comment": "Sách hay!"
-        },
-        {
-          "UserID": 2,
-          "Rating": 5,
-          "Comment": "Tuyệt vời!"
-        }
-      ]
-    },
-    {
-      "id": 5,
-      "Title": "Yếu đuối cho ai xem",
-      "Author": "Tác giả 1",
-      "Description": "Mô tả sách 1",
-      "Price": 25.99,
-      "CategoryID": 1,
-      "ImageURL": "https://307a0e78.vws.vegacdn.vn/view/v2/image/img.book/0/0/1/46111.jpg?v=1&w=200&h=292",
-      "Reviews": [
-        {
-          "UserID": 1,
-          "Rating": 4,
-          "Comment": "Sách hay!"
-        },
-        {
-          "UserID": 2,
-          "Rating": 5,
-          "Comment": "Tuyệt vời!"
-        }
-      ]
-    },
-    {
-      "id": 6,
-      "Title": "Yếu đuối cho ai xem",
-      "Author": "Tác giả 1",
-      "Description": "Mô tả sách 1",
-      "Price": 25.99,
-      "CategoryID": 1,
-      "ImageURL": "https://307a0e78.vws.vegacdn.vn/view/v2/image/img.book/0/0/1/46111.jpg?v=1&w=200&h=292",
-      "Reviews": [
-        {
-          "UserID": 1,
-          "Rating": 4,
-          "Comment": "Sách hay!"
-        },
-        {
-          "UserID": 2,
-          "Rating": 5,
-          "Comment": "Tuyệt vời!"
-        }
-      ]
-    },
-    {
-      "id": 7,
-      "Title": "Yếu đuối cho ai xem",
-      "Author": "Tác giả 1",
-      "Description": "Mô tả sách 1",
-      "Price": 25.99,
-      "CategoryID": 1,
-      "ImageURL": "https://307a0e78.vws.vegacdn.vn/view/v2/image/img.book/0/0/1/46111.jpg?v=1&w=200&h=292",
-      "Reviews": [
-        {
-          "UserID": 1,
-          "Rating": 4,
-          "Comment": "Sách hay!"
-        },
-        {
-          "UserID": 2,
-          "Rating": 5,
-          "Comment": "Tuyệt vời!"
-        }
-      ]
-    },
-    {
-      "id": 8,
-      "Title": "Mạnh đuối cho ai xem",
-      "Author": "Tác giả 1",
-      "Description": "Mô tả sách 1",
-      "Price": 25.99,
-      "CategoryID": 1,
-      "ImageURL": "https://307a0e78.vws.vegacdn.vn/view/v2/image/img.book/0/0/1/46111.jpg?v=1&w=200&h=292",
-      "Reviews": [
-        {
-          "UserID": 1,
-          "Rating": 4,
-          "Comment": "Sách hay!"
-        },
-        {
-          "UserID": 2,
-          "Rating": 5,
-          "Comment": "Tuyệt vời!"
-        }
-      ]
-    }
-  ],
-  "Categories": [
-    {
-      "id": 1,
-      "Name": "Khoa học",
-      "Description": "Danh mục sách về khoa học"
-    },
-    {
-      "id": 2,
-      "Name": "Tiểu thuyết",
-      "Description": "Danh mục sách tiểu thuyết"
-    }
-  ],
-  "Users": [
-    {
-      "ID": 1,
-      "Username": "nguoidung1",
-      "Password": "hashed_password_1",
-      "Email": "user1@example.com",
-      "FullName": "Người dùng 1",
-      "Address": "Địa chỉ 1",
-      "Phone": "123456789"
-    },
-    {
-      "ID": 2,
-      "Username": "nguoidung2",
-      "Password": "hashed_password_2",
-      "Email": "user2@example.com",
-      "FullName": "Người dùng 2",
-      "Address": "Địa chỉ 2",
-      "Phone": "987654321"
-    }
-  ],
-  "Carts": [
-    {
-      "ID": 1,
-      "UserID": 1,
-      "BooksInCart": [
-        1,
-        2
-      ]
-    },
-    {
-      "ID": 2,
-      "UserID": 2,
-      "BooksInCart": [
-        1
-      ]
-    }
-  ],
-  "Orders": [
-    {
-      "ID": 1,
-      "UserID": 1,
-      "OrderedBooks": [
-        1
       ],
-      "TotalPrice": 25.99,
-      "OrderDate": "2023-10-10",
-      "Status": "Đã nhận đơn"
+      "totalPrice": 370,
+      "id": 1
     }
   ],
-  "Reviews": [],
-  "Promotions": [
+  "googleAccount": [
     {
-      "ID": 1,
-      "Name": "Giảm giá mùa hè",
-      "Description": "Ưu đãi giảm giá cho sách mùa hè",
-      "Discount": 10,
-      "StartDate": "2023-06-01",
-      "EndDate": "2023-08-31"
-    }
-  ],
-  "SearchHistory": [
-    {
-      "ID": 1,
-      "UserID": 1,
-      "Keyword": "Khoa học",
-      "SearchDate": "2023-10-05"
+      "email": "anhnek033@gmail.com",
+      "name": "Xế biết code",
+      "img": "https://lh3.googleusercontent.com/a/AAcHTtdQrW_PX3riN9qotN_24lK0M3ahKnWCxbwjvA8VpfKIyQ=s96-c",
+      "id": 1
     },
     {
-      "ID": 2,
-      "UserID": 2,
-      "Keyword": "Tiểu thuyết",
-      "SearchDate": "2023-10-08"
+      "email": "maitranthi651@gmail.com",
+      "name": "Mai Tranthi",
+      "img": "https://lh3.googleusercontent.com/a/AAcHTtftVC05JKhGjQiIN3Zzcgh6q7Hd0K4x2VnPN4DXkiRd=s96-c",
+      "id": 2
+    },
+    {
+      "email": "bosstrum4x@gmail.com",
+      "name": "tai dinh",
+      "img": "https://lh3.googleusercontent.com/a/AAcHTtcqimdv5aqaPQUyfLo8tpZe_ImaKTZW2P7OhXlEuGF4=s96-c",
+      "id": 3
+    }
+  ],
+  "cart": [
+    {
+      "product": {
+        "name": "kinhmat",
+        "price": 250,
+        "img": "https://kinhmatanna.com/wp-content/uploads/2023/06/DSC_4094-copy-1-300x300.jpg",
+        "materialId": "1",
+        "color": "fé",
+        "quantity": "34",
+        "info": "fé",
+        "categoriesId": 1,
+        "id": 1
+      },
+      "quantity": 1,
+      "userProfile": {
+        "email": "anhnek033@gmail.com",
+        "name": "Xế biết code",
+        "img": "https://lh3.googleusercontent.com/a/AAcHTtdQrW_PX3riN9qotN_24lK0M3ahKnWCxbwjvA8VpfKIyQ=s96-c"
+      },
+      "id": 4
+    },
+    {
+      "product": {
+        "name": "Kínhsố2",
+        "price": 120,
+        "img": "https://kinhmatanna.com/wp-content/uploads/2023/06/DSC_4017-1-300x300.jpg",
+        "categoriesId": 2,
+        "color": "red",
+        "quantity": "2",
+        "info": "test",
+        "id": 2
+      },
+      "quantity": 1,
+      "userProfile": {
+        "email": "bosstrum4x@gmail.com",
+        "name": "tai dinh",
+        "img": "https://lh3.googleusercontent.com/a/AAcHTtcqimdv5aqaPQUyfLo8tpZe_ImaKTZW2P7OhXlEuGF4=s96-c"
+      },
+      "id": 5
+    },
+    {
+      "product": {
+        "name": "kinhmat 1",
+        "price": 250,
+        "img": "https://kinhmatanna.com/wp-content/uploads/2023/06/DSC_4094-copy-1-300x300.jpg",
+        "materialId": "1",
+        "color": "fé",
+        "quantity": "34",
+        "info": "fé",
+        "categoriesId": 1,
+        "id": 1
+      },
+      "quantity": 2,
+      "userProfile": {
+        "email": "maitranthi651@gmail.com",
+        "name": "Mai Tranthi",
+        "img": "https://lh3.googleusercontent.com/a/AAcHTtftVC05JKhGjQiIN3Zzcgh6q7Hd0K4x2VnPN4DXkiRd=s96-c"
+      },
+      "id": 6
+    }
+  ],
+  "categories": [
+    {
+      "id": 1,
+      "name": "Anna"
+    },
+    {
+      "id": 2,
+      "name": "Anna2"
+    }
+  ],
+  "products": [
+    {
+      "name": "kinhmat 1",
+      "price": 250,
+      "img": "https://kinhmatanna.com/wp-content/uploads/2023/06/DSC_4094-copy-1-300x300.jpg",
+      "materialId": "1",
+      "color": "fé",
+      "quantity": "34",
+      "info": "fé",
+      "categoriesId": 1,
+      "id": 1
+    },
+    {
+      "name": "Kínhsố2",
+      "price": 120,
+      "img": "https://kinhmatanna.com/wp-content/uploads/2023/06/DSC_4017-1-300x300.jpg",
+      "categoriesId": 2,
+      "color": "red",
+      "quantity": "2",
+      "info": "test",
+      "id": 2
+    },
+    {
+      "name": "Kínhsố3",
+      "price": 300,
+      "img": "https://kinhmatanna.com/wp-content/uploads/2023/06/DSC_4017-1-300x300.jpg",
+      "categoriesId": 2,
+      "color": "red",
+      "quantity": "2",
+      "info": "test",
+      "id": 3
+    },
+    {
+      "name": "Kínhsố4",
+      "price": 400,
+      "img": "https://kinhmatanna.com/wp-content/uploads/2023/06/DSC_4017-1-300x300.jpg",
+      "categoriesId": 2,
+      "color": "red",
+      "quantity": "2",
+      "info": "test",
+      "id": 4
+    },
+    {
+      "name": "Kínhsố5",
+      "price": 500,
+      "img": "https://kinhmatanna.com/wp-content/uploads/2023/06/DSC_4017-1-300x300.jpg",
+      "categoriesId": 2,
+      "color": "red",
+      "quantity": "2",
+      "info": "test",
+      "id": 5
+    },
+    {
+      "name": "Kínhsố6",
+      "price": 600,
+      "img": "https://kinhmatanna.com/wp-content/uploads/2023/06/DSC_4017-1-300x300.jpg",
+      "categoriesId": 2,
+      "color": "red",
+      "quantity": "2",
+      "info": "test",
+      "id": 6
+    },
+    {
+      "name": "Kínhsố7",
+      "price": 700,
+      "img": "https://kinhmatanna.com/wp-content/uploads/2023/06/DSC_4017-1-300x300.jpg",
+      "categoriesId": 2,
+      "color": "red",
+      "quantity": "2",
+      "info": "test",
+      "id": 7
+    },
+    {
+      "name": "Kínhsố8",
+      "price": 800,
+      "img": "https://kinhmatanna.com/wp-content/uploads/2023/06/DSC_4017-1-300x300.jpg",
+      "categoriesId": 2,
+      "color": "red",
+      "quantity": "2",
+      "info": "test",
+      "id": 8
     }
   ]
 }
