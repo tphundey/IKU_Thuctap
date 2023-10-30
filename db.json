@@ -73,6 +73,12 @@
       "name": "tai dinh",
       "img": "https://lh3.googleusercontent.com/a/AAcHTtcqimdv5aqaPQUyfLo8tpZe_ImaKTZW2P7OhXlEuGF4=s96-c",
       "id": 3
+    },
+    {
+      "email": "taidvph20044@gmail.com",
+      "name": "Tài Đinh Văn",
+      "img": "https://lh3.googleusercontent.com/a/ACg8ocKJJ1paGWKCnHOGm3j3pONTOmT0LBwy4In8h06aQDkF=s96-c",
+      "id": 4
     }
   ],
   "cart": [
@@ -227,6 +233,44 @@
       "quantity": "2",
       "info": "test",
       "id": 8
+    }
+  ],
+  "Reviews": [
+    {
+      "bookId": 5,
+      "email": "taidvph20044@gmail.com",
+      "name": "Tài Đinh Văn",
+      "img": "https://lh3.googleusercontent.com/a/ACg8ocKJJ1paGWKCnHOGm3j3pONTOmT0LBwy4In8h06aQDkF=s96-c",
+      "rating": 4,
+      "comment": "dưadưadưa",
+      "id": 1
+    },
+    {
+      "bookId": 2,
+      "email": "taidvph20044@gmail.com",
+      "name": "Tài Đinh Văn",
+      "img": "https://lh3.googleusercontent.com/a/ACg8ocKJJ1paGWKCnHOGm3j3pONTOmT0LBwy4In8h06aQDkF=s96-c",
+      "rating": 3,
+      "comment": "FÉ",
+      "id": 2
+    },
+    {
+      "bookId": 3,
+      "email": "taidvph20044@gmail.com",
+      "name": "Tài Đinh Văn",
+      "img": "https://lh3.googleusercontent.com/a/ACg8ocKJJ1paGWKCnHOGm3j3pONTOmT0LBwy4In8h06aQDkF=s96-c",
+      "rating": 2,
+      "comment": "bìa hơi mềm ạ",
+      "id": 3
+    },
+    {
+      "bookId": 3,
+      "email": "maitranthi651@gmail.com",
+      "name": "Mai Tranthi",
+      "img": "https://lh3.googleusercontent.com/a/ACg8ocJj_ott0VE1bH_RteiS4TZltYyQmbfZtyP7A3bsdip6=s96-c",
+      "rating": 5,
+      "comment": "Sách bảo quản tốt",
+      "id": 4
     }
   ]
 }

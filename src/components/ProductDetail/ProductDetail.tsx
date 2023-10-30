@@ -10,7 +10,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from "react-router-dom";
 import { Breadcrumb } from 'antd';
 import { Rate } from 'antd';
-import { Button, Form, Input, Select } from 'antd';
+import { Button, Form, Input } from 'antd';
 import type { FormInstance } from 'antd/es/form';
 
 interface Product {
@@ -27,14 +27,16 @@ interface CartItem {
 }
 const ProductDetail = () => {
   const desc = ['terrible', 'bad', 'normal', 'good', 'wonderful'];
-
   const navigate = useNavigate();
   const cartItems = useSelector((state) => state.cart.cartItems);
   const dispatch = useDispatch();
   const [product, setProduct] = useState<Product | null>(null);
   const [quantity, setQuantity] = useState(1);
   const [value, setValue] = useState(3);
-  const { id } = useParams<{ id: string }>();
+  const { id } = useParams<{ id: number }>();
+  const user = JSON.parse(localStorage.getItem('profile'));
+  const [reviews, setReviews] = useState([]);
+  const [averageRating, setAverageRating] = useState(0);
   const layout = {
     labelCol: { span: 8 },
     wrapperCol: { span: 16 },
@@ -44,10 +46,6 @@ const ProductDetail = () => {
     wrapperCol: { offset: 8, span: 16 },
   };
   const formRef = React.useRef<FormInstance>(null);
-
-  const onFinish = (values: any) => {
-    console.log(values);
-  };
 
   const onReset = () => {
     formRef.current?.resetFields();
@@ -67,6 +65,39 @@ const ProductDetail = () => {
       setProduct(null);
     }
   };
+  // Hàm tính số điểm trung bình dựa trên danh sách đánh giá
+  const calculateAverageRating = (reviews) => {
+    if (reviews.length === 0) {
+      return 0;
+    }
+  
+    const totalRating = reviews.reduce((acc, review) => acc + review.rating, 0);
+    return totalRating / reviews.length;
+  };
+  
+  useEffect(() => {
+    axios.get(`http://localhost:3000/Reviews?bookId=${id}`)
+      .then((response) => {
+        setReviews(response.data);
+      })
+      .catch((error) => {
+        console.error('Lỗi khi lấy đánh giá:', error);
+      });
+  }, [id]);
+  
+  
+  useEffect(() => {
+
+    axios.get(`http://localhost:3000/Reviews?bookId=${id}`)
+      .then((response) => {
+        setReviews(response.data);
+      })
+      .catch((error) => {
+        console.error('Lỗi khi lấy đánh giá:', error);
+      });
+  }
+  );
+
   if (!product) {
     return <div>Đang tải...</div>;
   }
@@ -81,11 +112,71 @@ const ProductDetail = () => {
       setQuantity(quantity + 1);
     }
   }
+  const checkEmailAlreadyReviewed = async (email, id) => {
+    try {
+      const response = await axios.get(`http://localhost:3000/Reviews?email=${email}&bookId=${id}`);
+      return response.data.length > 0;
+    } catch (error) {
+      console.error('Lỗi khi kiểm tra review:', error);
+      return true; // Trả về true để đảm bảo rằng không thể post lần thứ hai trong trường hợp xảy ra lỗi.
+    }
+  };
+
+  const onFinish = async (values) => {
+    // Kiểm tra xem có dữ liệu người dùng trong local storage hay không
+    if (!user) {
+      toast.error('Bạn cần đăng nhập trước', {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 1500,
+      });
+      onReset()
+      return;
+    }
+    const email = user.email;
+    const name = user.name;
+    const img = user.img;
+
+    // Kiểm tra xem email đã post review cho cuốn sách này chưa
+    const emailAlreadyReviewed = await checkEmailAlreadyReviewed(email, id);
+
+    if (emailAlreadyReviewed) {
+      toast.error('Bạn chỉ được đánh giá 1 lần).', {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 1500,
+      });
+      return;
+    }
+    const bookIdNumber = Number(id);
+
+    const reviewData = {
+      bookId: bookIdNumber,
+      email: email,
+      name: name,
+      img: img,
+      rating: value,
+      comment: values.note,
+    };
+
+    // Gửi dữ liệu lên API
+    axios.post('http://localhost:3000/Reviews', reviewData)
+      .then((response) => {
+        onReset();
+      })
+      .catch((error) => {
+        toast.error('Bạn cần đăng nhập trước', {
+          position: toast.POSITION.TOP_CENTER,
+          autoClose: 1500,
+        });
+      });
+  };
 
   const handleAddToCart = () => {
     const userProfile = JSON.parse(localStorage.getItem("profile") || "{}");
     if (!userProfile || Object.keys(userProfile).length === 0) {
-      alert("Vui lòng đăng nhập hoặc đăng ký để thêm sản phẩm vào giỏ hàng.");
+      toast.error('Bạn cần đăng nhập trước', {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 1500,
+      });
       return;
     }
     const cartItem: CartItem = { product, quantity, userProfile };
@@ -115,6 +206,9 @@ const ProductDetail = () => {
       }
     }
   };
+
+
+  
   return (
     <div className="container">
       <Breadcrumb style={{ backgroundColor: 'white', marginTop: 7 }}
@@ -167,19 +261,19 @@ const ProductDetail = () => {
       <h2 className="font-bold text-xl mb-10">Thông tin chi tiết</h2>
       <p>Android is an open source mobile phone platform based on the Linux operating system and developed by the Open Handset Alliance, a consortium of over 30 hardware, software and telecom companies that focus on open standards for mobile devices. Led by search giant, Google, Android is designed to deliver a better and more open and cost effective mobile experience.    Unlocking Android: A Developer's Guide provides concise, hands-on instruction for the Android operating system and development tools. This book teaches important architectural concepts in a straightforward writing style and builds on this with practical and useful examples throughout. Based on his mobile development experience and his deep knowledge of the arcane Android technical documentation, the author conveys the know-how you need to develop practical applications that build upon or replace any of Androids features, however small.    Unlocking Android: A Developer's Guide prepares the reader to embrace the platform in easy-to-understand language and builds on this foundation with re-usable Java code examples. It is ideal for corporate and hobbyists alike who have an interest, or a mandate, to deliver software functionality for cell phones</p>
       <div className="reviewPro">
-        <h2 className="font-bold text-xl mb-10 mt-5">Đánh giá sách</h2>
-
-        <div className="review-user">
-          <div className="imgUser">
-            <img src="https://s120-ava-talk.zadn.vn/a/3/8/d/41/120/d420f9f3b51245aefb0cb31ca04cad1e.jpg" alt="" />
+        <h2 className="font-bold text-xl mb-10 mt-5">Đánh giá sách  ({calculateAverageRating(reviews)}) <Rate disabled defaultValue={calculateAverageRating(reviews)} /></h2>
+        {reviews.map((review) => (
+          <div className="review-user">
+            <div className="imgUser">
+              <img src={review.img} alt="" />
+            </div>
+            <div className="review">
+              <div className="commentName font-bold">{review.name}</div>
+              <div className="commentText">{review.comment}</div>
+              <div className="reviewRate"><Rate disabled defaultValue={review.rating} /></div>
+            </div>
           </div>
-          <div className="review">
-          <div className="commentName font-bold">Trần Phùng</div>
-            <div className="commentText">Sách khá hay nhé mn</div>
-            <div className="reviewRate"><Rate disabled defaultValue={2} /></div>
-          </div>
-        </div>
-
+        ))}
         <span>
           <Rate tooltips={desc} onChange={setValue} value={value} />
           {value ? <span className="ant-rate-text">{desc[value - 1]}</span> : ''}
