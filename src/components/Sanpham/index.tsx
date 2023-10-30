@@ -49,14 +49,14 @@ const Sanpham = () => {
         });
         setFilteredProducts(updatedFilteredProducts);
     }, [selectedCategoryIds, selectedPriceIds, products]);
-    const handlePriceChange = (priceId) => {
+    const handlePriceChange = (priceId: any) => {
         if (selectedPriceIds.includes(priceId)) {
             setSelectedPriceIds(selectedPriceIds.filter(id => id !== priceId));
         } else {
             setSelectedPriceIds([...selectedPriceIds, priceId]);
         }
     };
-    const handleCategoryChange = (categoryId) => {
+    const handleCategoryChange = (categoryId: any) => {
         if (selectedCategoryIds.includes(categoryId)) {
             setSelectedCategoryIds(selectedCategoryIds.filter(id => id !== categoryId));
         } else {
@@ -70,12 +70,12 @@ const Sanpham = () => {
             <div className="container">
                 <div className="title">
                     <div className="tl1">HOT TREND</div>
-                    <div className="tl2">SẢN PHẨM</div>
+                    <div className="tl2">SÁCH MỚI</div>
                 </div>
                 <div className="flex">
                     <div className="filter">
                         <div className="th">
-                            Thương hiệu
+                            Danh mục
                         </div>
                         <div className="danhmuc">
                             {/* Display categories fetched using Axios */}
@@ -120,7 +120,7 @@ const Sanpham = () => {
                                     <div className="image">
                                         <img src={item.img} alt="" />
                                     </div>
-                                    <div className="name">{item.name}</div>
+                                    <div className="name mt-2">{item.name}</div>
                                     <div className="price">{item.price}.000đ</div>
                                 </Link>
                             </div>

@@ -1,12 +1,17 @@
 import "./ProductDetail.css";
 import { useState, useEffect } from 'react';
+import React from "react";
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { addToCart, updateCartItem } from "@/actions/cart";
 import { useDispatch, useSelector } from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import {  useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { Breadcrumb } from 'antd';
+import { Rate } from 'antd';
+import { Button, Form, Input, Select } from 'antd';
+import type { FormInstance } from 'antd/es/form';
 
 interface Product {
   id: number;
@@ -21,13 +26,34 @@ interface CartItem {
   userProfile: any;
 }
 const ProductDetail = () => {
+  const desc = ['terrible', 'bad', 'normal', 'good', 'wonderful'];
 
   const navigate = useNavigate();
   const cartItems = useSelector((state) => state.cart.cartItems);
   const dispatch = useDispatch();
   const [product, setProduct] = useState<Product | null>(null);
   const [quantity, setQuantity] = useState(1);
+  const [value, setValue] = useState(3);
   const { id } = useParams<{ id: string }>();
+  const layout = {
+    labelCol: { span: 8 },
+    wrapperCol: { span: 16 },
+  };
+
+  const tailLayout = {
+    wrapperCol: { offset: 8, span: 16 },
+  };
+  const formRef = React.useRef<FormInstance>(null);
+
+  const onFinish = (values: any) => {
+    console.log(values);
+  };
+
+  const onReset = () => {
+    formRef.current?.resetFields();
+  };
+
+
   useEffect(() => {
     getProductById(id);
   }, [id]);
@@ -91,23 +117,36 @@ const ProductDetail = () => {
   };
   return (
     <div className="container">
+      <Breadcrumb style={{ backgroundColor: 'white', marginTop: 7 }}
+        items={[
+          {
+            title: 'Trang chủ',
+          },
+          {
+            title: <a href="">Sản phẩm</a>,
+          },
+          {
+            title: <p>{product.name}</p>,
+          },
+        ]}
+      />
+
       <div className="product_detail">
-        <div className="product_detail-top">Trang chủ - Sản phẩm - {product.name}</div>
         <div className="product_detail-info">
           <div className="detail_info-left">
             <div className="img-primary">
-              <img src="../../../public/img/img_pri.jpg" alt="" />
+              <img src="https://s3.amazonaws.com/AKIAJC5RLADLUMVRPFDQ.book-thumb-images/ableson2.jpg" alt="" />
             </div>
           </div>
           <div className="detail_info-right">
             <div className="info-top">
               <div className="name">{product.name}</div> <br />
               <div className="price">{product.price}.000₫</div>
-              <div className="title">
-                <p>Mã sản phẩm: 200CK032</p>
-                <p>Chất liệu: Kim loại</p>
-                <p>Màu sắc: {product.color}</p>
-                <p>Thông tin: {product.info}</p>
+              <div className="mt-5">
+                <p>Danh mục: 200CK032</p>
+                <p>Tác giả: Kim loại</p>
+                <p>Số trang: {product.color}</p>
+                <p>Ngày phát hành: {product.info}</p>
               </div>
               <div className="ship">
                 Miễn phí giao hàng từ 500k ( vận chuyển 3 - 5 ngày )
@@ -125,27 +164,46 @@ const ProductDetail = () => {
           </div>
         </div>
       </div>
-      <div className="product_info">
-        <div className="info_left">
-          <div className="info_left-header">
-            <h4>Thông tin</h4>
-          </div>
-          <div className="info_left-content">
-            <p>Chịu trách nhiệm sản phẩm: Công Ty TNHH Dịch vụ và Thương mại Anna Việt Nam</p>
-            <p>Cảnh báo: Bảo quản trong hộp kính</p>
-            <p>Hướng dẫn sử dụng:</p>
-            <p>+ Tháo kính bằng 2 tay</p>
-            <p>+ Không bỏ kính vào cốp xe hoặc những nơi có nhiệt độ cao làm biến dạng kính.</p>
-            <p>+ Không bỏ kính vào túi sách nếu không có hộp kính, vật dụng nhọn như chìa khóa sẽ làm xước kính.</p>
-            <p>+ Không rửa kính lau kính bằng các chất có tính tẩy rửa mạnh làm bong tróc lớp váng phủ</p>
+      <h2 className="font-bold text-xl mb-10">Thông tin chi tiết</h2>
+      <p>Android is an open source mobile phone platform based on the Linux operating system and developed by the Open Handset Alliance, a consortium of over 30 hardware, software and telecom companies that focus on open standards for mobile devices. Led by search giant, Google, Android is designed to deliver a better and more open and cost effective mobile experience.    Unlocking Android: A Developer's Guide provides concise, hands-on instruction for the Android operating system and development tools. This book teaches important architectural concepts in a straightforward writing style and builds on this with practical and useful examples throughout. Based on his mobile development experience and his deep knowledge of the arcane Android technical documentation, the author conveys the know-how you need to develop practical applications that build upon or replace any of Androids features, however small.    Unlocking Android: A Developer's Guide prepares the reader to embrace the platform in easy-to-understand language and builds on this foundation with re-usable Java code examples. It is ideal for corporate and hobbyists alike who have an interest, or a mandate, to deliver software functionality for cell phones</p>
+      <div className="reviewPro">
+        <h2 className="font-bold text-xl mb-10 mt-5">Đánh giá sách</h2>
 
+        <div className="review-user">
+          <div className="imgUser">
+            <img src="https://s120-ava-talk.zadn.vn/a/3/8/d/41/120/d420f9f3b51245aefb0cb31ca04cad1e.jpg" alt="" />
+          </div>
+          <div className="review">
+          <div className="commentName font-bold">Trần Phùng</div>
+            <div className="commentText">Sách khá hay nhé mn</div>
+            <div className="reviewRate"><Rate disabled defaultValue={2} /></div>
           </div>
         </div>
-        <div className="info_right">
-          <div className="info_right-img">
-            <img src="../../../public/img/product_detail-img.jpg" alt="" />
-          </div>
-        </div>
+
+        <span>
+          <Rate tooltips={desc} onChange={setValue} value={value} />
+          {value ? <span className="ant-rate-text">{desc[value - 1]}</span> : ''}
+        </span>
+        <Form
+          {...layout}
+          ref={formRef}
+          name="control-ref"
+          onFinish={onFinish}
+          className="mt-5"
+          style={{ maxWidth: 500 }}
+        >
+          <Form.Item name="note" rules={[{ required: true }]}>
+            <Input style={{ float: 'left' }} />
+          </Form.Item>
+          <Form.Item {...tailLayout}>
+            <Button type="primary" htmlType="submit" className="text-green-700">
+              Submit
+            </Button>
+            <Button htmlType="button" onClick={onReset}>
+              Reset
+            </Button>
+          </Form.Item>
+        </Form>
       </div>
       <ToastContainer />
     </div>

@@ -71,12 +71,12 @@ const Header = () => {
                 <div className="container">
                     <div className="header">
                         <div className="logo">
-                            <img src="https://f11-zpcloud.zdn.vn/3582383015173649842/d49467afac3e7b60222f.jpg" alt="" />
+                        <a href="/"> <img src="https://f11-zpcloud.zdn.vn/3582383015173649842/d49467afac3e7b60222f.jpg" alt="" /></a>
                         </div>
                         <div className="tab">
                             <ul>
                                 <li><a href="/">Trang Chủ</a></li>
-                                <li className="select"><a href="/products">Sản Phẩm *</a></li>
+                                <li><a href="/products">Sản Phẩm *</a></li>
                                 <li><a href="">Về ANNA</a></li>
                                 <li><a href="">STORE</a></li>
                             </ul>
