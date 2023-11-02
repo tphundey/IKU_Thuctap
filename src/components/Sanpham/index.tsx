@@ -2,7 +2,6 @@ import "./style.css";
 import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from "@/store/hook";
 import { getProduct } from '@/actions/product';
-import Skeleton from "react-loading-skeleton";
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
@@ -63,14 +62,12 @@ const Sanpham = () => {
             setSelectedCategoryIds([...selectedCategoryIds, categoryId]);
         }
     };
-    if (isLoading || isLoadingDelay) return <Skeleton count={30} height={35} highlightColor="#9AD3CE" />;
-    if (error) return <div>{error}</div>;
+
     return (
         <div>
             <div className="container">
                 <div className="title">
                     <div className="tl1">HOT TREND</div>
-                    <div className="tl2">SÁCH MỚI</div>
                 </div>
                 <div className="flex">
                     <div className="filter">

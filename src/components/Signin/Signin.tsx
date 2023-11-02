@@ -42,8 +42,13 @@ const Signin = () => {
   const googleSignIn = async () => {
     const provider = new GoogleAuthProvider();
     try {
-      await signInWithPopup(auth, provider);
-      // Không cần lưu thông tin người dùng lên local, người dùng đã được xác thực bởi Firebase
+      const userCredential = await signInWithPopup(auth, provider);
+      const { user, credential } = userCredential;
+
+      // Log dữ liệu người dùng và thông tin đăng nhập
+      console.log('Dữ liệu người dùng:', user);
+      console.log('Thông tin đăng nhập:', credential);
+
       toast.success('Đăng nhập thành công!', {
         className: 'thongbaothanhcong',
         position: toast.POSITION.TOP_CENTER,
@@ -55,6 +60,7 @@ const Signin = () => {
     }
   };
 
+
   return (
     <div className="container_signin">
       {/* Rest of your JSX code here */}
@@ -62,6 +68,9 @@ const Signin = () => {
         <div>
           <p>Xin chào, {user.displayName}!</p>
           <button onClick={() => auth.signOut()}>Đăng xuất</button>
+          {user.photoURL && (
+            <img src={user.photoURL} alt="Ảnh đại diện" />
+          )}
         </div>
       ) : (
         <button className="signin_google" onClick={googleSignIn}>

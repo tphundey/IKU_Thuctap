@@ -1,19 +1,33 @@
 import "./style.css"
 import { useState, useEffect } from 'react';
 import axios from "axios";
-import { GoogleLogout } from "react-google-login";
 import { useNavigate } from 'react-router-dom';
-const clientId = "617522400337-v8petg67tn301qkocslk6or3j9c4jjmn.apps.googleusercontent.com"
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { onAuthStateChanged } from 'firebase/auth';
+import { auth } from '../AuthFirebase/auth';
+
 const Header = () => {
-    const [showDiv, setShowDiv] = useState(false);
     const [isSignedIn, setIsSignedIn] = useState(false);
     const navigate = useNavigate();
     const [cartItemsFromAPI, setCartItemsFromAPI] = useState([]);
     const userProfile = JSON.parse(localStorage.getItem("profile") || "{}");
     const [totalPrice, setTotalPrice] = useState(0);
     const [totalItems, setTotalItems] = useState(0);
+    const [user, setUser] = useState(null);
+
+    useEffect(() => {
+        const unsubscribe = onAuthStateChanged(auth, (currentUser: any) => {
+            if (currentUser) {
+                setUser(currentUser);
+            } else {
+                setUser(null);
+            }
+        });
+        return () => unsubscribe();
+    }, []);
+
+
     useEffect(() => {
         // Lấy dữ liệu giỏ hàng từ API
         axios.get("http://localhost:3000/cart")
@@ -39,31 +53,10 @@ const Header = () => {
     }, [userProfile.email]);
 
     useEffect(() => {
-        // Check the user's login status from local storage
         const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
         setIsSignedIn(isLoggedIn);
 
     }, []);
-
-    const toggleDiv = (event: any) => {
-        event.preventDefault();
-        setShowDiv(!showDiv);
-    };
-
-    const onSuccess = () => {
-        console.log("Log out successfull !");
-        localStorage.setItem('isLoggedIn', 'false');
-        localStorage.removeItem('profile');
-        toast.success('Đã đăng xuất tài khoản!', {
-            className: 'thongbaothanhcong',
-            position: toast.POSITION.TOP_CENTER,
-            autoClose: 2000, // Thời gian tự động biến mất sau 3 giây
-        });
-        setTimeout(() => {
-            navigate('/')
-            location.reload()
-        }, 2000);
-    }
 
     return (
         <div>
@@ -71,7 +64,7 @@ const Header = () => {
                 <div className="container">
                     <div className="header">
                         <div className="logo">
-                        <a href="/"> <img src="https://f11-zpcloud.zdn.vn/3582383015173649842/d49467afac3e7b60222f.jpg" alt="" /></a>
+                            <a href="/"> <img src="https://f11-zpcloud.zdn.vn/3582383015173649842/d49467afac3e7b60222f.jpg" alt="" /></a>
                         </div>
                         <div className="tab">
                             <ul>
@@ -84,53 +77,16 @@ const Header = () => {
                         <div className="option">
                             <ul>
                                 <li><a href=""><img className="a" src="https://cdn.icon-icons.com/icons2/1129/PNG/512/searchmagnifierinterfacesymbol_79894.png" alt="" /></a></li>
-                                {/* ...Other header options here... */}
-                                {isSignedIn ? (
-                                    <li>
-                                        <GoogleLogout
-                                            clientId={clientId}
-                                            buttonText="Logout"
-                                            onLogoutSuccess={onSuccess}
-                                        />
-                                    </li>
+                                {user ? (
+                                    <div>
+                                        <a href="http://localhost:5173/signin"><img style={{ width: 40, borderRadius: 100 }} src={user.photoURL} alt="Ảnh đại diện" /></a>
+                                    </div>
                                 ) : (
-                                    <li><a href="/signin"><img className="b" src="https://cdn.icon-icons.com/icons2/2987/PNG/512/home_set_of_house_clipart_icon_187233.png" alt="" /></a></li>
+                                    <a href="http://localhost:5173/signin"><i className="fa-solid fa-user"></i></a>
                                 )}
-                                <li><a onClick={toggleDiv} href=""><img onClick={toggleDiv} className="c" src="https://cdn.icon-icons.com/icons2/1302/PNG/512/onlineshoppingcart_85781.png" alt="" /></a></li>
+                                <li><a href=""><img className="c" src="https://cdn.icon-icons.com/icons2/1302/PNG/512/onlineshoppingcart_85781.png" alt="" /></a></li>
                                 <span className="count"> {totalItems}</span>
                             </ul>
-                        </div>
-
-                        <div className={`hidden-div ${showDiv ? 'show-div' : ''}`}>
-
-                            <div className="listcart">
-                                {/* Hiển thị thông tin sản phẩm và số lượng từ API */}
-                                {cartItemsFromAPI.map((cartItem) => (
-
-                                    <div className="cart" key={cartItem.id}>
-                                        <div className="imgcart">
-                                            <img src={cartItem.product.img} alt="" />
-                                        </div>
-                                        <div className="thongtin">
-                                            <div className="tencart">{cartItem.product.name}</div>
-                                            <div className="carttt">
-                                                <div className="soluong">{cartItem.quantity} x</div>
-                                                <div className="giatien">{cartItem.product.price}.000đ</div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                ))}
-                                <br />
-                                <div className="tongtien">
-                                    <b>Tạm tính:</b> {totalPrice}.000đ
-                                </div>
-                                <button className="thanhtoan"><a href="/thanhtoan">Thanh toán</a></button>
-                            </div>
-
-
-
-                            <button className="thoat" onClick={toggleDiv}>X</button>
                         </div>
                     </div>
                 </div>

@@ -12,6 +12,8 @@ import { Breadcrumb } from 'antd';
 import { Rate } from 'antd';
 import { Button, Form, Input } from 'antd';
 import type { FormInstance } from 'antd/es/form';
+import { onAuthStateChanged } from 'firebase/auth';
+import { auth } from '../AuthFirebase/auth';
 
 interface Product {
   id: number;
@@ -34,9 +36,21 @@ const ProductDetail = () => {
   const [quantity, setQuantity] = useState(1);
   const [value, setValue] = useState(3);
   const { id } = useParams<{ id: number }>();
-  const user = JSON.parse(localStorage.getItem('profile'));
   const [reviews, setReviews] = useState([]);
   const [averageRating, setAverageRating] = useState(0);
+  const [user, setUser] = useState(null);
+  console.log(user);
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser: any) => {
+      if (currentUser) {
+        setUser(currentUser);
+      } else {
+        setUser(null);
+      }
+    });
+    return () => unsubscribe();
+  }, []);
+
   const layout = {
     labelCol: { span: 8 },
     wrapperCol: { span: 16 },
@@ -46,15 +60,14 @@ const ProductDetail = () => {
     wrapperCol: { offset: 8, span: 16 },
   };
   const formRef = React.useRef<FormInstance>(null);
-
   const onReset = () => {
     formRef.current?.resetFields();
   };
-
-
   useEffect(() => {
     getProductById(id);
   }, [id]);
+
+
 
   const getProductById = async (id: any) => {
     try {
@@ -65,16 +78,19 @@ const ProductDetail = () => {
       setProduct(null);
     }
   };
+
+
+
   // Hàm tính số điểm trung bình dựa trên danh sách đánh giá
-  const calculateAverageRating = (reviews) => {
+  const calculateAverageRating = (reviews: any) => {
     if (reviews.length === 0) {
       return 0;
     }
-  
     const totalRating = reviews.reduce((acc, review) => acc + review.rating, 0);
     return totalRating / reviews.length;
   };
-  
+
+
   useEffect(() => {
     axios.get(`http://localhost:3000/Reviews?bookId=${id}`)
       .then((response) => {
@@ -84,8 +100,8 @@ const ProductDetail = () => {
         console.error('Lỗi khi lấy đánh giá:', error);
       });
   }, [id]);
-  
-  
+
+
   useEffect(() => {
 
     axios.get(`http://localhost:3000/Reviews?bookId=${id}`)
@@ -95,8 +111,7 @@ const ProductDetail = () => {
       .catch((error) => {
         console.error('Lỗi khi lấy đánh giá:', error);
       });
-  }
-  );
+  }, [id]);
 
   if (!product) {
     return <div>Đang tải...</div>;
@@ -112,7 +127,7 @@ const ProductDetail = () => {
       setQuantity(quantity + 1);
     }
   }
-  const checkEmailAlreadyReviewed = async (email, id) => {
+  const checkEmailAlreadyReviewed = async (email: any, id: any) => {
     try {
       const response = await axios.get(`http://localhost:3000/Reviews?email=${email}&bookId=${id}`);
       return response.data.length > 0;
@@ -122,8 +137,8 @@ const ProductDetail = () => {
     }
   };
 
-  const onFinish = async (values) => {
-    // Kiểm tra xem có dữ liệu người dùng trong local storage hay không
+  const onFinish = async (values: any) => {
+
     if (!user) {
       toast.error('Bạn cần đăng nhập trước', {
         position: toast.POSITION.TOP_CENTER,
@@ -133,9 +148,8 @@ const ProductDetail = () => {
       return;
     }
     const email = user.email;
-    const name = user.name;
-    const img = user.img;
-
+    const name = user.displayName;
+    const img = user.photoURL;
     // Kiểm tra xem email đã post review cho cuốn sách này chưa
     const emailAlreadyReviewed = await checkEmailAlreadyReviewed(email, id);
 
@@ -161,54 +175,103 @@ const ProductDetail = () => {
     axios.post('http://localhost:3000/Reviews', reviewData)
       .then((response) => {
         onReset();
+        // Update the reviews state with the new review data
+        setReviews((prevReviews) => [...prevReviews, reviewData]);
+
+        // Update the average rating state with the newly calculated average
+        const newAverageRating = calculateAverageRating([...prevReviews, reviewData]);
+        setAverageRating(newAverageRating);
+
       })
-      .catch((error) => {
-        toast.error('Bạn cần đăng nhập trước', {
-          position: toast.POSITION.TOP_CENTER,
-          autoClose: 1500,
-        });
-      });
   };
 
-  const handleAddToCart = () => {
-    const userProfile = JSON.parse(localStorage.getItem("profile") || "{}");
-    if (!userProfile || Object.keys(userProfile).length === 0) {
+
+  const handleAddToCart = async () => {
+    if (!user) {
       toast.error('Bạn cần đăng nhập trước', {
         position: toast.POSITION.TOP_CENTER,
         autoClose: 1500,
       });
       return;
     }
-    const cartItem: CartItem = { product, quantity, userProfile };
-    if (product) {
-      const existingCartItem = cartItems.find((item) => item.product.id === product.id);
-      if (existingCartItem) {
-        const updatedQuantity = existingCartItem.quantity + quantity;
-        if (updatedQuantity <= 5) {
-          const updatedCartItem = { ...existingCartItem, quantity: updatedQuantity };
-          dispatch(updateCartItem(updatedCartItem));
-        } else {
-          toast.error('Không thể thêm sản phẩm vào giỏ hàng. Số lượng vượt quá giới hạn (tối đa 5 sản phẩm).', {
-            position: toast.POSITION.TOP_CENTER,
-            autoClose: 1000,
-          });
-        }
-      } else {
-        dispatch(addToCart(cartItem));
-        toast.success('Thêm thành công chờ 3s để vào giỏ hàng!', {
-          className: 'thongbaothanhcong',
-          position: toast.POSITION.TOP_CENTER,
-          autoClose: 3000,
-        });
-        setTimeout(() => {
-          navigate("/thanhtoan");
-        }, 3000);
-      }
-    }
-  };
-
-
   
+    const email = user.email;
+  
+    // Kiểm tra giỏ hàng của người dùng dựa trên email
+    axios.get(`http://localhost:3000/cart?email=${email}`)
+      .then((response) => {
+        const cartItem = {
+          product: product,
+          quantity: quantity,
+        };
+  
+        if (response.data.length > 0) {
+          // Người dùng đã có giỏ hàng, kiểm tra xem sản phẩm đã tồn tại trong giỏ hàng hay chưa
+          const existingCart = response.data[0];
+          const existingProductIndex = existingCart.products.findIndex((item) => item.product.id === product.id);
+  
+          if (existingProductIndex !== -1) {
+            // Sản phẩm đã tồn tại, cộng thêm quantity vào sản phẩm đã có
+            existingCart.products[existingProductIndex].quantity += quantity;
+          } else {
+            // Sản phẩm chưa tồn tại, thêm sản phẩm mới vào mảng sản phẩm
+            existingCart.products.push(cartItem);
+          }
+  
+          // Cập nhật giỏ hàng bằng cách PUT dữ liệu đã thay đổi
+          axios.put(`http://localhost:3000/cart/${existingCart.id}`, existingCart)
+            .then(() => {
+              toast.success('Sản phẩm đã được thêm vào giỏ hàng!', {
+                className: 'thongbaothanhcong',
+                position: toast.POSITION.TOP_CENTER,
+                autoClose: 3000,
+              });
+              setTimeout(() => {
+                navigate('/thanhtoan');
+              }, 3000);
+            })
+            .catch((error) => {
+              toast.error('Lỗi khi cập nhật giỏ hàng', {
+                position: toast.POSITION.TOP_CENTER,
+                autoClose: 1000,
+              });
+            });
+        } else {
+          // Người dùng chưa có giỏ hàng, tạo một giỏ hàng mới cho họ
+          const newCart = {
+            email: email,
+            products: [cartItem],
+          };
+  
+          // Thêm giỏ hàng mới vào API
+          axios.post('http://localhost:3000/cart', newCart)
+            .then(() => {
+              toast.success('Sản phẩm đã được thêm vào giỏ hàng!', {
+                className: 'thongbaothanhcong',
+                position: toast.POSITION.TOP_CENTER,
+                autoClose: 3000,
+              });
+              setTimeout(() => {
+                navigate('/thanhtoan');
+              }, 3000);
+            })
+            .catch((error) => {
+              toast.error('Lỗi khi tạo giỏ hàng mới', {
+                position: toast.POSITION.TOP_CENTER,
+                autoClose: 1000,
+              });
+            });
+        }
+      })
+      .catch((error) => {
+        toast.error('Lỗi khi kiểm tra giỏ hàng', {
+          position: toast.POSITION.TOP_CENTER,
+          autoClose: 1000,
+        });
+      });
+  };
+  
+
   return (
     <div className="container">
       <Breadcrumb style={{ backgroundColor: 'white', marginTop: 7 }}
@@ -261,7 +324,7 @@ const ProductDetail = () => {
       <h2 className="font-bold text-xl mb-10">Thông tin chi tiết</h2>
       <p>Android is an open source mobile phone platform based on the Linux operating system and developed by the Open Handset Alliance, a consortium of over 30 hardware, software and telecom companies that focus on open standards for mobile devices. Led by search giant, Google, Android is designed to deliver a better and more open and cost effective mobile experience.    Unlocking Android: A Developer's Guide provides concise, hands-on instruction for the Android operating system and development tools. This book teaches important architectural concepts in a straightforward writing style and builds on this with practical and useful examples throughout. Based on his mobile development experience and his deep knowledge of the arcane Android technical documentation, the author conveys the know-how you need to develop practical applications that build upon or replace any of Androids features, however small.    Unlocking Android: A Developer's Guide prepares the reader to embrace the platform in easy-to-understand language and builds on this foundation with re-usable Java code examples. It is ideal for corporate and hobbyists alike who have an interest, or a mandate, to deliver software functionality for cell phones</p>
       <div className="reviewPro">
-        <h2 className="font-bold text-xl mb-10 mt-5">Đánh giá sách  ({calculateAverageRating(reviews)}) <Rate disabled defaultValue={calculateAverageRating(reviews)} /></h2>
+        <h2 className="font-bold text-xl mb-10 mt-5">Đánh giá sách  ( {calculateAverageRating(reviews)}⭐)</h2>
         {reviews.map((review) => (
           <div className="review-user">
             <div className="imgUser">
