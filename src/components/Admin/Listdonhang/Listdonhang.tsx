@@ -17,7 +17,7 @@ const Listdonhang = () => {
     }, []);
 
     return (
-        <div className="listproduct">
+        <div>
             <table>
                 <thead>
                     <tr>

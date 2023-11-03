@@ -5,8 +5,59 @@ import { getProduct, removeProduct } from '@/actions/product';
 import { Link } from 'react-router-dom';
 import { Pagination } from 'antd';
 import { useNavigate } from 'react-router-dom';
+import { Space, Table, Tag } from 'antd';
+import type { ColumnsType } from 'antd/es/table';
 
 const Listproduct = () => {
+    const columns: ColumnsType<any> = [
+        {
+            title: 'Mã sản phẩm',
+            dataIndex: 'id',
+            key: 'id',
+            render: (text, record) => `SP00${text}`,
+        },
+        {
+            title: 'Hình ảnh',
+            dataIndex: 'img',
+            key: 'img',
+            render: (text) => <img width={120} src={text} alt="" />,
+        },
+        {
+            title: 'Tên sản phẩm',
+            dataIndex: 'name',
+            key: 'name',
+        },
+        {
+            title: 'Giá',
+            dataIndex: 'price',
+            key: 'price',
+        },
+        {
+            title: 'Danh mục',
+            dataIndex: 'categoriesId',
+            key: 'categoriesId',
+        },
+        {
+            title: 'Màu sắc',
+            dataIndex: 'color',
+            key: 'color',
+        },
+        {
+            title: 'Số lượng',
+            dataIndex: 'quantity',
+            key: 'quantity',
+        },
+        {
+            title: 'Chức năng',
+            key: 'action',
+            render: (text, record) => (
+                <>
+                    <Link to={`/admin/suasanpham/${record.id}`} className='sua'>Sửa</Link>
+                    <button onClick={() => dispatch(removeProduct(record.id))} className='xoa'>Xóa</button>
+                </>
+            ),
+        },
+    ];
 
     const dispatch = useAppDispatch();
     const { products } = useAppSelector((state: any) => state.products);
@@ -27,46 +78,11 @@ const Listproduct = () => {
     const handlePageChange = (page: number) => {
         setCurrentPage(page);
     };
-    
-    return (
-        <div className="listproduct">
 
+    return (
+        <div >
             <a className='themspmoi' href="admin/addsanpham">Thêm sản phẩm mới !</a>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Msp</th>
-                        <th>Hình ảnh</th>
-                        <th>Tên kính</th>
-                        <th>Giá kính</th>
-                        <th>Chất liệu</th>
-                        <th>Màu sắc</th>
-                        <th>Số lượng</th>
-                        <th>Chức năng</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {currentItems.map((item: any) => (
-                        <tr key={item.id}>
-                            <td>SP{item.id}</td>
-                            <td><img src={item.img} alt="" /></td>
-                            <td>{item.name}</td>
-                            <td>{item.price}</td>
-                            <td>{item.categoriesId}</td>
-                            <td>{item.color}</td>
-                            <td>{item.quantity}</td>
-                            <td className='chucnang'>
-                                <div className="">
-                                    <Link to={`/admin/suasanpham/${item.id}`} className='sua'>Sửa</Link>
-                                </div>
-                                <div>
-                                    <button onClick={() => dispatch(removeProduct(item.id))} className='xoa'>Xóa</button>
-                                </div>
-                            </td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
+            <Table columns={columns} dataSource={currentItems} />
             <Pagination
                 current={currentPage}
                 onChange={handlePageChange}

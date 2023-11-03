@@ -1,9 +1,43 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-
+import { Table, Button, Popconfirm } from 'antd';
 const Listuser = () => {
     const [userData, setUserData] = useState([]);
-
+    const columns = [
+        {
+            title: 'ID',
+            dataIndex: 'id',
+            key: 'id',
+        },
+        {
+            title: 'Tên người dùng',
+            dataIndex: 'name',
+            key: 'name',
+        },
+        {
+            title: 'Email',
+            dataIndex: 'email',
+            key: 'email',
+        },
+        {
+            title: 'Hình ảnh',
+            dataIndex: 'img',
+            key: 'img',
+            render: (text) => <img src={text} alt="" />,
+        },
+        {
+            title: 'Chức năng',
+            key: 'action',
+            render: (text, record) => (
+                <Popconfirm
+                    title="Bạn có chắc chắn muốn xóa người dùng này?"
+                    onConfirm={() => handleDeleteUser(record.id)}
+                >
+                    <Button type="danger">Xóa</Button>
+                </Popconfirm>
+            ),
+        },
+    ];
     useEffect(() => {
         // Gọi API để lấy dữ liệu người dùng
         axios.get('http://localhost:3000/googleAccount')
@@ -32,31 +66,10 @@ const Listuser = () => {
         }
     };
     return (
-        <div className="listproduct">
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Tên người dùng</th>
-                        <th>Email</th>
-                        <th>Hình ảnh</th>
-                        <th>Chức năng</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {userData.map((user) => (
-                        <tr key={user.id}>
-                            <td>{user.id}</td>
-                            <td>{user.name}</td>
-                            <td>{user.email}</td>
-                            <td><img src={user.img} alt="" /></td>
-                            <td>
-                                <button style={{ padding: 10, backgroundColor: 'red', border: 'none', color: 'white', borderRadius: 5 }} onClick={() => handleDeleteUser(user.id)}>Xóa</button>
-                            </td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
+        <div >
+            <div >
+                <Table columns={columns} dataSource={userData} />
+            </div>
         </div>
     );
 };
