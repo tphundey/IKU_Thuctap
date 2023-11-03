@@ -1,14 +1,30 @@
 import "./Hoadon.css"
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-const Hoadon = () => {
+import { onAuthStateChanged } from 'firebase/auth';
+import { auth } from '../AuthFirebase/auth';
 
+const Hoadon = () => {
+    const [email, setEmail] = useState([]);
+    const [userCart, setUserCart] = useState([]);
+    const [user, setUser] = useState(null);
     const [orderData, setOrderData] = useState(null);
-    const userProfile = JSON.parse(localStorage.getItem("profile") || "{}");
-    const userEmail = userProfile.email; // Lấy email từ Local Storage
+
+    useEffect(() => {
+        const unsubscribe = onAuthStateChanged(auth, (currentUser: any) => {
+            if (currentUser) {
+                setUser(currentUser);
+                setEmail(currentUser.email)
+            } else {
+                setUser(null);;
+            }
+        });
+        return () => unsubscribe();
+    }, []);
+
     useEffect(() => {
         // Gọi API để lấy dữ liệu đơn hàng dựa trên email từ Local Storage
-        axios.get(`http://localhost:3000/hoadon?email=${userEmail}`)
+        axios.get(`http://localhost:3000/hoadon?email=maitranthi651@gmail.com`)
             .then((response) => {
                 // Lưu trữ dữ liệu đơn hàng vào state
                 setOrderData(response.data[0]);
@@ -40,14 +56,18 @@ const Hoadon = () => {
                             <th>PRODUCT</th>
                             <th>TOTAL</th>
                         </tr>
-
-                        {orderData.cartItems.map((cartItem) => (
-                            <tr key={cartItem.id}>
-                                <td>{cartItem.product.name}</td>
-                                <td>{cartItem.quantity}</td>
-                            </tr>
-
-                        ))}
+                        <tr>
+                            <td>Tên người nhận hàng:</td>
+                            <td>{orderData.name}</td>
+                        </tr>
+                        <tr>
+                            <td>Số điện thoại:</td>
+                            <td>{orderData.phone}</td>
+                        </tr>
+                        <tr>
+                            <td>Địa chỉ:</td>
+                            <td>{orderData.address}</td>
+                        </tr>
                         <tr>
                             <td>Voucher:</td>
                             <td>{orderData.voucher}</td>

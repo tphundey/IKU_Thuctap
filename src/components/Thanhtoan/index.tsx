@@ -6,7 +6,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './thanhtoan.css';
 import { useNavigate } from 'react-router-dom';
-import { Button } from '..';
+import { onAuthStateChanged } from 'firebase/auth';
+import { auth } from '../AuthFirebase/auth';
 
 const Thanhtoan = () => {
     const navigate = useNavigate();
@@ -19,6 +20,49 @@ const Thanhtoan = () => {
     const [discountAmount, setDiscountAmount] = useState(0); // State để lưu số tiền giảm giá
     const [isDiscountApplied, setIsDiscountApplied] = useState(false); // State để kiểm tra xem mã giảm giá đã được áp dụng hay chưa
     const [voucherCode, setVoucherCode] = useState("");
+    const [email, setEmail] = useState([]);
+    const [userCart, setUserCart] = useState([]);
+    const [user, setUser] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
+    useEffect(() => {
+        const unsubscribe = onAuthStateChanged(auth, (currentUser: any) => {
+            if (currentUser) {
+                setUser(currentUser);
+                setEmail(currentUser.email)
+            } else {
+                setUser(null);;
+            }
+        });
+        return () => unsubscribe();
+    }, []);
+
+    useEffect(() => {
+        // Lấy dữ liệu giỏ hàng từ API
+        axios.get("http://localhost:3000/cart")
+            .then((response) => {
+                const cartItems = response.data;
+
+                // Lọc giỏ hàng dựa trên email
+                const filteredCart = cartItems.find((cartItem) => cartItem.email === email);
+
+
+                if (filteredCart) {
+                    setCartItemsFromAPI(userCart);
+                    setUserCart(filteredCart.products);
+                    // Calculate total price and items
+                    const total = filteredCart.products.reduce((acc, item) => {
+                        return acc + item.quantity * item.product.price;
+                    }, 0);
+
+                    setTotalPrice(total);
+                }
+            })
+            .catch((error) => {
+                console.error("Error fetching cart data from the API:", error);
+                // Handle the error as needed
+                setIsLoading(false);
+            });
+    }, [email]);
 
     useEffect(() => {
         if (voucherCode === "GIAMGIA50") {
@@ -33,42 +77,7 @@ const Thanhtoan = () => {
     const onSubmitVoucherForm = (data: any) => {
         setVoucherCode(data.voucher);
     };
-    useEffect(() => {
-        // Lấy dữ liệu giỏ hàng từ API
-        axios.get("http://localhost:3000/cart")
-            .then((response) => {
-                const cartItems = response.data;
-                const userCart = cartItems.filter((cartItem) => cartItem.userProfile.email === userProfile.email);
-                setCartItemsFromAPI(userCart);
-            })
-            .catch((error) => {
-                console.error("Lỗi khi lấy dữ liệu giỏ hàng từ API:", error);
-            });
-    }, [userProfile.email]);
 
-    useEffect(() => {
-        // Lấy dữ liệu giỏ hàng từ API
-        axios.get("http://localhost:3000/cart")
-            .then((response) => {
-                const cartItems = response.data;
-                const userCart = cartItems.filter((cartItem) => cartItem.userProfile.email === userProfile.email);
-                setCartItemsFromAPI(userCart);
-                // Tính tổng số tiền
-                const total = userCart.reduce((acc, item) => {
-                    return acc + item.quantity * item.product.price;
-                }, 0);
-
-                setTotalPrice(total);
-                const totalItems = userCart.reduce((acc, item) => {
-                    return acc + item.quantity;
-                }, 0);
-                setTotalItems(totalItems);
-            })
-
-            .catch((error) => {
-                console.error("Lỗi khi lấy dữ liệu giỏ hàng từ API:", error);
-            });
-    }, [userProfile.email]);
     const wardsByCity = {
         'Hà Nội': ['Ba Đình', 'Hoàn Kiếm', 'Đống Đa', 'Cầu Giấy', 'Hai Bà Trưng', 'Hoàng Mai'],
         'Hồ Chí Minh': ['Quận 1', 'Quận 2', 'Quận 3', 'Quận 4', 'Quận 5', 'Quận 6'],
@@ -88,8 +97,6 @@ const Thanhtoan = () => {
     // Hàm được gọi khi chọn một thành phố
     const handleCityChange = (selectedCity: any) => {
         setSelectedCity(selectedCity);
-
-        // Lấy danh sách xã/phường dựa trên thành phố được chọn
         const wards = wardsByCity[selectedCity?.value] || [];
         setWardsOptions(
             wards.map((ward: any) => ({ value: ward, label: ward }))
@@ -98,45 +105,12 @@ const Thanhtoan = () => {
 
 
     const [paymentMethod, setPaymentMethod] = useState('cash');
-
     const handlePaymentMethodChange = (event: any) => {
         setPaymentMethod(event.target.value);
     };
-    // Hàm tính tổng số tiền và tổng số sản phẩm trong giỏ hàng
-    const calculateCartTotal = (cartItems) => {
-        const total = cartItems.reduce((acc, item) => {
-            return acc + item.quantity * item.product.price;
-        }, 0);
-        setTotalPrice(total);
 
-        const totalItems = cartItems.reduce((acc, item) => {
-            return acc + item.quantity;
-        }, 0);
-        setTotalItems(totalItems);
-    };
 
-    // Hàm xóa sản phẩm khỏi giỏ hàng
-    const handleDeleteCartItem = (cartItemId) => {
-        axios
-            .delete(`http://localhost:3000/cart/${cartItemId}`)
-            .then((response) => {
-                console.log("Xóa sản phẩm khỏi giỏ hàng thành công:", response.data);
-                // Cập nhật lại danh sách giỏ hàng sau khi xóa thành công
-                setCartItemsFromAPI((prevCartItems) =>
-                    prevCartItems.filter((item) => item.id !== cartItemId)
-                );
-            })
-            .catch((error) => {
-                console.error("Lỗi khi xóa sản phẩm khỏi giỏ hàng:", error);
-                // Xử lý lỗi và hiển thị thông báo cho người dùng nếu cần
-            });
-    };
 
-    // Lắng nghe sự thay đổi của danh sách giỏ hàng sau khi xóa sản phẩm
-    useEffect(() => {
-        // Sau khi danh sách giỏ hàng thay đổi, tính lại tổng số tiền và tổng số sản phẩm
-        calculateCartTotal(cartItemsFromAPI);
-    }, [cartItemsFromAPI]);
     const onSubmit = (data: any) => {
 
         if (data.voucher === "GIAMGIA50") {
@@ -147,37 +121,60 @@ const Thanhtoan = () => {
             setIsDiscountApplied(false);
         }
         const orderData = {
-
             name: data.name,
-            email: data.email,
+            email: email,
             phone: data.phone,
             city: data.city.value,
             ward: data.ward?.value || '',
             address: data.address,
             voucher: data.voucher,
             paymentMethod: paymentMethod,
-            cartItems: cartItemsFromAPI, // Thêm thông tin sản phẩm trong giỏ hàng vào dữ liệu đặt hàng
-            totalPrice: totalPrice - (isDiscountApplied ? discountAmount : 0)
+            cartItems: userCart.map((cartItem) => ({
+                product: {
+                    name: cartItem.product.name,
+                    price: cartItem.product.price,
+                    img: cartItem.product.img,
+                    categoriesId: cartItem.product.categoriesId,
+                    color: cartItem.product.color,
+                    quantity: cartItem.product.quantity,
+                    info: cartItem.product.info,
+                    id: cartItem.product.id,
+                },
+                quantity: cartItem.quantity,
+            })),
+            totalPrice: totalPrice - (isDiscountApplied ? discountAmount : 0),
         };
 
-        // Gửi dữ liệu lên API
         axios.post("http://localhost:3000/hoadon", orderData)
             .then((response) => {
                 console.log("Đặt hàng thành công:", response.data);
 
+                // After a successful order, remove the user's cart data based on their email
+                const email = data.email;
+                axios.delete(`http://localhost:3000/cart?email=${email}`)
+                    .then(() => {
+                        console.log(`Cart data cleared for email: ${email}`);
+                    })
+                    .catch((error) => {
+                        console.error(`Error clearing cart data for email: ${email}`, error);
+                        // Handle the error as needed
+                    });
+
+                // Clear the userCart state
+                setUserCart([]);
                 toast.success('Đặt hàng thành công!', {
                     className: 'thongbaothanhcong',
                     position: toast.POSITION.TOP_CENTER,
-                    autoClose: 2000, // Thời gian tự động biến mất sau 3 giây
+                    autoClose: 2000, // Thời gian tự động biến mất sau 2 giây
                 });
-                navigate('/hoadon')
+                //   navigate('/hoadon');
             })
             .catch((error) => {
                 console.error("Lỗi khi đặt hàng:", error);
                 // Xử lý lỗi và hiển thị thông báo cho người dùng nếu cần
             });
-
     };
+
     return (
         <div className="container2">
             <div className='layout'>
@@ -260,36 +257,29 @@ const Thanhtoan = () => {
                                 </div>
                             )}
                         </div>
-                        <button type="submit">Đặt hàng</button>
+                        <button style={{ height: 40 }} type="submit">Buy</button>
                     </form>
                 </div>
                 <div className="right">
-                    <h2>Nhập mã giảm giá</h2>
-                    <form className='giamgia' onSubmit={handleSubmit(onSubmitVoucherForm)}>
-
-                        <Controller
-                            name="voucher"
-                            control={control}
-                            defaultValue=""
-                            render={({ field }) => <input {...field} type="text" placeholder="Nhập mã giảm giá" />}
-                        />
-                        <button>Áp dụng</button>
-                    </form>
                     <div className="listcart">
                         <div className="listcart">
-                            {/* Hiển thị thông tin sản phẩm và số lượng từ API */}
-                            {cartItemsFromAPI.map((cartItem) => (
-                                <div className="cart" key={cartItem.id}>
+                            {userCart.map((productItem, index) => (
+                                <div className="cart" key={index}>
                                     <div className="imgcart">
-                                        <img src={cartItem.product.img} alt="" />
+                                        <img src={productItem.product.img} alt="" />
                                     </div>
                                     <div className="thongtin">
-                                        <div className="tencart">{cartItem.product.name}</div>
+                                        <div className="tencart">{productItem.product.name}</div>
                                         <div className="carttt">
-                                            <div className="soluong">{cartItem.quantity} x</div>
-                                            <div className="giatien">{cartItem.product.price}.000đ</div>
+                                            <div className="soluong">{productItem.quantity} x</div>
+                                            <div className="giatien">{productItem.product.price}.000đ</div>
                                         </div>
-                                        <button className='removecart' onClick={() => handleDeleteCartItem(cartItem.id)}>Xóa</button>
+                                        {/* <button
+            className='removecart'
+            onClick={() => handleRemoveProduct(userCartItem.email, productItem.product.id)}
+          >
+            Xóa
+          </button> */}
                                     </div>
                                 </div>
                             ))}
