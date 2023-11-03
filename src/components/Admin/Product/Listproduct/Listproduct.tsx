@@ -27,13 +27,7 @@ const Listproduct = () => {
     const handlePageChange = (page: number) => {
         setCurrentPage(page);
     };
-    useEffect(() => {
-        const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
-        const isAdmin = JSON.parse(localStorage.getItem('profile'))?.email === 'anhnek033@gmail.com';
-        if (!isLoggedIn || !isAdmin) {
-            navigate('/'); // Chuyển hướng người dùng về trang chủ nếu không thỏa mãn điều kiện truy cập admin
-        }
-    },);
+    
     return (
         <div className="listproduct">
 
