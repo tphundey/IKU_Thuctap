@@ -143,6 +143,7 @@ const Thanhtoan = () => {
                 quantity: cartItem.quantity,
             })),
             totalPrice: totalPrice - (isDiscountApplied ? discountAmount : 0),
+            status: "Đã đặt hàng",
         };
 
         axios.post("http://localhost:3000/hoadon", orderData)

@@ -32,15 +32,11 @@ const Listproduct = () => {
             dataIndex: 'price',
             key: 'price',
         },
+
         {
-            title: 'Danh mục',
-            dataIndex: 'categoriesId',
-            key: 'categoriesId',
-        },
-        {
-            title: 'Màu sắc',
-            dataIndex: 'color',
-            key: 'color',
+            title: 'Mô tả',
+            dataIndex: 'info',
+            key: 'info',
         },
         {
             title: 'Số lượng',

@@ -113,7 +113,7 @@
       "email": "maitranthi651@gmail.com",
       "phone": "0916523894",
       "city": "Hà Nội",
-      "ward": "Ba Đình",
+      "ward": "Hoàn Kiếm",
       "address": "Giao Thủy - Nam Định",
       "paymentMethod": "cash",
       "cartItems": [
@@ -142,9 +142,23 @@
             "id": 3
           },
           "quantity": 2
+        },
+        {
+          "product": {
+            "name": "kinhmat 1",
+            "price": 250,
+            "img": "https://kinhmatanna.com/wp-content/uploads/2023/06/DSC_4094-copy-1-300x300.jpg",
+            "categoriesId": 1,
+            "color": "fé",
+            "quantity": "34",
+            "info": "fé",
+            "id": 1
+          },
+          "quantity": 1
         }
       ],
-      "totalPrice": 1560,
+      "totalPrice": 1810,
+      "status": "Đã giao",
       "id": 1
     }
   ],
@@ -229,16 +243,6 @@
       "quantity": "2",
       "info": "test",
       "id": 7
-    },
-    {
-      "name": "Kínhsố8",
-      "price": 800,
-      "img": "https://kinhmatanna.com/wp-content/uploads/2023/06/DSC_4017-1-300x300.jpg",
-      "categoriesId": 2,
-      "color": "red",
-      "quantity": "2",
-      "info": "test",
-      "id": 8
     }
   ],
   "Reviews": [
