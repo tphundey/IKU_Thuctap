@@ -82,9 +82,9 @@ const Header = () => {
                                         <a href="http://localhost:5173/signin"><img style={{ width: 40, borderRadius: 100 }} src={user.photoURL} alt="Ảnh đại diện" /></a>
                                     </div>
                                 ) : (
-                                    <a href="http://localhost:5173/signin"><i className="fa-solid fa-user"></i></a>
+                                    <a href="http://localhost:5173/signin"><img style={{ width: 50, borderRadius: 100 }} src="https://media.istockphoto.com/id/1136995165/vi/vec-to/bi%E1%BB%83u-t%C6%B0%E1%BB%A3ng-vector-ng%C6%B0%E1%BB%9Di-%C4%91%C3%A0n-%C3%B4ng-cho-thi%E1%BA%BFt-k%E1%BA%BF-%C4%91%E1%BB%93-h%E1%BB%8Da-logo-trang-web-ph%C6%B0%C6%A1ng-ti%E1%BB%87n-truy%E1%BB%81n-th%C3%B4ng.jpg?s=612x612&w=0&k=20&c=Lv8EXD1fsPwWdnzGXhpTbClUdsFr4qYpoo-G2HTUrbE=" alt="Ảnh đại diện" /></a>
                                 )}
-                                <li><a href=""><img className="c" src="https://cdn.icon-icons.com/icons2/1302/PNG/512/onlineshoppingcart_85781.png" alt="" /></a></li>
+                                <li><a href="http://localhost:5173/thanhtoan"><img className="c" src="https://cdn.icon-icons.com/icons2/1302/PNG/512/onlineshoppingcart_85781.png" alt="" /></a></li>
                                 <span className="count"> {totalItems}</span>
                             </ul>
                         </div>
