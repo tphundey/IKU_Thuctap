@@ -6,7 +6,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../AuthFirebase/auth';
-
+import SearchResults from "../Search/Search"; import { Input } from 'antd';
 const Header = () => {
     const [isSignedIn, setIsSignedIn] = useState(false);
     const navigate = useNavigate();
@@ -15,9 +15,37 @@ const Header = () => {
     const [totalPrice, setTotalPrice] = useState(0);
     const [totalItems, setTotalItems] = useState(0);
     const [user, setUser] = useState(null);
+    const [isSearchOpen, setIsSearchOpen] = useState(false);
+    const [searchKeyword, setSearchKeyword] = useState('');
+    const [searchResults, setSearchResults] = useState([]);
+
+    // Hàm mở ô tìm kiếm
+    const openSearch = () => {
+        setIsSearchOpen(true);
+    };
+
+    // Hàm đóng ô tìm kiếm
+    const closeSearch = () => {
+        setIsSearchOpen(false);
+        setSearchKeyword('');
+        setSearchResults([]);
+    };
+
+    // Hàm tìm kiếm sản phẩm dựa trên từ khóa
+    const searchProducts = () => {
+        // Gửi yêu cầu API để lấy danh sách sản phẩm dựa trên từ khóa tìm kiếm
+        axios.get(`http://localhost:3000/products?name_like=${searchKeyword}`)
+            .then((response) => {
+                const searchResults = response.data;
+                setSearchResults(searchResults);
+            })
+            .catch((error) => {
+                console.error('Lỗi khi tìm kiếm sản phẩm:', error);
+            });
+    };
 
     useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, (currentUser: any) => {
+        const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
             if (currentUser) {
                 setUser(currentUser);
             } else {
@@ -26,7 +54,6 @@ const Header = () => {
         });
         return () => unsubscribe();
     }, []);
-
 
     useEffect(() => {
         // Lấy dữ liệu giỏ hàng từ API
@@ -46,7 +73,6 @@ const Header = () => {
                 }, 0);
                 setTotalItems(totalItems);
             })
-
             .catch((error) => {
                 console.error("Lỗi khi lấy dữ liệu giỏ hàng từ API:", error);
             });
@@ -55,7 +81,6 @@ const Header = () => {
     useEffect(() => {
         const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
         setIsSignedIn(isLoggedIn);
-
     }, []);
 
     return (
@@ -76,7 +101,11 @@ const Header = () => {
                         </div>
                         <div className="option">
                             <ul>
-                                <li><a href=""><img className="a" src="https://cdn.icon-icons.com/icons2/1129/PNG/512/searchmagnifierinterfacesymbol_79894.png" alt="" /></a></li>
+                                <li>
+                                    <a href="#" onClick={openSearch}>
+                                        <img className="a" src="https://cdn.icon-icons.com/icons2/1129/PNG/512/searchmagnifierinterfacesymbol_79894.png" alt="" />
+                                    </a>
+                                </li>
                                 {user ? (
                                     <div>
                                         <a href="http://localhost:5173/signin"><img style={{ width: 40, borderRadius: 100 }} src={user.photoURL} alt="Ảnh đại diện" /></a>
@@ -96,7 +125,26 @@ const Header = () => {
                     SEE BETTER THAN YESTERDAY - ANNA LOVE YOU!
                 </div>
             </nav>
-            {/* Component ToastContainer để hiển thị thông báo */}
+            {isSearchOpen && (
+                <div className="search-overlay">
+                    <div className="search-box">
+                        <Input
+                            placeholder="Tìm kiếm sản phẩm..."
+                            value={searchKeyword}
+                            onChange={(e) => setSearchKeyword(e.target.value)}
+                        />
+                        <button onClick={searchProducts}>Tìm kiếm</button>
+                        <button onClick={closeSearch}>Đóng</button>
+                    </div>
+                    {searchResults.length > 0 && (
+                        <SearchResults searchResults={searchResults} onItemClick={(product) => {
+                            // Xử lý khi người dùng chọn sản phẩm từ kết quả tìm kiếm
+                            console.log('Selected product:', product);
+                        }} />
+                    )}
+                </div>
+            )}
+
             <ToastContainer />
         </div>
     );
