@@ -103,11 +103,15 @@
   ],
   "hoadon": [
     {
+      "status": "Hủy",
+      "id": 1
+    },
+    {
       "name": "Đinh Văn Tài",
       "email": "maitranthi651@gmail.com",
       "phone": "0916523894",
       "city": "Hà Nội",
-      "ward": "Hoàn Kiếm",
+      "ward": "Ba Đình",
       "address": "Giao Thủy - Nam Định",
       "paymentMethod": "cash",
       "cartItems": [
@@ -152,8 +156,8 @@
         }
       ],
       "totalPrice": 1810,
-      "status": "Đang giao",
-      "id": 1
+      "status": "Đã đặt hàng",
+      "id": 2
     }
   ],
   "categories": [
