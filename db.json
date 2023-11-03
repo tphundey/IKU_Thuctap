@@ -95,12 +95,6 @@
       "id": 2
     },
     {
-      "email": "linkedinlearningonlinecourses@gmail.com",
-      "name": "Online Courses LinkedIn Learning",
-      "img": "https://lh3.googleusercontent.com/a/ACg8ocLfebCbqai7QugLRJ6gEUp1H_sKL_VGcy4M7MotlTpR=s96-c",
-      "id": 3
-    },
-    {
       "email": "maitranthi651@gmail.com",
       "name": "Mai Tranthi",
       "img": "https://lh3.googleusercontent.com/a/ACg8ocJj_ott0VE1bH_RteiS4TZltYyQmbfZtyP7A3bsdip6=s96-c",
@@ -158,7 +152,7 @@
         }
       ],
       "totalPrice": 1810,
-      "status": "Đã giao",
+      "status": "Đang giao",
       "id": 1
     }
   ],
@@ -290,6 +284,15 @@
       "rating": 2,
       "comment": "gdzvzd",
       "id": 5
+    },
+    {
+      "bookId": 6,
+      "email": "maitranthi651@gmail.com",
+      "name": "Mai Tranthi",
+      "img": "https://lh3.googleusercontent.com/a/ACg8ocJj_ott0VE1bH_RteiS4TZltYyQmbfZtyP7A3bsdip6=s96-c",
+      "rating": 3,
+      "comment": "rrr",
+      "id": 6
     }
   ]
 }
