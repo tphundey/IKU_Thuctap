@@ -175,7 +175,31 @@ const Thanhtoan = () => {
                 // Xử lý lỗi và hiển thị thông báo cho người dùng nếu cần
             });
     };
+    const handleRemoveProduct = (productId) => {
+        // Update the cart items by filtering out the product with the given ID
+        const updatedCartItems = userCart.filter((item) => item.product.id !== productId);
 
+        // Update the cart state
+        setUserCart(updatedCartItems);
+
+        // Calculate the new total price
+        const newTotal = updatedCartItems.reduce((acc, item) => {
+            return acc + item.quantity * item.product.price;
+        }, 0);
+
+        setTotalPrice(newTotal);
+
+        // Here you would also make an API call to update the cart on the server
+        // For example:
+        axios.delete(`http://localhost:3000/cart/${userProfile.email}/products/${productId}`)
+            .then((response) => {
+                // Handle the response if needed
+            })
+            .catch((error) => {
+                console.error("Error removing product from cart:", error);
+                // Handle the error as needed
+            });
+    };
     return (
         <div className="container2">
             <div className='layout'>
@@ -275,6 +299,12 @@ const Thanhtoan = () => {
                                             <div className="soluong">{productItem.quantity} x</div>
                                             <div className="giatien">{productItem.product.price}.000đ</div>
                                         </div>
+                                        <button
+                                            className='removecart'
+                                            onClick={() => handleRemoveProduct(productItem.product.id)}
+                                        >
+                                            Xóa
+                                        </button>
                                         {/* <button
             className='removecart'
             onClick={() => handleRemoveProduct(userCartItem.email, productItem.product.id)}

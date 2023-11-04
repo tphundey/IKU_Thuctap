@@ -25,14 +25,18 @@ const auth = getAuth(app);
 
 const Signin = () => {
   const [user, setUser] = useState(null);
+  const [email, setEmail] = useState(null);
   const [userOrders, setUserOrders] = useState([]);
   const [canceledOrders, setCanceledOrders] = useState([]);
-  
+
   useEffect(() => {
     // Sử dụng onAuthStateChanged để kiểm tra trạng thái xác thực của người dùng
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       if (currentUser) {
         // Người dùng đã đăng nhập
+        setEmail(currentUser.email)
+        console.log(email);
+
         setUser(currentUser);
       } else {
         // Người dùng chưa đăng nhập
@@ -47,19 +51,31 @@ const Signin = () => {
   }, [auth]);
 
   const googleSignIn = async () => {
-    // ... (code đăng nhập Google)
+    const provider = new GoogleAuthProvider();
+    try {
+      await signInWithPopup(auth, provider);
+      // Không cần lưu thông tin người dùng lên local, người dùng đã được xác thực bởi Firebase
+      toast.success('Đăng nhập thành công!', {
+        className: 'thongbaothanhcong',
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 2000,
+      });
+    } catch (error) {
+      console.error('Authentication failed:', error);
+      alert('Không thành công');
+    }
   };
 
   useEffect(() => {
     // Gửi yêu cầu API để lấy danh sách đơn hàng của người dùng
     axios
-      .get(`http://localhost:3000/hoadon`)
+      .get(`http://localhost:3000/hoadon?email=${email}`)
       .then((response) => {
         // Lấy danh sách đơn hàng và tách ra thành danh sách đơn hàng đã hủy và chưa hủy
         const allOrders = response.data;
         const notCanceledOrders = allOrders.filter(order => order.status !== 'Hủy');
         const canceledOrders = allOrders.filter(order => order.status === 'Hủy');
-        
+
         setUserOrders(notCanceledOrders);
         setCanceledOrders(canceledOrders);
       })
@@ -111,10 +127,10 @@ const Signin = () => {
         // Hủy đơn hàng thành công, cập nhật lại danh sách đơn hàng
         const updatedOrders = userOrders.filter((order) => order.id !== orderId);
         const canceledOrder = userOrders.find((order) => order.id === orderId);
-        
+
         setUserOrders(updatedOrders);
         setCanceledOrders([...canceledOrders, canceledOrder]);
-        
+
         toast.success('Đã hủy đơn hàng thành công!');
       })
       .catch((error) => {
