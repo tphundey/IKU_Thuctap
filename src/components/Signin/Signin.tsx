@@ -33,11 +33,12 @@ const Signin = () => {
     // Sử dụng onAuthStateChanged để kiểm tra trạng thái xác thực của người dùng
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       if (currentUser) {
-        // Người dùng đã đăng nhập
-        setEmail(currentUser.email)
-        console.log(email);
-
+       
         setUser(currentUser);
+         // Người dùng đã đăng nhậpd
+         setEmail(currentUser.email)
+         console.log(email);
+ 
       } else {
         // Người dùng chưa đăng nhập
         setUser(null);
@@ -67,22 +68,24 @@ const Signin = () => {
   };
 
   useEffect(() => {
-    // Gửi yêu cầu API để lấy danh sách đơn hàng của người dùng
-    axios
-      .get(`http://localhost:3000/hoadon?email=${email}`)
-      .then((response) => {
-        // Lấy danh sách đơn hàng và tách ra thành danh sách đơn hàng đã hủy và chưa hủy
-        const allOrders = response.data;
-        const notCanceledOrders = allOrders.filter(order => order.status !== 'Hủy');
-        const canceledOrders = allOrders.filter(order => order.status === 'Hủy');
+    const fetchOrders = async () => {
+      if (user?.email) {
+        try {
+          // Gọi API để lấy thông tin đơn hàng khi user đã đăng nhập
+          const response = await axios.get(`http://localhost:3000/hoadon?email=${user.email}`);
+          const allOrders = response.data;
+          setUserOrders(allOrders.filter(order => order.status !== 'Hủy'));
+          setCanceledOrders(allOrders.filter(order => order.status === 'Hủy'));
+        } catch (error) {
+          console.error('Error fetching orders:', error);
+        }
+      }
+    };
 
-        setUserOrders(notCanceledOrders);
-        setCanceledOrders(canceledOrders);
-      })
-      .catch((error) => {
-        console.error('Error fetching orders:', error);
-      });
-  }, []);
+    // Gọi API khi component được mount hoặc khi user đổi
+    fetchOrders();
+  }, [user]);
+
 
   // Định nghĩa cột cho bảng Ant Design
   const columns = [
@@ -141,13 +144,14 @@ const Signin = () => {
 
   return (
     <div className="container_signin">
-      <h2>Lịch sử đơn hàng của bạn</h2>
-      <Table dataSource={userOrders} columns={columns} />
       {user ? (
         <div>
-          <p>Xin chào, {user.displayName}!</p>
+        <div className="flex gap-3 idki">
+        <p className='font-bold'>Xin chào, {user.displayName}!</p>
+          {user.photoURL && <img width={80} style={{borderRadius:100}} src={user.photoURL} alt="Ảnh đại diện" />}
+        </div>
           <button onClick={() => auth.signOut()}>Đăng xuất</button>
-          {user.photoURL && <img src={user.photoURL} alt="Ảnh đại diện" />}
+       
         </div>
       ) : (
         <button className="signin_google" onClick={googleSignIn}>
@@ -155,6 +159,8 @@ const Signin = () => {
           Đăng nhập bằng Google
         </button>
       )}
+      <h2>Lịch sử đơn hàng của bạn</h2>
+      <Table dataSource={userOrders} columns={columns} />
       <h2>Danh sách đơn hàng đã hủy</h2>
       <Table dataSource={canceledOrders} columns={columns} />
       <ToastContainer />

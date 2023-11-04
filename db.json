@@ -60,7 +60,7 @@
             "info": "test",
             "id": 2
           },
-          "quantity": 1
+          "quantity": 2
         },
         {
           "product": {
@@ -150,7 +150,7 @@
   "hoadon": [
     {
       "name": "Đinh Văn Tài",
-      "email": "taidvph20044@gmail.com",
+      "email": "bail.com",
       "phone": "0916523894",
       "city": "Hà Nội",
       "ward": "Hoàn Kiếm",
@@ -174,6 +174,62 @@
       "totalPrice": 2100,
       "status": "Đã đặt hàng",
       "id": 1
+    },
+    {
+      "status": "Hủy",
+      "id": 2
+    },
+    {
+      "status": "Hủy",
+      "id": 3
+    },
+    {
+      "status": "Hủy",
+      "id": 4
+    },
+    {
+      "status": "Hủy",
+      "id": 5
+    },
+    {
+      "name": "Đinh Văn Tài",
+      "email": "taidvph20044@gmail.com",
+      "phone": "0916523894",
+      "city": "Hà Nội",
+      "ward": "Hoàn Kiếm",
+      "address": "Giao Thủy - Nam Định",
+      "paymentMethod": "cash",
+      "cartItems": [
+        {
+          "product": {
+            "name": "kinhmat 1",
+            "price": 250,
+            "img": "https://kinhmatanna.com/wp-content/uploads/2023/06/DSC_4094-copy-1-300x300.jpg",
+            "categoriesId": 1,
+            "color": "fé",
+            "quantity": "34",
+            "info": "fé",
+            "id": 1
+          },
+          "quantity": 1
+        },
+        {
+          "product": {
+            "name": "Kínhsố7",
+            "price": 700,
+            "img": "https://kinhmatanna.com/wp-content/uploads/2023/06/DSC_4017-1-300x300.jpg",
+            "categoriesId": 2,
+            "color": "red",
+            "quantity": "2",
+            "info": "test",
+            "id": 7
+          },
+          "quantity": 3
+        }
+      ],
+      "totalPrice": 2350,
+      "status": "Đã đặt hàng",
+      "id": 6
     }
   ],
   "categories": [

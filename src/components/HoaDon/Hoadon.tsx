@@ -24,7 +24,7 @@ const Hoadon = () => {
 
     useEffect(() => {
         // Gọi API để lấy dữ liệu đơn hàng dựa trên email từ Local Storage
-        axios.get(`http://localhost:3000/hoadon?email=maitranthi651@gmail.com`)
+        axios.get(`http://localhost:3000/hoadon?email=${email}`)
             .then((response) => {
                 // Lưu trữ dữ liệu đơn hàng vào state
                 setOrderData(response.data[0]);
