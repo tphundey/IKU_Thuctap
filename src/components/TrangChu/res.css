@@ -1,0 +1,17 @@
+.formo {
+    display: none;
+}
+
+@media (max-width: 600px) {
+    .responsive-div {
+        display: none;
+    }
+
+    .con {
+        margin: 0 auto;
+    }
+
+    .formo {
+        display: block;
+    }
+}
