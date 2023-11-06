@@ -39,7 +39,7 @@ const BaseLayoutadmin = () => {
               {
                   key: "2",
                   icon: <AiOutlineBook />,
-                  label: <Link to="/admin">Quản lý sách</Link>,
+                  label: <Link to="/admin/products">Quản lý sách</Link>,
               },
               {
                   key: "3",

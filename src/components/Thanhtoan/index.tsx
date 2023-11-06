@@ -26,7 +26,8 @@ const Thanhtoan = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [voucher, setVoucher] = useState(''); // thêm state cho voucher
     const [voucherError, setVoucherError] = useState(''); // thêm state để hiển thị lỗi
-
+    const [selectedDate, setSelectedDate] = useState("");
+    const currentDate = new Date().toISOString().split('T')[0];
     const handleApplyVoucher = () => {
         if (voucher === 'GIAMGIA20') { // giả sử đây là mã giảm giá hợp lệ
             setDiscountAmount(totalPrice * 0.2); // giảm giá 20%
@@ -142,6 +143,7 @@ const Thanhtoan = () => {
             ward: data.ward?.value || '',
             address: data.address,
             voucher: data.voucher,
+            date: currentDate,
             paymentMethod: paymentMethod,
             cartItems: userCart.map((cartItem) => ({
                 product: {

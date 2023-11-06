@@ -21,6 +21,7 @@ import AddCategory from "./components/Admin/Category/Adddanhmuc/Adddanhmuc";
 import UpdateCategory from "./components/Admin/Category/UpdateCategory/UpdateCategory";
 import { auth } from "./components/AuthFirebase/auth";
 import { onAuthStateChanged } from 'firebase/auth';
+import Dashboard from "./components/Admin/Thongke/Thongke";
 interface Product {
   id: number;
   name: string;
@@ -81,7 +82,8 @@ function App() {
         {/* router admin */}
         {role === "admin" && (
           <Route path="/admin" element={<BaseLayoutadmin />}>
-            <Route index element={<Listproduct />} />
+            <Route index element={<Dashboard />} />
+            <Route path="products" element={<Listproduct  />} />
             <Route path="addsanpham" element={<AddProductFormProps onAddProduct={handleAddProduct} />} />
             <Route path="suasanpham/:id" element={<SuaSanPham />} />
             <Route path="category">
