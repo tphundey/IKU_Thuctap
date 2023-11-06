@@ -125,9 +125,11 @@ nav {
 .tencart {
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
-.logo img{
+
+.logo img {
     width: 120px;
 }
+
 .carttt {
     display: flex;
     margin-top: 30%;
@@ -166,4 +168,49 @@ nav {
     top: 45px;
     right: 20px;
     font-size: 20px;
+}
+
+.formobile {
+    display: none;
+}
+
+/* CSS chỉ áp dụng cho các màn hình có chiều rộng tối đa là 600px */
+@media (max-width: 600px) {
+    .responsive-div {
+        display: none;
+    }
+
+    .text-vvu {
+        font-size: 13px;
+    }
+
+    .formobile {
+        display: grid;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .utu {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        margin-top: 10px;
+    }
+
+    .logo img {
+        margin: 0 auto;
+    }
+
+    .a {
+        width: 17px;
+    }
+
+    .b {
+        width: 27px;
+    }
+
+    .c {
+        width: 17px;
+    }
+
 }

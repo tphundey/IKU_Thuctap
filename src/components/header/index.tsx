@@ -84,67 +84,100 @@ const Header = () => {
     }, []);
 
     return (
-        <div>
-            <header>
-                <div className="container">
-                    <div className="header">
-                        <div className="logo">
-                            <a href="/"> <img src="https://f11-zpcloud.zdn.vn/3582383015173649842/d49467afac3e7b60222f.jpg" alt="" /></a>
-                        </div>
-                        <div className="tab">
-                            <ul>
-                                <li><a href="/">Trang Chủ</a></li>
-                                <li><a href="/products">Sản Phẩm *</a></li>
-                                <li><a href="">Về ANNA</a></li>
-                                <li><a href="">STORE</a></li>
-                            </ul>
-                        </div>
-                        <div className="option">
-                            <ul>
-                                <li>
-                                    <a href="#" onClick={openSearch}>
-                                        <img className="a" src="https://cdn.icon-icons.com/icons2/1129/PNG/512/searchmagnifierinterfacesymbol_79894.png" alt="" />
-                                    </a>
-                                </li>
-                                {user ? (
-                                    <div>
-                                        <a href="http://localhost:5173/signin"><img style={{ width: 40, borderRadius: 100 }} src={user.photoURL} alt="Ảnh đại diện" /></a>
-                                    </div>
-                                ) : (
-                                    <a href="http://localhost:5173/signin"><img style={{ width: 50, borderRadius: 100 }} src="https://media.istockphoto.com/id/1136995165/vi/vec-to/bi%E1%BB%83u-t%C6%B0%E1%BB%A3ng-vector-ng%C6%B0%E1%BB%9Di-%C4%91%C3%A0n-%C3%B4ng-cho-thi%E1%BA%BFt-k%E1%BA%BF-%C4%91%E1%BB%93-h%E1%BB%8Da-logo-trang-web-ph%C6%B0%C6%A1ng-ti%E1%BB%87n-truy%E1%BB%81n-th%C3%B4ng.jpg?s=612x612&w=0&k=20&c=Lv8EXD1fsPwWdnzGXhpTbClUdsFr4qYpoo-G2HTUrbE=" alt="Ảnh đại diện" /></a>
-                                )}
-                                <li><a href="http://localhost:5173/thanhtoan"><img className="c" src="https://cdn.icon-icons.com/icons2/1302/PNG/512/onlineshoppingcart_85781.png" alt="" /></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </header>
-            <nav>
-                <div className="value">
-                    SEE BETTER THAN YESTERDAY - ANNA LOVE YOU!
-                </div>
-            </nav>
-            {isSearchOpen && (
-                <div className="search-overlay">
-                    <div className="search-box">
-                        <Input
-                            placeholder="Tìm kiếm sản phẩm..."
-                            value={searchKeyword}
-                            onChange={(e) => setSearchKeyword(e.target.value)}
-                        />
-                        <button onClick={searchProducts}>Tìm kiếm</button>
-                        <button onClick={closeSearch}>Đóng</button>
-                    </div>
-                    {searchResults.length > 0 && (
-                        <SearchResults searchResults={searchResults} onItemClick={(product) => {
-                            // Xử lý khi người dùng chọn sản phẩm từ kết quả tìm kiếm
-                            console.log('Selected product:', product);
-                        }} />
-                    )}
-                </div>
-            )}
 
-            <ToastContainer />
+        <div>
+            <div className="responsive-div">
+                <header>
+                    <div className="container ">
+                        <div className="header">
+                            <div className="logo">
+                                <a href="/"> <img src="https://f11-zpcloud.zdn.vn/3582383015173649842/d49467afac3e7b60222f.jpg" alt="" /></a>
+                            </div>
+                            <div className="tab">
+                                <ul>
+                                    <li><a href="/">Trang Chủ</a></li>
+                                    <li><a href="/products">Sản Phẩm *</a></li>
+                                    <li><a href="">Về ANNA</a></li>
+                                    <li><a href="">STORE</a></li>
+                                </ul>
+                            </div>
+                            <div className="option">
+                                <ul>
+                                    <li>
+                                        <a href="#" onClick={openSearch}>
+                                            <img className="a" src="https://cdn.icon-icons.com/icons2/1129/PNG/512/searchmagnifierinterfacesymbol_79894.png" alt="" />
+                                        </a>
+                                    </li>
+                                    {user ? (
+                                        <div>
+                                            <a href="http://localhost:5173/signin"><img style={{ width: 40, borderRadius: 100 }} src={user.photoURL} alt="Ảnh đại diện" /></a>
+                                        </div>
+                                    ) : (
+                                        <a href="http://localhost:5173/signin"><img style={{ width: 50, borderRadius: 100 }} src="https://media.istockphoto.com/id/1136995165/vi/vec-to/bi%E1%BB%83u-t%C6%B0%E1%BB%A3ng-vector-ng%C6%B0%E1%BB%9Di-%C4%91%C3%A0n-%C3%B4ng-cho-thi%E1%BA%BFt-k%E1%BA%BF-%C4%91%E1%BB%93-h%E1%BB%8Da-logo-trang-web-ph%C6%B0%C6%A1ng-ti%E1%BB%87n-truy%E1%BB%81n-th%C3%B4ng.jpg?s=612x612&w=0&k=20&c=Lv8EXD1fsPwWdnzGXhpTbClUdsFr4qYpoo-G2HTUrbE=" alt="Ảnh đại diện" /></a>
+                                    )}
+                                    <li><a href="http://localhost:5173/thanhtoan"><img className="c" src="https://cdn.icon-icons.com/icons2/1302/PNG/512/onlineshoppingcart_85781.png" alt="" /></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </header>
+                <nav>
+                    <div className="value">
+                        SEE BETTER THAN YESTERDAY - ANNA LOVE YOU!
+                    </div>
+                </nav>
+                {isSearchOpen && (
+                    <div className="search-overlay">
+                        <div className="search-box">
+                            <Input
+                                placeholder="Tìm kiếm sản phẩm..."
+                                value={searchKeyword}
+                                onChange={(e) => setSearchKeyword(e.target.value)}
+                            />
+                            <button onClick={searchProducts}>Tìm kiếm</button>
+                            <button onClick={closeSearch}>Đóng</button>
+                        </div>
+                        {searchResults.length > 0 && (
+                            <SearchResults searchResults={searchResults} onItemClick={(product) => {
+                                // Xử lý khi người dùng chọn sản phẩm từ kết quả tìm kiếm
+                                console.log('Selected product:', product);
+                            }} />
+                        )}
+                    </div>
+                )}
+
+                <ToastContainer />
+            </div>
+           <div className="formobile">
+           <div className="logo">
+                <a href="/"> <img src="https://f11-zpcloud.zdn.vn/3582383015173649842/d49467afac3e7b60222f.jpg" alt="" /></a>
+            </div>
+            <div className="flex">
+                <ul className="flex gap-3 font-bold text-vvu">
+                    <li><a href="/">Trang Chủ</a></li>
+                    <li><a href="/products">Sản Phẩm *</a></li>
+                    <li><a href="">Về ANNA</a></li>
+                    <li><a href="">STORE</a></li>
+                </ul>
+            </div>
+            <div className="">
+                <ul className="flex utu">
+                    <li>
+                        <a href="#" onClick={openSearch}>
+                            <img className="a" src="https://cdn.icon-icons.com/icons2/1129/PNG/512/searchmagnifierinterfacesymbol_79894.png" alt="" />
+                        </a>
+                    </li>
+                    {user ? (
+                        <div>
+                            <a className="b" href="http://localhost:5173/signin"><img style={{ width: 40, borderRadius: 100 }} src={user.photoURL} alt="Ảnh đại diện" /></a>
+                        </div>
+                    ) : (
+                        <a className="b" href="http://localhost:5173/signin"><img style={{ width: 50, borderRadius: 100 }} src="https://media.istockphoto.com/id/1136995165/vi/vec-to/bi%E1%BB%83u-t%C6%B0%E1%BB%A3ng-vector-ng%C6%B0%E1%BB%9Di-%C4%91%C3%A0n-%C3%B4ng-cho-thi%E1%BA%BFt-k%E1%BA%BF-%C4%91%E1%BB%93-h%E1%BB%8Da-logo-trang-web-ph%C6%B0%C6%A1ng-ti%E1%BB%87n-truy%E1%BB%81n-th%C3%B4ng.jpg?s=612x612&w=0&k=20&c=Lv8EXD1fsPwWdnzGXhpTbClUdsFr4qYpoo-G2HTUrbE=" alt="Ảnh đại diện" /></a>
+                    )}
+                    <li><a href="http://localhost:5173/thanhtoan"><img className="c" src="https://cdn.icon-icons.com/icons2/1302/PNG/512/onlineshoppingcart_85781.png" alt="" /></a></li>
+                </ul>
+            </div>
+           </div>
         </div>
     );
 };
