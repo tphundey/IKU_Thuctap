@@ -50,7 +50,7 @@ const Listdonhang = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {orderData.map((order) => (
+                {Array.isArray(orderData) && orderData.map((order) => (
                         <tr key={order.id}>
                             <td>{order.id}</td>
                             <td>{order.name}</td>
@@ -69,7 +69,7 @@ const Listdonhang = () => {
                             </td>
                             <td>
                                 <ul>
-                                    {order.cartItems.map((item) => (
+                                {Array.isArray(order.cartItems) && order.cartItems.map((item) => (
                                         <div key={item.id}>
                                             <p>{item.quantity} cái {item.product.name} </p>
                                         </div>
