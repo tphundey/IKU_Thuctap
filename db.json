@@ -230,6 +230,33 @@
       "totalPrice": 2350,
       "status": "Đã đặt hàng",
       "id": 6
+    },
+    {
+      "name": "Đinh Văn Tài",
+      "email": "taidvph20044@gmail.com",
+      "phone": "0916523894",
+      "city": "Hà Nội",
+      "ward": "Cầu Giấy",
+      "address": "Giao Thủy - Nam Định",
+      "paymentMethod": "cash",
+      "cartItems": [
+        {
+          "product": {
+            "name": "Kínhsố7",
+            "price": 700,
+            "img": "https://kinhmatanna.com/wp-content/uploads/2023/06/DSC_4017-1-300x300.jpg",
+            "categoriesId": 2,
+            "color": "red",
+            "quantity": "2",
+            "info": "test",
+            "id": 7
+          },
+          "quantity": 3
+        }
+      ],
+      "totalPrice": 2100,
+      "status": "Đã đặt hàng",
+      "id": 7
     }
   ],
   "categories": [

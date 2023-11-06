@@ -24,6 +24,20 @@ const Thanhtoan = () => {
     const [userCart, setUserCart] = useState([]);
     const [user, setUser] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
+    const [voucher, setVoucher] = useState(''); // thêm state cho voucher
+    const [voucherError, setVoucherError] = useState(''); // thêm state để hiển thị lỗi
+
+    const handleApplyVoucher = () => {
+        if (voucher === 'GIAMGIA20') { // giả sử đây là mã giảm giá hợp lệ
+            setDiscountAmount(totalPrice * 0.2); // giảm giá 20%
+            setIsDiscountApplied(true);
+            setVoucherError(''); // xóa thông báo lỗi nếu có
+        } else {
+            setVoucherError('Mã giảm giá không hợp lệ'); // hiển thị lỗi nếu mã giảm giá không hợp lệ
+            setIsDiscountApplied(false);
+        }
+    };
+
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (currentUser: any) => {
             if (currentUser) {
@@ -142,7 +156,7 @@ const Thanhtoan = () => {
                 },
                 quantity: cartItem.quantity,
             })),
-            totalPrice: totalPrice - (isDiscountApplied ? discountAmount : 0),
+            totalPrice: totalPrice - discountAmount,
             status: "Đã đặt hàng",
         };
 
@@ -264,6 +278,19 @@ const Thanhtoan = () => {
                             render={({ field }) => <input {...field} type="text" placeholder="Số nhà và đường" />}
                         />
                         <br />
+                        <Controller
+                            name="voucher"
+                            control={control}
+                            defaultValue=""
+                            render={({ field }) => (
+                                <div>
+                                    <input {...field} type="text" placeholder="Nhập mã giảm giá" value={voucher} onChange={(e) => setVoucher(e.target.value)} />
+                                    <button type="button" onClick={handleApplyVoucher}>Áp dụng</button>
+                                    {voucherError && <p>{voucherError}</p>}
+                                </div>
+                            )}
+                        />
+                        <br />
                         <div>
                             <h2>Phương thức thanh toán</h2>
                             <select className='phuongthuc' value={paymentMethod} onChange={handlePaymentMethodChange}>
@@ -305,12 +332,7 @@ const Thanhtoan = () => {
                                         >
                                             Xóa
                                         </button>
-                                        {/* <button
-            className='removecart'
-            onClick={() => handleRemoveProduct(userCartItem.email, productItem.product.id)}
-          >
-            Xóa
-          </button> */}
+
                                     </div>
                                 </div>
                             ))}
