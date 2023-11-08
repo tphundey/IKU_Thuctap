@@ -15,31 +15,19 @@ import type { FormInstance } from 'antd/es/form';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../AuthFirebase/auth';
 
-interface Product {
-  id: number;
-  name: string;
-  price: number;
-  color: string;
-  info: string;
-}
-interface CartItem {
-  product: Product;
-  quantity: number;
-  userProfile: any;
-}
 const ProductDetail = () => {
   const desc = ['terrible', 'bad', 'normal', 'good', 'wonderful'];
   const navigate = useNavigate();
   const cartItems = useSelector((state) => state.cart.cartItems);
   const dispatch = useDispatch();
-  const [product, setProduct] = useState<Product | null>(null);
+  const [product, setProduct] = useState<any | null>(null);
   const [quantity, setQuantity] = useState(1);
   const [value, setValue] = useState(3);
   const { id } = useParams<{ id: number }>();
   const [reviews, setReviews] = useState([]);
   const [averageRating, setAverageRating] = useState(0);
   const [user, setUser] = useState(null);
-  console.log(user);
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser: any) => {
       if (currentUser) {
@@ -67,8 +55,6 @@ const ProductDetail = () => {
     getProductById(id);
   }, [id]);
 
-
-
   const getProductById = async (id: any) => {
     try {
       const response = await axios.get(`http://localhost:3000/products/${id}`);
@@ -78,8 +64,6 @@ const ProductDetail = () => {
       setProduct(null);
     }
   };
-
-
 
   // Hàm tính số điểm trung bình dựa trên danh sách đánh giá
   const calculateAverageRating = (reviews: any) => {
@@ -197,79 +181,57 @@ const ProductDetail = () => {
   
     const email = user.email;
   
-    // Kiểm tra giỏ hàng của người dùng dựa trên email
-    axios.get(`http://localhost:3000/cart?email=${email}`)
-      .then((response) => {
-        const cartItem = {
-          product: product,
-          quantity: quantity,
-        };
+    const cartItem = {
+      product: {
+        id: product.id,
+        name: product.name,
+        price: product.price,
+        color: product.color,
+        info: product.info,
+      },
+      quantity: quantity
+    };
   
-        if (response.data.length > 0) {
-          // Người dùng đã có giỏ hàng, kiểm tra xem sản phẩm đã tồn tại trong giỏ hàng hay chưa
-          const existingCart = response.data[0];
-          const existingProductIndex = existingCart.products.findIndex((item) => item.product.id === product.id);
+    try {
+      // Kiểm tra xem giỏ hàng của người dùng đã tồn tại chưa
+      const response = await axios.get(`http://localhost:3000/cart?email=${email}`);
+      const existingCart = response.data.find(cart => cart.email === email);
   
-          if (existingProductIndex !== -1) {
-            // Sản phẩm đã tồn tại, cộng thêm quantity vào sản phẩm đã có
-            existingCart.products[existingProductIndex].quantity += quantity;
-          } else {
-            // Sản phẩm chưa tồn tại, thêm sản phẩm mới vào mảng sản phẩm
-            existingCart.products.push(cartItem);
-          }
-  
-          // Cập nhật giỏ hàng bằng cách PUT dữ liệu đã thay đổi
-          axios.put(`http://localhost:3000/cart/${existingCart.id}`, existingCart)
-            .then(() => {
-              toast.success('Sản phẩm đã được thêm vào giỏ hàng!', {
-                className: 'thongbaothanhcong',
-                position: toast.POSITION.TOP_CENTER,
-                autoClose: 3000,
-              });
-              setTimeout(() => {
-                navigate('/thanhtoan');
-              }, 3000);
-            })
-            .catch((error) => {
-              toast.error('Lỗi khi cập nhật giỏ hàng', {
-                position: toast.POSITION.TOP_CENTER,
-                autoClose: 1000,
-              });
-            });
+      if (existingCart) {
+        // Nếu giỏ hàng đã tồn tại, kiểm tra sản phẩm đã có chưa và cập nhật giỏ hàng
+        const productExists = existingCart.products.some(item => item.product.id === cartItem.product.id);
+        if (productExists) {
+          // Sản phẩm đã tồn tại, tăng số lượng
+          existingCart.products = existingCart.products.map(item =>
+            item.product.id === cartItem.product.id
+              ? { ...item, quantity: item.quantity + cartItem.quantity }
+              : item
+          );
         } else {
-          // Người dùng chưa có giỏ hàng, tạo một giỏ hàng mới cho họ
-          const newCart = {
-            email: email,
-            products: [cartItem],
-          };
-  
-          // Thêm giỏ hàng mới vào API
-          axios.post('http://localhost:3000/cart', newCart)
-            .then(() => {
-              toast.success('Sản phẩm đã được thêm vào giỏ hàng!', {
-                className: 'thongbaothanhcong',
-                position: toast.POSITION.TOP_CENTER,
-                autoClose: 3000,
-              });
-              setTimeout(() => {
-                navigate('/thanhtoan');
-              }, 3000);
-            })
-            .catch((error) => {
-              toast.error('Lỗi khi tạo giỏ hàng mới', {
-                position: toast.POSITION.TOP_CENTER,
-                autoClose: 1000,
-              });
-            });
+          // Thêm sản phẩm mới vào giỏ hàng
+          existingCart.products.push(cartItem);
         }
-      })
-      .catch((error) => {
-        toast.error('Lỗi khi kiểm tra giỏ hàng', {
-          position: toast.POSITION.TOP_CENTER,
-          autoClose: 1000,
+        await axios.patch(`http://localhost:3000/cart/${existingCart.id}`, existingCart);
+      } else {
+        // Nếu không có giỏ hàng, tạo giỏ hàng mới
+        await axios.post('http://localhost:3000/cart', {
+          email,
+          products: [cartItem]
         });
+      }
+      toast.success('Sản phẩm đã được thêm vào giỏ hàng!', {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 3000,
       });
+    } catch (error) {
+      toast.error('Có lỗi xảy ra khi thêm sản phẩm vào giỏ hàng', {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 1500,
+      });
+      console.error('Error when adding to cart:', error);
+    }
   };
+  
   
 
   return (

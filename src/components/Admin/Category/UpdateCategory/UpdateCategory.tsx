@@ -1,10 +1,9 @@
 import React, { useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from "@/store/hook";
 import { useForm, Controller } from 'react-hook-form';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { getCategoryById, updateCategory } from '@/actions/category';
+import axios from 'axios';
 
 interface Cate {
     id: number;
@@ -16,38 +15,34 @@ interface RouteParams {
 }
 
 const UpdateCategory: React.FC = () => {
-    const navigate = useNavigate();
-    const dispatch = useAppDispatch();
     const { id } = useParams<RouteParams>();
-    const category = useAppSelector((state) => state.category.categories.find((item) => item.id === parseInt(id)));
-
-    const {
-        control,
-        handleSubmit,
-        formState: { errors },
-        reset,
-    } = useForm<Cate>({
-        defaultValues: category || {},
-    });
+    const navigate = useNavigate();
+    const { control, handleSubmit, formState: { errors }, reset } = useForm<Cate>();
 
     useEffect(() => {
-        dispatch(getCategoryById(parseInt(id)));
-    }, [dispatch, id]);
-
-
-
+        axios.get(`http://localhost:3000/Categories/${id}`)
+            .then((response) => {
+                reset(response.data);
+            })
+            .catch((error) => {
+                toast.error(`Lỗi: ${error.message}`);
+            });
+    }, [id, reset]);
 
     const onSubmit = (data: Cate) => {
-        // Gọi action để cập nhật sản phẩm
-        dispatch(updateCategory(data));
-        toast.success('Sửa thành công!', {
-            className: 'thongbaothanhcong',
-            position: toast.POSITION.TOP_CENTER,
-            autoClose: 3000,// Thời gian tự động biến mất sau 3 giây
-
-        });
-
+        axios.patch(`http://localhost:3000/Categories/${id}`, data)
+            .then(() => {
+                toast.success('Danh mục cập nhật thành công!', {
+                    position: toast.POSITION.TOP_CENTER,
+                    autoClose: 3000,
+                });
+                navigate('/admin/category'); // Thay đổi đường dẫn tùy theo cấu trúc của bạn
+            })
+            .catch((error) => {
+                toast.error(`Lỗi: ${error.response?.data.message || error.message}`);
+            });
     };
+
     return (
         <div className="formadd">
             <form onSubmit={handleSubmit(onSubmit)}>
@@ -58,18 +53,15 @@ const UpdateCategory: React.FC = () => {
                             name="name"
                             control={control}
                             rules={{
-                                required: 'Không được để trống dữ liệu',
-
+                                required: 'Tên danh mục không được để trống',
                             }}
                             render={({ field }) => <input type="text" {...field} />}
                         />
                     </label>
                     {errors.name && <div className="error">{errors.name.message}</div>}
                 </div>
-                
                 <button type="submit">Cập nhật Danh mục</button>
             </form>
-            {/* Component ToastContainer để hiển thị thông báo */}
             <ToastContainer />
         </div>
     );

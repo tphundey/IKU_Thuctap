@@ -29,6 +29,7 @@ const Signin = () => {
   const [userOrders, setUserOrders] = useState([]);
   const [canceledOrders, setCanceledOrders] = useState([]);
 
+  const [orders, setOrders] = useState([]);
   useEffect(() => {
     // Sử dụng onAuthStateChanged để kiểm tra trạng thái xác thực của người dùng
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -67,24 +68,56 @@ const Signin = () => {
     }
   };
 
-  useEffect(() => {
-    const fetchOrders = async () => {
-      if (user?.email) {
-        try {
-          // Gọi API để lấy thông tin đơn hàng khi user đã đăng nhập
-          const response = await axios.get(`http://localhost:3000/hoadon?email=${user.email}`);
-          const allOrders = response.data;
-          setUserOrders(allOrders.filter(order => order.status !== 'Hủy'));
-          setCanceledOrders(allOrders.filter(order => order.status === 'Hủy'));
-        } catch (error) {
-          console.error('Error fetching orders:', error);
-        }
-      }
-    };
 
-    // Gọi API khi component được mount hoặc khi user đổi
-    fetchOrders();
-  }, [user]);
+  useEffect(() => {
+    // Sử dụng onAuthStateChanged để kiểm tra trạng thái xác thực của người dùng
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      if (currentUser) {
+        setUser(currentUser);
+        // Khi người dùng đã đăng nhập, lấy danh sách đơn hàng của họ
+        fetchUserOrders(currentUser.email);
+      } else {
+        setUser(null);
+        setOrders([]);
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
+
+
+ // Hàm để lấy đơn hàng dựa trên email người dùng
+ const fetchUserOrders = (userEmail) => {
+  axios.get('http://localhost:3000/hoadon')
+    .then(response => {
+      const allOrders = response.data;
+      // Lọc các đơn hàng phù hợp với email người dùng
+      const userOrders = allOrders.filter(order => order.email === userEmail);
+      setOrders(userOrders);
+    })
+    .catch(error => {
+      toast.error('Lỗi khi lấy thông tin đơn hàng');
+      console.error('Error fetching orders:', error);
+    });
+};
+// Hàm hủy đơn hàng
+const handleCancelOrder = (orderId) => {
+  axios.delete(`http://localhost:3000/hoadon/${orderId}`)
+    .then(() => {
+      // Loại bỏ đơn hàng đã hủy khỏi state
+      const remainingOrders = orders.filter(order => order.id !== orderId);
+      setOrders(remainingOrders);
+      toast.success('Đơn hàng đã được hủy thành công!');
+    })
+    .catch((error) => {
+      console.error('Error canceling order:', error);
+      toast.error('Không thể hủy đơn hàng.');
+    });
+};
+
+
+
+
 
 
   // Định nghĩa cột cho bảng Ant Design
@@ -106,41 +139,21 @@ const Signin = () => {
       title: 'Tổng giá trị',
       dataIndex: 'totalPrice',
       key: 'totalPrice',
-    },
+    }
+    ,
     {
       title: 'Hành động',
       key: 'action',
-      render: (text, record) => (
-        <Button
-          type="danger"
-          onClick={() => handleCancelOrder(record.id)}
-          disabled={record.status === 'Hủy'} // Chỉ cho phép hủy đơn hàng nếu trạng thái không phải 'Hủy'
-        >
-          Hủy đơn hàng
-        </Button>
+      render: (_, record) => (
+        record.status !== 'Hủy' && (
+          <Button type="primary" danger onClick={() => handleCancelOrder(record.id)}>
+            Hủy đơn hàng
+          </Button>
+        )
       ),
-    },
+    }
+    
   ];
-
-  const handleCancelOrder = (orderId) => {
-    // Gửi yêu cầu API để hủy đơn hàng
-    axios
-      .put(`http://localhost:3000/hoadon/${orderId}`, { status: 'Hủy' })
-      .then(() => {
-        // Hủy đơn hàng thành công, cập nhật lại danh sách đơn hàng
-        const updatedOrders = userOrders.filter((order) => order.id !== orderId);
-        const canceledOrder = userOrders.find((order) => order.id === orderId);
-
-        setUserOrders(updatedOrders);
-        setCanceledOrders([...canceledOrders, canceledOrder]);
-
-        toast.success('Đã hủy đơn hàng thành công!');
-      })
-      .catch((error) => {
-        console.error('Error canceling order:', error);
-        toast.error('Không thể hủy đơn hàng.');
-      });
-  };
 
   return (
     <div className="container_signin">
@@ -160,7 +173,7 @@ const Signin = () => {
         </button>
       )}
       <h2>Lịch sử đơn hàng của bạn</h2>
-      <Table dataSource={userOrders} columns={columns} />
+      <Table dataSource={orders} columns={columns} />
       <h2>Danh sách đơn hàng đã hủy</h2>
       <Table dataSource={canceledOrders} columns={columns} />
       <ToastContainer />

@@ -1,55 +1,40 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from "@/store/hook";
-import { getProductById, updateProduct } from '@/actions/product';
 import { useForm, Controller } from 'react-hook-form';
+import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-
-interface Product {
-    id: number;
-    name: string;
-    price: number;
-    img: string;
-    material: string;
-    color: string;
-    quantity: number;
-}
-
-interface RouteParams {
-    id: string;
-}
 
 const SuaSanPham: React.FC = () => {
-    const dispatch = useAppDispatch();
-    const { id } = useParams<RouteParams>();
-    const product = useAppSelector((state) => state.products.products.find((item) => item.id === parseInt(id)));
-
-    const {
-        control,
-        handleSubmit,
-        formState: { errors },
-        reset,
-    } = useForm<Product>({
-        defaultValues: product || {},
+    const { id } = useParams<{ id: string }>();
+    const [product, setProduct] = useState<any>({});
+    const { control, handleSubmit, formState: { errors }, reset } = useForm({
+        defaultValues: {
+            name: '',
+            price: 0,
+            img: '',
+            color: '',
+            quantity: 0,
+        }
     });
 
     useEffect(() => {
-        dispatch(getProductById(parseInt(id)));
-    }, [dispatch, id]);
+        // Lấy dữ liệu sản phẩm từ API và đặt vào form
+        axios.get(`http://localhost:3000/products/${id}`)
+            .then(response => {
+                setProduct(response.data);
+                reset(response.data); // Reset form values với dữ liệu sản phẩm
+            })
+            .catch(error => toast.error(error.message));
+    }, [id, reset]);
 
-
-    const onSubmit = (data: Product) => {
-        // Gọi action để cập nhật sản phẩm
-        dispatch(updateProduct(data));
-
-        toast.success('Sửa thành công!', {
-            className: 'thongbaothanhcong',
-            position: toast.POSITION.TOP_CENTER,
-            autoClose: 3000, // Thời gian tự động biến mất sau 3 giây
-        });
-
+    const onSubmit = (data: any) => {
+        axios.patch(`http://localhost:3000/products/${id}`, data)
+            .then(() => {
+                toast.success('Sản phẩm đã được cập nhật!');
+            })
+            .catch(error => toast.error(error.message));
     };
+
     return (
         <div className="formadd">
             <form onSubmit={handleSubmit(onSubmit)}>

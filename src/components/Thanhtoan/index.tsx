@@ -126,7 +126,7 @@ const Thanhtoan = () => {
 
 
 
-    const onSubmit = (data: any) => {
+    const onSubmit = async (data: any) => {
 
         if (data.voucher === "GIAMGIA50") {
             setDiscountAmount(50); // Nếu mã giảm giá hợp lệ, giảm 50 trong tổng số tiền
@@ -162,34 +162,33 @@ const Thanhtoan = () => {
             status: "Đã đặt hàng",
         };
 
-        axios.post("http://localhost:3000/hoadon", orderData)
-            .then((response) => {
-                console.log("Đặt hàng thành công:", response.data);
+        try {
+            const orderResponse = await axios.post("http://localhost:3000/hoadon", orderData);
 
-                // After a successful order, remove the user's cart data based on their email
-                const email = data.email;
-                axios.delete(`http://localhost:3000/cart?email=${email}`)
-                    .then(() => {
-                        console.log(`Cart data cleared for email: ${email}`);
-                    })
-                    .catch((error) => {
-                        console.error(`Error clearing cart data for email: ${email}`, error);
-                        // Handle the error as needed
+            // Đặt hàng thành công, tiếp theo là xóa giỏ hàng
+            if (orderResponse.status === 201) {
+                const cartResponse = await axios.get(`http://localhost:3000/cart?email=${email}`);
+                const userCart = cartResponse.data.find(cart => cart.email === email);
+
+                if (userCart && userCart.id) {
+                    await axios.patch(`http://localhost:3000/cart/${userCart.id}`, { products: [] });
+                    setUserCart([]); // Cập nhật state để giỏ hàng trên UI trở về rỗng
+                    setTotalPrice(0); // Đặt lại tổng giá trị giỏ hàng về 0
+                    toast.success('Giỏ hàng đã được xóa sau khi thanh toán thành công.', {
+                        position: toast.POSITION.TOP_CENTER,
+                        autoClose: 3000,
                     });
-
-                // Clear the userCart state
-                setUserCart([]);
-                toast.success('Đặt hàng thành công!', {
-                    className: 'thongbaothanhcong',
-                    position: toast.POSITION.TOP_CENTER,
-                    autoClose: 2000, // Thời gian tự động biến mất sau 2 giây
-                });
-                //   navigate('/hoadon');
-            })
-            .catch((error) => {
-                console.error("Lỗi khi đặt hàng:", error);
-                // Xử lý lỗi và hiển thị thông báo cho người dùng nếu cần
+                }
+            }
+        } catch (error) {
+            // Xử lý lỗi đặt hàng hoặc xóa giỏ hàng
+            console.error("Lỗi khi xử lý đặt hàng hoặc xóa giỏ hàng:", error);
+            toast.error('Lỗi khi đặt hàng hoặc xóa giỏ hàng.', {
+                position: toast.POSITION.TOP_CENTER,
+                autoClose: 3000,
             });
+        }
+
     };
     const handleRemoveProduct = (productId) => {
         // Update the cart items by filtering out the product with the given ID
