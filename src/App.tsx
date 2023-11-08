@@ -22,6 +22,7 @@ import UpdateCategory from "./components/Admin/Category/UpdateCategory/UpdateCat
 import { auth } from "./components/AuthFirebase/auth";
 import { onAuthStateChanged } from 'firebase/auth';
 import Dashboard from "./components/Admin/Thongke/Thongke";
+
 interface Product {
   id: number;
   name: string;
@@ -40,6 +41,7 @@ function App() {
   const [role, setRole] = useState<"admin" | "user" | null>(null);
   const adminEmail = "maitranthi651@gmail.com";
   console.log(user);
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser: any) => {
       if (currentUser) {
@@ -64,6 +66,7 @@ function App() {
     setCategory([...categories, newCate]);
   }
   return (
+    
     <Router>
       <Routes>
         {/* router user */}

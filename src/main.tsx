@@ -34,7 +34,6 @@ const Root = () => {
                 setIsAuthenticated(true);
             }
         });
-
         return () => unsubscribe();
     }, []);
 

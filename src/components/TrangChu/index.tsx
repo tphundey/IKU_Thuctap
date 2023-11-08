@@ -1,15 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from "@/store/hook";
 import { getProduct } from '@/actions/product';
-import Skeleton from "react-loading-skeleton";
 import { Link } from 'react-router-dom';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import { Carousel } from 'antd';
-import './res.css'
-const Home = () => {
 
+import './res.css'
+
+const Home = () => {
     const settings1 = {
         arrows: true,
         infinite: true,
@@ -33,7 +32,7 @@ const Home = () => {
     };
 
     const dispatch = useAppDispatch();
-    const { products, isLoading, error } = useAppSelector((state: any) => state.products);
+    const { products } = useAppSelector((state: any) => state.products);
 
     useEffect(() => {
         dispatch(getProduct());
