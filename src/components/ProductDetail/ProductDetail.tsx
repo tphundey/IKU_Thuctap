@@ -3,7 +3,6 @@ import { useState, useEffect } from 'react';
 import React from "react";
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
-import { addToCart, updateCartItem } from "@/actions/cart";
 import { useDispatch, useSelector } from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -74,23 +73,11 @@ const ProductDetail = () => {
     return totalRating / reviews.length;
   };
 
-
   useEffect(() => {
-    axios.get(`http://localhost:3000/Reviews?bookId=${id}`)
+    axios.get(`http://localhost:3000/Reviews`)
       .then((response) => {
-        setReviews(response.data);
-      })
-      .catch((error) => {
-        console.error('Lỗi khi lấy đánh giá:', error);
-      });
-  }, [id]);
-
-
-  useEffect(() => {
-
-    axios.get(`http://localhost:3000/Reviews?bookId=${id}`)
-      .then((response) => {
-        setReviews(response.data);
+        const filteredReviews = response.data.filter((review) => review.bookId === id);
+        setReviews(filteredReviews);
       })
       .catch((error) => {
         console.error('Lỗi khi lấy đánh giá:', error);
@@ -111,24 +98,31 @@ const ProductDetail = () => {
       setQuantity(quantity + 1);
     }
   }
-  const checkEmailAlreadyReviewed = async (email: any, id: any) => {
+  const checkEmailAlreadyReviewed = async (email, id) => {
     try {
-      const response = await axios.get(`http://localhost:3000/Reviews?email=${email}&bookId=${id}`);
-      return response.data.length > 0;
+      const response = await axios.get(`http://localhost:3000/Reviews`);
+      const allReviews = response.data;
+
+      // Check if the user has already reviewed the specified product
+      const hasReviewed = allReviews.some((review) => review.email === email && review.bookId === id);
+
+      return hasReviewed;
     } catch (error) {
       console.error('Lỗi khi kiểm tra review:', error);
       return true; // Trả về true để đảm bảo rằng không thể post lần thứ hai trong trường hợp xảy ra lỗi.
     }
   };
 
-  const onFinish = async (values: any) => {
+  const hasUserReviewed = reviews.some((review) => review.email === user?.email);
+  console.log(id);
 
-    if (!user) {
-      toast.error('Bạn cần đăng nhập trước', {
+  const onFinish = async (values: any) => {
+    if (hasUserReviewed) {
+      toast.error('Bạn đã đánh giá sản phẩm này rồi!', {
         position: toast.POSITION.TOP_CENTER,
         autoClose: 1500,
       });
-      onReset()
+      onReset();
       return;
     }
     const email = user.email;
@@ -144,10 +138,10 @@ const ProductDetail = () => {
       });
       return;
     }
-    const bookIdNumber = Number(id);
+
 
     const reviewData = {
-      bookId: bookIdNumber,
+      bookId: id,
       email: email,
       name: name,
       img: img,
@@ -178,9 +172,9 @@ const ProductDetail = () => {
       });
       return;
     }
-  
+
     const email = user.email;
-  
+
     const cartItem = {
       product: {
         id: product.id,
@@ -191,12 +185,12 @@ const ProductDetail = () => {
       },
       quantity: quantity
     };
-  
+
     try {
       // Kiểm tra xem giỏ hàng của người dùng đã tồn tại chưa
       const response = await axios.get(`http://localhost:3000/cart?email=${email}`);
       const existingCart = response.data.find(cart => cart.email === email);
-  
+
       if (existingCart) {
         // Nếu giỏ hàng đã tồn tại, kiểm tra sản phẩm đã có chưa và cập nhật giỏ hàng
         const productExists = existingCart.products.some(item => item.product.id === cartItem.product.id);
@@ -231,8 +225,8 @@ const ProductDetail = () => {
       console.error('Error when adding to cart:', error);
     }
   };
-  
-  
+
+
 
   return (
     <div className="container">
@@ -299,30 +293,38 @@ const ProductDetail = () => {
             </div>
           </div>
         ))}
-        <span>
-          <Rate tooltips={desc} onChange={setValue} value={value} />
-          {value ? <span className="ant-rate-text">{desc[value - 1]}</span> : ''}
-        </span>
-        <Form
-          {...layout}
-          ref={formRef}
-          name="control-ref"
-          onFinish={onFinish}
-          className="mt-5"
-          style={{ maxWidth: 500 }}
-        >
-          <Form.Item name="note" rules={[{ required: true }]}>
-            <Input style={{ float: 'left' }} />
-          </Form.Item>
-          <Form.Item {...tailLayout}>
-            <Button type="primary" htmlType="submit" className="text-green-700">
-              Submit
-            </Button>
-            <Button htmlType="button" onClick={onReset}>
-              Reset
-            </Button>
-          </Form.Item>
-        </Form>
+
+        {hasUserReviewed ? (
+          <p>Bạn chỉ được đánh giá 1 lần!</p>
+        ) : (
+          <div>
+            <span>
+              <Rate tooltips={desc} onChange={setValue} value={value} />
+              {value ? <span className="ant-rate-text">{desc[value - 1]}</span> : ''}
+            </span>
+            <Form
+              {...layout}
+              ref={formRef}
+              name="control-ref"
+              onFinish={onFinish}
+              className="mt-5"
+              style={{ maxWidth: 500 }}
+            >
+              <Form.Item name="note" rules={[{ required: true }]}>
+                <Input style={{ float: 'left' }} />
+              </Form.Item>
+              <Form.Item {...tailLayout}>
+                <Button type="primary" htmlType="submit" className="text-green-700">
+                  Submit
+                </Button>
+                <Button htmlType="button" onClick={onReset}>
+                  Reset
+                </Button>
+              </Form.Item>
+            </Form>
+          </div>
+        )}
+
       </div>
       <ToastContainer />
     </div>

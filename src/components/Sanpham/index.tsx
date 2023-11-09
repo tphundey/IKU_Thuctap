@@ -56,7 +56,7 @@ const Sanpham = () => {
             setSelectedPriceIds([...selectedPriceIds, priceId]);
         }
     };
-    
+
     const handleCategoryChange = (categoryId: any) => {
         if (selectedCategoryIds.includes(categoryId)) {
             setSelectedCategoryIds(selectedCategoryIds.filter(id => id !== categoryId));
@@ -119,7 +119,7 @@ const Sanpham = () => {
                                     <div className="image">
                                         <img src={item.img} alt="" />
                                     </div>
-                                    <div className="name mt-2">{item.name}{item.categoriesId}</div>
+                                    <div className="name mt-2">{item.name}</div>
                                     <div className="price">{item.price}.000đ</div>
                                 </Link>
                             </div>
