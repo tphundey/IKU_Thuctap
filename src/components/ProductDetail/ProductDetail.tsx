@@ -182,6 +182,7 @@ const ProductDetail = () => {
         price: product.price,
         color: product.color,
         info: product.info,
+        img: product.img
       },
       quantity: quantity
     };
