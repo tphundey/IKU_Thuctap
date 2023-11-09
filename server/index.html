@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang Thanh Toán</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1>Trang Thanh Toán</h1>
+        <form id="paymentForm" action="/payment" method="post">
+            <label for="productName">Tên Sản Phẩm:</label>
+            <input type="text" id="productName" name="vnp_OrderInfo" required>
+
+            <label for="amount">Số Tiền:</label>
+            <input type="number" id="amount" name="vnp_Amount" required>
+
+            <button type="submit">Thanh Toán</button>
+        </form>
+    </div>
+    <script>
+      app.post('/vnpay-return', (req, res) => {
+  const vnp_HashSecret = 'VRWDUINOYPVCKNVKRDXRRBXGOGNMIKUI';
+
+  // Xác thực thông tin kết quả thanh toán
+  const isValidSignature = vnpay.verifySignature(req.body, vnp_HashSecret);
+
+  if (isValidSignature) {
+    // Xử lý kết quả thanh toán ở đây
+    const paymentStatus = req.body.vnp_ResponseCode;
+    const paymentAmount = req.body.vnp_Amount;
+
+    // Cập nhật trạng thái thanh toán trong cơ sở dữ liệu, gửi email xác nhận, v.v.
+
+    // Trả về phản hồi cho VNPAY
+    res.status(200).send('OK');
+  } else {
+    // Chữ ký không hợp lệ, xử lý lỗi
+    res.status(400).send('Bad Request');
+  }
+});
+    </script>
+
+</body>
+
+</html>
