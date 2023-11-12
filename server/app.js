@@ -111,6 +111,17 @@ app.post('/create_payment_url', function (req, res, next) {
     vnpUrl += '?' + querystring.stringify(vnp_Params, { encode: false });
     res.redirect(vnpUrl)
 });
+
+const fs = require('fs');
+
+app.post('/saveOrder', (req, res) => {
+    const { orderId } = req.body;
+
+    // Ghi orderId vào tệp tin
+    fs.writeFileSync('order.txt', orderId);
+
+    res.sendStatus(200);
+});
 // ...
 const fetch = require('node-fetch');
 app.get('/order/vnpay_return', async function (req, res, next) {
@@ -137,11 +148,13 @@ app.get('/order/vnpay_return', async function (req, res, next) {
         const responseCode = vnp_Params['vnp_ResponseCode'];
         if (responseCode === '00') {
             // Giao dịch thành công, cập nhật hóa đơn
-            const orderId = vnp_Params['vnp_TxnRef'];
+            // Đọc orderId từ tệp tin
+            const orderIdFilePath = 'order.txt';
+            const orderId = fs.readFileSync(orderIdFilePath, 'utf-8').trim();
 
             // Thực hiện yêu cầu cập nhật hóa đơn thông qua API
             try {
-                const updateResponse = await fetch(`http://localhost:3000/hoadon/65513c029c44ea88d62bcc9f`, {
+                const updateResponse = await fetch(`http://localhost:3000/hoadon/${orderId}`, {
                     method: 'PATCH',
                     headers: {
                         'Content-Type': 'application/json',
