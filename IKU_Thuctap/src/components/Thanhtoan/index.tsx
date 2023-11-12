@@ -5,7 +5,7 @@ import Select from 'react-select';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './thanhtoan.css';
-import { useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../AuthFirebase/auth';
 
@@ -124,7 +124,15 @@ const Thanhtoan = () => {
         setPaymentMethod(event.target.value);
     };
 
-
+    const postOrderPaymentStatus = async (orderId, paymentStatus) => {
+        try {
+            const response = await axios.patch(`http://localhost:3000/hoadon/${orderId}`, { paymentStatus });
+            console.log("Payment status updated successfully:", response.data);
+        } catch (error) {
+            console.error("Error updating payment status:", error);
+            // Xử lý lỗi theo cách bạn muốn
+        }
+    };
 
     const onSubmit = async (data: any) => {
 
@@ -164,9 +172,17 @@ const Thanhtoan = () => {
 
         try {
             const orderResponse = await axios.post("http://localhost:3000/hoadon", orderData);
+            const orderId = orderResponse.data.id;
 
+            // Lưu ID hóa đơn vào Local Storage
+            localStorage.setItem("orderId", orderId);
             // Đặt hàng thành công, tiếp theo là xóa giỏ hàng
             if (orderResponse.status === 201) {
+
+
+                // Gửi trạng thái đơn hàng đã thanh toán lên API
+                await postOrderPaymentStatus(orderId, "Chưa thanh toán");
+
                 const cartResponse = await axios.get(`http://localhost:3000/cart?email=${email}`);
                 const userCart = cartResponse.data.find(cart => cart.email === email);
 
@@ -180,6 +196,7 @@ const Thanhtoan = () => {
                     });
                 }
             }
+            window.location.href = 'http://localhost:3000/order';
         } catch (error) {
             // Xử lý lỗi đặt hàng hoặc xóa giỏ hàng
             console.error("Lỗi khi xử lý đặt hàng hoặc xóa giỏ hàng:", error);

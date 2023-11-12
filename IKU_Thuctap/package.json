@@ -1,4 +1,5 @@
 {
+    "proxy": "https://sandbox.vnpayment.vn",
     "name": "vite-project",
     "private": true,
     "version": "0.0.0",
@@ -25,6 +26,7 @@
         "firebase": "^10.5.2",
         "formik": "^2.4.2",
         "gapi-script": "^1.2.0",
+        "http-proxy-middleware": "^2.0.6",
         "immer": "^10.0.2",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",

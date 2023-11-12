@@ -27,6 +27,7 @@ router.post('/create-payment', (req, res) => {
 
   // Trả về đường dẫn thanh toán cho trang React
   res.json({ redirectUrl: orderUrl });
+  res.redirect(orderUrl);
 });
 
 module.exports = router;
