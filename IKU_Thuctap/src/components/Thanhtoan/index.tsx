@@ -330,8 +330,7 @@ const Thanhtoan = () => {
                                 </div>
                             ) : (
                                 <div>
-                                    {/* Thêm nội dung của tab thanh toán chuyển khoản ở đây */}
-                                    <img width={'320px'} src='https://b-f10-zpcloud.zdn.vn/3712333603563929973/1df2db0055f486aadfe5.jpg'></img>
+                                   <p>Bạn sẽ được chuyển tới trang thanh toán. Vui lòng nhập đúng số tiền tương ứng thanh toán</p>
                                 </div>
                             )}
                         </div>
