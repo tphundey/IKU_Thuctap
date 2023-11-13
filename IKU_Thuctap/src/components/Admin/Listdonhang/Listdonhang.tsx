@@ -47,6 +47,8 @@ const Listdonhang = () => {
                         <th>Tổng giá trị</th>
                         <th>Thông tin</th>
                         <th>Trạng thái</th>
+                        <th>Đã thanh toán</th>
+                        <th>Trạng thái</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -67,6 +69,8 @@ const Listdonhang = () => {
                                     <option value="Đã giao">Đã giao</option>
                                 </select>
                             </td>
+                            <td>{order.paymentStatus}</td>
+                            <td>{order.amountDone}</td>
                             <td>
                                 <ul>
                                 {Array.isArray(order.cartItems) && order.cartItems.map((item) => (

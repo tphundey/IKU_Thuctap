@@ -124,6 +124,7 @@ app.post('/saveOrder', (req, res) => {
 });
 // ...
 const fetch = require('node-fetch');
+const { log } = require('console');
 app.get('/order/vnpay_return', async function (req, res, next) {
     let vnp_Params = req.query;
 
@@ -143,12 +144,13 @@ app.get('/order/vnpay_return', async function (req, res, next) {
     let crypto = require("crypto");
     let hmac = crypto.createHmac("sha512", secretKey);
     let signed = hmac.update(new Buffer(signData, 'utf-8')).digest("hex");
+    
+    const amountPaid = vnp_Params['vnp_Amount'] / 100; // Chia cho 100 vì đã nhân 100 ở phần tạo thanh toán
 
     if (secureHash === signed) {
         const responseCode = vnp_Params['vnp_ResponseCode'];
         if (responseCode === '00') {
             // Giao dịch thành công, cập nhật hóa đơn
-            // Đọc orderId từ tệp tin
             const orderIdFilePath = 'order.txt';
             const orderId = fs.readFileSync(orderIdFilePath, 'utf-8').trim();
 
@@ -162,6 +164,7 @@ app.get('/order/vnpay_return', async function (req, res, next) {
                     },
                     body: JSON.stringify({
                         paymentStatus: 'Đã thanh toán',
+                        amountDone: amountPaid, // Thêm giá trị amount
                         // Các trường khác cần cập nhật
                     }),
                 });

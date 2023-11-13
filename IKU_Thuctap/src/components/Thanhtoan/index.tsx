@@ -27,6 +27,7 @@ const Thanhtoan = () => {
     const [voucher, setVoucher] = useState(''); // thêm state cho voucher
     const [voucherError, setVoucherError] = useState(''); // thêm state để hiển thị lỗi
     const [selectedDate, setSelectedDate] = useState("");
+
     const currentDate = new Date().toISOString().split('T')[0];
     const handleApplyVoucher = () => {
         if (voucher === 'GIAMGIA20') { // giả sử đây là mã giảm giá hợp lệ
@@ -197,7 +198,13 @@ const Thanhtoan = () => {
                     });
                 }
             }
-            window.location.href = 'http://localhost:3000/order';
+            if (paymentMethod === 'cash') {
+                // Nếu thanh toán tiền mặt, điều hướng về trang home
+                navigate('/');
+            } else {
+                // Nếu thanh toán chuyển khoản, điều hướng đến trang localhost:3000/order
+                window.location.href = 'http://localhost:3000/order';
+            }
         } catch (error) {
             // Xử lý lỗi đặt hàng hoặc xóa giỏ hàng
             console.error("Lỗi khi xử lý đặt hàng hoặc xóa giỏ hàng:", error);
