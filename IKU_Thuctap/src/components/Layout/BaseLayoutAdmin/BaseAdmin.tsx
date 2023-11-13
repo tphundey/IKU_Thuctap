@@ -27,41 +27,42 @@ const BaseLayoutadmin = () => {
         <Sider trigger={null} collapsible collapsed={collapsed}>
           <div className="demo-logo-vertical" />
           <Menu
+            style={{ height: 900 }}
             theme="dark"
             mode="inline"
             defaultSelectedKeys={['1']}
             items={[
               {
-                  key: "1",
-                  icon: <AiOutlineBarChart />,
-                  label: <Link to="/admin">Thống kê</Link>,
+                key: "1",
+                icon: <AiOutlineBarChart />,
+                label: <Link to="/admin">Thống kê</Link>,
               },
               {
-                  key: "2",
-                  icon: <AiOutlineBook />,
-                  label: <Link to="/admin/products">Quản lý sách</Link>,
+                key: "2",
+                icon: <AiOutlineBook />,
+                label: <Link to="/admin/products">Quản lý sách</Link>,
               },
               {
-                  key: "3",
-                  icon: <AiOutlineAlignLeft />,
-                  label: <Link to="/admin/category">Quản lý danh mục</Link>,
+                key: "3",
+                icon: <AiOutlineAlignLeft />,
+                label: <Link to="/admin/category">Quản lý danh mục</Link>,
               },
               {
-                  key: "4",
-                  icon: <AiOutlineVideoCamera />,
-                  label: <Link to="/admin/user">Quản lý người dùng</Link>,
+                key: "4",
+                icon: <AiOutlineVideoCamera />,
+                label: <Link to="/admin/user">Quản lý người dùng</Link>,
               },
               {
-                  key: "5",
-                  icon: <AiOutlineUser />,
-                  label: <Link to="/admin/donhang">Quản lý đơn hàng</Link>,
+                key: "5",
+                icon: <AiOutlineUser />,
+                label: <Link to="/admin/donhang">Quản lý đơn hàng</Link>,
               },
               {
-                  key: "6",
-                  icon: <AiFillCloseCircle />,
-                  label: <Link to="http://localhost:5173">Thoát</Link>,
+                key: "6",
+                icon: <AiFillCloseCircle />,
+                label: <Link to="http://localhost:5173">Thoát</Link>,
               },
-          ]}
+            ]}
           />
         </Sider>
         <Layout>
@@ -85,7 +86,7 @@ const BaseLayoutadmin = () => {
               background: colorBgContainer,
             }}
           >
-           <Outlet />
+            <Outlet />
           </Content>
         </Layout>
       </Layout>

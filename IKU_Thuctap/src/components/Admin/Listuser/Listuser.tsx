@@ -5,7 +5,7 @@ const Listuser = () => {
     const [userData, setUserData] = useState([]);
     const columns = [
         {
-            title: 'ID',
+            title: 'Id',
             dataIndex: 'id',
             key: 'id',
         },
@@ -40,7 +40,7 @@ const Listuser = () => {
     ];
     useEffect(() => {
         // Gọi API để lấy dữ liệu người dùng
-        axios.get('http://localhost:3000/googleAccount')
+        axios.get('http://localhost:3000/googleaccounts')
             .then((response) => {
                 // Lưu trữ dữ liệu người dùng vào state
                 setUserData(response.data);

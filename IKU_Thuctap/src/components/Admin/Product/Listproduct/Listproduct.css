@@ -67,7 +67,8 @@
 
 .xoa {
     background-color: rgb(230, 39, 39);
-    padding: 6px 12px;
+    padding:6px 12px;
+    margin-bottom: 2px;
     border: none;
     border-radius: 5px;
     margin-left: 5px;

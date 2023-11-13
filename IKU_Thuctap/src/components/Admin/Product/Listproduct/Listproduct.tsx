@@ -26,6 +26,7 @@ const Listproduct = () => {
             title: 'Tên sách',
             dataIndex: 'name',
             key: 'name',
+            width: 220
         },
         {
             title: 'Giá',
@@ -37,6 +38,21 @@ const Listproduct = () => {
             title: 'Mô tả',
             dataIndex: 'color',
             key: 'color',
+            render: (text, record) => (
+                <div style={{ width: 420 }}>
+                    <div style={{ maxHeight: expandedRows.includes(record.key) ? 'none' : 100, overflow: 'hidden' }}>
+                        {text}
+                    </div>
+                    {text.length > 100 && !expandedRows.includes(record.key) && (
+                        <button
+                            onClick={() => setExpandedRows([...expandedRows, record.key])}
+                            style={{ color: 'blue', marginTop: '5px', cursor: 'pointer' }}
+                        >
+                            Xem thêm
+                        </button>
+                    )}
+                </div>
+            ),
         },
         {
             title: 'Số lượng',
@@ -54,7 +70,7 @@ const Listproduct = () => {
             ),
         },
     ];
-
+    const [expandedRows, setExpandedRows] = useState([]);
     const dispatch = useAppDispatch();
     const { products } = useAppSelector((state: any) => state.products);
     const [currentPage, setCurrentPage] = useState(1);
@@ -77,7 +93,7 @@ const Listproduct = () => {
 
     return (
         <div >
-            <Link className='themspmoi' to="/addsanpham">Thêm sách mới!</Link>
+            <Link className='themspmoi' to="/admin/addsanpham">Thêm sách mới!</Link>
             <Table columns={columns} dataSource={currentItems} />
             <Pagination
                 current={currentPage}

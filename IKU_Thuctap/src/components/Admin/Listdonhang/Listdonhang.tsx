@@ -1,25 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-
+import './donhang.css'
 const Listdonhang = () => {
     const [orderData, setOrderData] = useState([]);
+    const [selectedOrder, setSelectedOrder] = useState(null);
 
     useEffect(() => {
         // Fetch data from the API
         axios.get('http://localhost:3000/hoadon')
             .then((response) => {
-                // Handle the data received from the API
                 setOrderData(response.data);
             })
             .catch((error) => {
                 console.error('Error fetching data:', error);
             });
     }, []);
+
     const updateOrderStatus = (orderId, newStatus) => {
         axios.patch(`http://localhost:3000/hoadon/${orderId}`, { status: newStatus })
             .then((response) => {
-                // Xử lý thành công
-                // Cập nhật trạng thái đơn hàng trong state local
                 const updatedOrders = orderData.map(order => {
                     if (order.id === orderId) {
                         return { ...order, status: newStatus };
@@ -38,27 +37,21 @@ const Listdonhang = () => {
             <table>
                 <thead>
                     <tr>
-                        <th>Mã đơn hàng</th>
-                        <th>Tên</th>
-                        <th>Số điện thoại</th>
-                        <th>Thành phố</th>
-                        <th>Địa chỉ</th>
-                        <th>Phương thức</th>
-                        <th>Tổng giá trị</th>
-                        <th>Thông tin</th>
-                        <th>Trạng thái</th>
-                        <th>Đã thanh toán</th>
-                        <th>Trạng thái</th>
+                        <th style={{ width: 130 }}>Mã đơn hàng</th>
+
+                        <th style={{ width: 130 }}>Phương thức</th>
+                        <th style={{ width: 160 }}>Tổng giá trị</th>
+                        <th style={{ width: 130 }}>Trạng thái đơn hàng</th>
+                        <th style={{ width: 230 }}>Trạng thái thanh toán</th>
+                        <th style={{ width: 220 }}>Số tiền thanh toán</th>
+                        <th style={{ width: 130 }}>Thông tin</th>
                     </tr>
                 </thead>
                 <tbody>
-                {Array.isArray(orderData) && orderData.map((order) => (
+                    {Array.isArray(orderData) && orderData.map((order) => (
                         <tr key={order.id}>
                             <td>{order.id}</td>
-                            <td>{order.name}</td>
-                            <td>{order.phone}</td>
-                            <td>{order.city}</td>
-                            <td>{order.address}</td>
+
                             <td>{order.paymentMethod}</td>
                             <td>{order.totalPrice}.000đ</td>
                             <td style={{ width: 80 }}>
@@ -67,18 +60,43 @@ const Listdonhang = () => {
                                     <option value="Đang xử lý">Đang xử lý</option>
                                     <option value="Đang giao">Đang giao</option>
                                     <option value="Đã giao">Đã giao</option>
+                                    <option value="Hủy">Hủy</option>
                                 </select>
                             </td>
                             <td>{order.paymentStatus}</td>
                             <td>{order.amountDone}</td>
                             <td>
-                                <ul>
-                                {Array.isArray(order.cartItems) && order.cartItems.map((item) => (
-                                        <div key={item.id}>
-                                            <p>{item.quantity} cái {item.product.name} </p>
+                                <button onClick={() => setSelectedOrder(order)} className='text-blue-600'>Xem chi tiết</button>
+                                {selectedOrder && (
+                                    <div className="modal-overlay">
+                                        <div className="modal-content">
+                                            {/* Nội dung chi tiết đơn hàng ở đây */}
+                                            <table>
+                                                <thead>
+                                                    <tr>
+                                                        <th>Mã đơn hàng</th>
+                                                        <th>Tên</th>
+                                                        <th>Số điện thoại</th>
+                                                        <th>Thành phố</th>
+                                                        <th>Địa chỉ</th>
+                                                        {/* ... Thêm các cột khác ... */}
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>{selectedOrder.id}</td>
+                                                        <td>{selectedOrder.name}</td>
+                                                        <td>{selectedOrder.phone}</td>
+                                                        <td>{selectedOrder.city}</td>
+                                                        <td>{selectedOrder.address}</td>
+                                                        {/* ... Thêm các dòng khác ... */}
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            <button className='text-red-600' onClick={() => setSelectedOrder(null)}>Đóng</button>
                                         </div>
-                                    ))}
-                                </ul>
+                                    </div>
+                                )}
                             </td>
                         </tr>
                     ))}

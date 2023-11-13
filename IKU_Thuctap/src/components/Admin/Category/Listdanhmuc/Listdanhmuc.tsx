@@ -19,7 +19,7 @@ const Listdanhmuc = () => {
     fetchCategories();
   }, []);
 
-  const handleDeleteCategory = async (id:any) => {
+  const handleDeleteCategory = async (id: any) => {
     try {
       await axios.delete(`http://localhost:3000/Categories/${id}`);
       setCategories(categories.filter((category) => category.id !== id));
@@ -59,8 +59,8 @@ const Listdanhmuc = () => {
   return (
     <div>
       <Link className='themspmoi' to="/admin/category/addCate">Thêm Danh mục!</Link>
-      <Table 
-        columns={columns} 
+      <Table
+        columns={columns}
         dataSource={categories.map((category, index) => ({
           ...category,
           key: category.id

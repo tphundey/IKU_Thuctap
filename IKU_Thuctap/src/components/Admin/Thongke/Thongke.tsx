@@ -77,7 +77,7 @@ const Dashboard = () => {
                 <Col span={12}>
                     <Card bordered={false}>
                         <Statistic
-                            title="Tổng số thành viên"
+                            title="Tổng danh mục"
                             value={googleAccountCount}
                             precision={2}
                             valueStyle={{ color: '#cf1322' }}
