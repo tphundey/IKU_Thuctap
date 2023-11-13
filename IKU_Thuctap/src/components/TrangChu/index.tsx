@@ -9,6 +9,8 @@ import 'slick-carousel/slick/slick-theme.css';
 import './res.css'
 
 const Home = () => {
+
+
     const settings1 = {
         arrows: true,
         infinite: true,
@@ -37,13 +39,21 @@ const Home = () => {
     useEffect(() => {
         dispatch(getProduct());
     }, []);
+    const shuffleArray = (array: any) => {
+        const shuffledArray = [...array]; // Create a new array to avoid modifying the original
+        for (let i = shuffledArray.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
+        }
+        return shuffledArray;
+    };
 
     return (
         <div>
             <div className="container responsive-div">
                 <div className="list-tc">
                     <Slider {...settings2}>
-                    <div>
+                        <div>
                             <img src="https://theme.hstatic.net/200000343865/1001052087/14/ms_banner_img1.jpg?v=438" alt="" />
                         </div>
                         <div>
@@ -79,11 +89,11 @@ const Home = () => {
                     </div>
                     <div>
                         <Slider {...settings1}>
-                            {products.map((item: any) => (
+                            {shuffleArray(products).map((item: any) => (
                                 <div className="product text-center p-6">
                                     <Link to={`/products/${item.id}`} >
                                         <div className="image">
-                                            <img  src={item.img} alt="" />
+                                            <img src={item.img} alt="" />
                                         </div>
                                         <div className="name mt-2">{item.name}</div>
                                         <div className="price">{item.price}.000đ</div>
@@ -135,7 +145,7 @@ const Home = () => {
                     </div>
                     <div>
                         <Slider {...settings1res}>
-                            {products.map((item: any) => (
+                            {shuffleArray(products).map((item: any) => (
                                 <div className="product text-center p-6">
                                     <Link to={`/products/${item.id}`} >
                                         <div className="image">
