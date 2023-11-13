@@ -177,7 +177,10 @@ const Thanhtoan = () => {
 
             // Lưu ID hóa đơn vào Local Storage
             localStorage.setItem("orderId", orderId);
-            await axios.post("http://localhost:3000/saveOrder", { orderId });
+            console.log(totalPrice)
+            
+            await axios.post("http://localhost:3000/saveOrder", { orderId, amount: totalPrice - (isDiscountApplied ? discountAmount : 0) });
+
             // Đặt hàng thành công, tiếp theo là xóa giỏ hàng
             if (orderResponse.status === 201) {
 

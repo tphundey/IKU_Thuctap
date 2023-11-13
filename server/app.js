@@ -1,58 +1,83 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
+const cors = require('cors');
+const fs = require('fs');
+const path = require('path');
+const moment = require('moment');
+const fetch = require('node-fetch');
+
 const app = express();
+const router = express.Router();
+
+const mongoDBUrl = "mongodb+srv://root:123@cluster0.zq6tyry.mongodb.net/thuctap?retryWrites=true&w=majority";
+
+mongoose.connect(mongoDBUrl, { useNewUrlParser: true, useUnifiedTopology: true });
+const db = mongoose.connection;
+
+db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+db.once('open', () => {
+    console.log("Connected to MongoDB Atlas!");
+});
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.json());
+app.use(cors({
+    origin: 'http://localhost:5173',
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true,
+}));
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Import các router
 const productsRouter = require('./products');
 const cartRouter = require('./cart');
 const googleAccountRouter = require('./googleAccount');
 const invoiceRouter = require('./invoice');
 const reviewRouter = require('./reviews');
 const categoryRouter = require('./categories');
-const router = express.Router();
-const path = require('path');
-const moment = require('moment');
-const mongoDBUrl = "mongodb+srv://root:123@cluster0.zq6tyry.mongodb.net/thuctap?retryWrites=true&w=majority";
-const cors = require('cors');
-const bodyParser = require('body-parser');
 
-mongoose.connect(mongoDBUrl, { useNewUrlParser: true, useUnifiedTopology: true });
-const db = mongoose.connection;
-db.on('error', console.error.bind(console, 'MongoDB connection error:'));
-db.once('open', () => {
-    console.log("Connected to MongoDB Atlas!");
-});
-
-
-
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(express.json());
-
-
-app.use(cors({
-    origin: 'http://localhost:5173',
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    credentials: true,
-}));
-
+// Sử dụng các router
 app.use('/products', productsRouter);
 app.use('/cart', cartRouter);
 app.use('/googleAccount', googleAccountRouter);
 app.use('/hoadon', invoiceRouter);
 app.use('/categories', categoryRouter);
 app.use('/reviews', reviewRouter);
-// Đường dẫn đến file orderRouter.js
 
-app.set('views', path.join(__dirname, 'views'));  // Set the views directory
-app.set('view engine', 'jade');  // Set the view engine to Jade
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'jade');
 
+// Route chính
 app.get('/', (req, res) => {
     res.send('Hello World!');
 });
 
 app.get('/order', (req, res) => {
-    // Truyền dữ liệu cần thiết cho trang order.jade nếu cần
-    res.render('order', { title: 'Thông tin thanh toán', amount: 1000000 });
+    try {
+        const orderData = fs.readFileSync('order.txt', 'utf-8');
+        const amountData = fs.readFileSync('amount.txt', 'utf-8');
+
+        const orderLines = orderData.split('\n');
+        const amountLines = amountData.split('\n');
+
+        const lastOrderLine = orderLines[orderLines.length - 2];
+        const lastAmountLine = amountLines[amountLines.length - 2];
+
+        const orderId = lastOrderLine.trim(); // Lưu ý: Đây là id trực tiếp, không có tiền tố "OrderId:"
+        const amount = (lastAmountLine.trim() + '000') || '1000000'; // Mặc định là 1000 nếu không tìm thấy
+
+        res.render('order', { title: 'Thông tin thanh toán', orderId, amount });
+    } catch (error) {
+        console.error('Error rendering order.jade:', error);
+        res.status(500).send('Internal Server Error');
+    }
 });
+
+
+
+
 
 
 
@@ -112,103 +137,100 @@ app.post('/create_payment_url', function (req, res, next) {
     res.redirect(vnpUrl)
 });
 
-const fs = require('fs');
 
 app.post('/saveOrder', (req, res) => {
-    const { orderId } = req.body;
+    const { orderId, amount } = req.body;
 
-    // Ghi orderId vào tệp tin
-    fs.writeFileSync('order.txt', orderId);
+    // Ghi chỉ số id vào tệp tin
+    const orderData = `${orderId}\n`;
+    const amountData = `${amount}\n`;
+
+    fs.writeFileSync('order.txt', orderData);  // Ghi đè nội dung file, chỉ giữ lại id cuối cùng
+    fs.writeFileSync('amount.txt', amountData);  // Ghi đè nội dung file, chỉ giữ lại amount cuối cùng
 
     res.sendStatus(200);
 });
-// ...
-const fetch = require('node-fetch');
-const { log } = require('console');
-app.get('/order/vnpay_return', async function (req, res, next) {
-    let vnp_Params = req.query;
 
-    let secureHash = vnp_Params['vnp_SecureHash'];
+app.get('/order/vnpay_return', vnpayReturnHandler);
 
-    delete vnp_Params['vnp_SecureHash'];
-    delete vnp_Params['vnp_SecureHashType'];
+async function vnpayReturnHandler(req, res, next) {
+    try {
+        const vnp_Params = req.query;
+        const secureHash = vnp_Params['vnp_SecureHash'];
 
-    vnp_Params = sortObject(vnp_Params);
+        // Xóa các tham số không cần thiết
+        delete vnp_Params['vnp_SecureHash'];
+        delete vnp_Params['vnp_SecureHashType'];
 
-    let config = require('config');
-    let tmnCode = config.get('vnp_TmnCode');
-    let secretKey = config.get('vnp_HashSecret');
+        // Sắp xếp lại tham số
+        const sortedParams = sortObject(vnp_Params);
 
-    let querystring = require('qs');
-    let signData = querystring.stringify(vnp_Params, { encode: false });
-    let crypto = require("crypto");
-    let hmac = crypto.createHmac("sha512", secretKey);
-    let signed = hmac.update(new Buffer(signData, 'utf-8')).digest("hex");
-    
-    const amountPaid = vnp_Params['vnp_Amount'] / 100; // Chia cho 100 vì đã nhân 100 ở phần tạo thanh toán
+        const config = require('config');
+        const tmnCode = config.get('vnp_TmnCode');
+        const secretKey = config.get('vnp_HashSecret');
 
-    if (secureHash === signed) {
-        const responseCode = vnp_Params['vnp_ResponseCode'];
-        if (responseCode === '00') {
-            // Giao dịch thành công, cập nhật hóa đơn
-            const orderIdFilePath = 'order.txt';
-            const orderId = fs.readFileSync(orderIdFilePath, 'utf-8').trim();
+        const querystring = require('qs');
+        const signData = querystring.stringify(sortedParams, { encode: false });
+        const crypto = require("crypto");
+        const hmac = crypto.createHmac("sha512", secretKey);
+        const signed = hmac.update(new Buffer(signData, 'utf-8')).digest("hex");
 
-            // Thực hiện yêu cầu cập nhật hóa đơn thông qua API
-            try {
-                const updateResponse = await fetch(`http://localhost:3000/hoadon/${orderId}`, {
-                    method: 'PATCH',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        // Add any other headers if needed
-                    },
-                    body: JSON.stringify({
-                        paymentStatus: 'Đã thanh toán',
-                        amountDone: amountPaid, // Thêm giá trị amount
-                        // Các trường khác cần cập nhật
-                    }),
-                });
+        const amountPaid = vnp_Params['vnp_Amount'] / 100;
 
-                if (updateResponse.ok) {
-                    // Cập nhật thành công, hiển thị trang success
-                    res.render('success', { code: responseCode });
-                } else {
-                    // Xử lý lỗi khi không cập nhật được
+        if (secureHash === signed) {
+            const responseCode = vnp_Params['vnp_ResponseCode'];
+
+            if (responseCode === '00') {
+                const orderIdFilePath = 'order.txt';
+                const orderId = fs.readFileSync(orderIdFilePath, 'utf-8').trim();
+
+                try {
+                    const updateResponse = await fetch(`http://localhost:3000/hoadon/${orderId}`, {
+                        method: 'PATCH',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            paymentStatus: 'Đã thanh toán',
+                            amountDone: amountPaid,
+                        }),
+                    });
+
+                    if (updateResponse.ok) {
+                        res.render('success', { code: responseCode });
+                    } else {
+                        res.render('success', { code: '97' });
+                    }
+                } catch (error) {
                     res.render('success', { code: '97' });
                 }
-            } catch (error) {
-                // Xử lý lỗi khi có lỗi trong quá trình yêu cầu API
-                res.render('success', { code: '97' });
+            } else {
+                res.render('success', { code: responseCode });
             }
         } else {
-            // Trạng thái giao dịch không phải là thành công
-            res.render('success', { code: responseCode });
+            res.render('success', { code: '97' });
         }
-    } else {
-        // Hash không khớp, xem xét xử lý lỗi tại đây
-        res.render('success', { code: '97' });
+    } catch (error) {
+        console.error('Error handling VNPAY return:', error);
+        res.status(500).send('Internal Server Error');
     }
-});
-
-
+}
 
 function sortObject(obj) {
     let sorted = {};
     let str = [];
-    let key;
-    for (key in obj) {
+    for (let key in obj) {
         if (obj.hasOwnProperty(key)) {
             str.push(encodeURIComponent(key));
         }
     }
     str.sort();
-    for (key = 0; key < str.length; key++) {
+    for (let key = 0; key < str.length; key++) {
         sorted[str[key]] = encodeURIComponent(obj[str[key]]).replace(/%20/g, "+");
     }
     return sorted;
 }
 
-// Vui lòng tham khảo thêm tại code demo
 const PORT = 3000;
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);

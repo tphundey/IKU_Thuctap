@@ -6,10 +6,10 @@ block content
     h3=title
     div.table-responsive
         form#createOrder(action='create_payment_url', method='POST')
-            div.form-group
-                label Số tiền
-                input.form-control#amount(name='amount', placeholder='Số tiền', value=amount)
-
+          div.form-group
+                label Số tiền thanh toán (VND)
+              
+                input.form-control#amount(name='amount', placeholder='Số tiền', value=amount,readonly)
             div.form-group
                 label Chọn Phương thức thanh toán:
                 label.control-label
