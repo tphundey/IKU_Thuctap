@@ -55,11 +55,11 @@ const Signin = () => {
 
   const googleSignIn = () => {
     const provider = new GoogleAuthProvider();
-  
+
     signInWithPopup(auth, provider)
       .then((result) => {
         const user = result.user;
-  
+
         // Check if the email already exists
         axios.get(`http://localhost:3000/googleAccount?email=${user.email}`)
           .then((response) => {
@@ -71,20 +71,20 @@ const Signin = () => {
                 photoURL: user.photoURL,
                 // Add other user information as needed
               })
-              .then((response) => {
-                // Handle success if needed
-                console.log('User information sent to API:', response.data);
-                toast.success('Đăng nhập thành công!', {
-                  className: 'thongbaothanhcong',
-                  position: toast.POSITION.TOP_CENTER,
-                  autoClose: 2000,
+                .then((response) => {
+                  // Handle success if needed
+                  console.log('User information sent to API:', response.data);
+                  toast.success('Đăng nhập thành công!', {
+                    className: 'thongbaothanhcong',
+                    position: toast.POSITION.TOP_CENTER,
+                    autoClose: 2000,
+                  });
+                })
+                .catch((error) => {
+                  // Handle error if needed
+                  console.error('Error sending user information to API:', error);
+                  alert('Không thành công');
                 });
-              })
-              .catch((error) => {
-                // Handle error if needed
-                console.error('Error sending user information to API:', error);
-                alert('Không thành công');
-              });
             } else {
               // Email already exists, handle accordingly
               console.log('Email already exists:', user.email);
@@ -101,7 +101,7 @@ const Signin = () => {
         alert('Không thành công');
       });
   };
-  
+
 
 
   useEffect(() => {
@@ -174,8 +174,10 @@ const Signin = () => {
       title: 'Tổng giá trị',
       dataIndex: 'totalPrice',
       key: 'totalPrice',
-    }
-    ,
+      render: (totalPrice: any) => (
+        <span>{totalPrice}.000đ</span>
+      ),
+    },
     {
       title: 'Hành động',
       key: 'action',
