@@ -28,7 +28,8 @@
 .product {
     text-align: center;
 }
-.product a{
+
+.product a {
     text-decoration: none;
     color: black;
 }
@@ -94,7 +95,7 @@
 
 .ft {
     display: flex;
-    width: 140px;
+    width: 170px;
     text-align: left;
     margin-top: 20px;
 }

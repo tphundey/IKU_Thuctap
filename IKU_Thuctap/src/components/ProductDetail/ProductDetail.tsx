@@ -214,7 +214,7 @@ const ProductDetail = () => {
           products: [cartItem]
         });
       }
-      toast.success('Sản phẩm đã được thêm vào giỏ hàng!', {
+      toast.success('Sách đã thêm vào giỏ hàng!', {
         position: toast.POSITION.TOP_CENTER,
         autoClose: 3000,
       });
@@ -226,8 +226,6 @@ const ProductDetail = () => {
       console.error('Error when adding to cart:', error);
     }
   };
-
-
 
   return (
     <div className="container">
@@ -257,10 +255,9 @@ const ProductDetail = () => {
               <div className="name">{product.name}</div> <br />
               <div className="price">{product.price}.000₫</div>
               <div className="mt-5">
-                <p>Danh mục: 200CK032</p>
-                <p>Tác giả: Kim loại</p>
-                <p>Số trang: {product.color}</p>
-                <p>Ngày phát hành: {product.info}</p>
+                <p>Mã sản phẩm: {product.id}</p>
+                <p>Danh mục: Sách</p>
+                <p>Ngày phát hành: 13/11/2023</p>
               </div>
               <div className="ship">
                 Miễn phí giao hàng từ 500k ( vận chuyển 3 - 5 ngày )
@@ -279,7 +276,7 @@ const ProductDetail = () => {
         </div>
       </div>
       <h2 className="font-bold text-xl mb-10">Thông tin chi tiết</h2>
-      <p>Android is an open source mobile phone platform based on the Linux operating system and developed by the Open Handset Alliance, a consortium of over 30 hardware, software and telecom companies that focus on open standards for mobile devices. Led by search giant, Google, Android is designed to deliver a better and more open and cost effective mobile experience.    Unlocking Android: A Developer's Guide provides concise, hands-on instruction for the Android operating system and development tools. This book teaches important architectural concepts in a straightforward writing style and builds on this with practical and useful examples throughout. Based on his mobile development experience and his deep knowledge of the arcane Android technical documentation, the author conveys the know-how you need to develop practical applications that build upon or replace any of Androids features, however small.    Unlocking Android: A Developer's Guide prepares the reader to embrace the platform in easy-to-understand language and builds on this foundation with re-usable Java code examples. It is ideal for corporate and hobbyists alike who have an interest, or a mandate, to deliver software functionality for cell phones</p>
+      <p> {product.color}</p>
       <div className="reviewPro">
         <h2 className="font-bold text-xl mb-10 mt-5">Đánh giá sách  ( {calculateAverageRating(reviews)}⭐)</h2>
         {reviews.map((review) => (
