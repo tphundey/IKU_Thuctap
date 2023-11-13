@@ -2,6 +2,10 @@
     display: none;
 }
 
+.image img {
+    height: 300px;
+}
+
 @media (max-width: 600px) {
     .responsive-div {
         display: none;

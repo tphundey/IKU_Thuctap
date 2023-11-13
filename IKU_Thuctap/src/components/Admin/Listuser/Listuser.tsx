@@ -11,8 +11,8 @@ const Listuser = () => {
         },
         {
             title: 'Tên người dùng',
-            dataIndex: 'name',
-            key: 'name',
+            dataIndex: 'displayName',
+            key: 'displayName',
         },
         {
             title: 'Email',
@@ -21,26 +21,15 @@ const Listuser = () => {
         },
         {
             title: 'Hình ảnh',
-            dataIndex: 'img',
-            key: 'img',
+            dataIndex: 'photoURL',
+            key: 'photoURL',
             render: (text) => <img src={text} alt="" />,
-        },
-        {
-            title: 'Chức năng',
-            key: 'action',
-            render: (text, record) => (
-                <Popconfirm
-                    title="Bạn có chắc chắn muốn xóa người dùng này?"
-                    onConfirm={() => handleDeleteUser(record.id)}
-                >
-                    <Button type="danger">Xóa</Button>
-                </Popconfirm>
-            ),
-        },
+        }
+      
     ];
     useEffect(() => {
         // Gọi API để lấy dữ liệu người dùng
-        axios.get('http://localhost:3000/googleaccounts')
+        axios.get('http://localhost:3000/googleAccount')
             .then((response) => {
                 // Lưu trữ dữ liệu người dùng vào state
                 setUserData(response.data);

@@ -247,7 +247,7 @@ const ProductDetail = () => {
         <div className="product_detail-info">
           <div className="detail_info-left">
             <div className="img-primary">
-              <img src="https://s3.amazonaws.com/AKIAJC5RLADLUMVRPFDQ.book-thumb-images/ableson2.jpg" alt="" />
+              <img src={product.img} alt="" />
             </div>
           </div>
           <div className="detail_info-right">

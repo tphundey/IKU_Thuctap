@@ -53,21 +53,55 @@ const Signin = () => {
     };
   }, [auth]);
 
-  const googleSignIn = async () => {
+  const googleSignIn = () => {
     const provider = new GoogleAuthProvider();
-    try {
-      await signInWithPopup(auth, provider);
-      // Không cần lưu thông tin người dùng lên local, người dùng đã được xác thực bởi Firebase
-      toast.success('Đăng nhập thành công!', {
-        className: 'thongbaothanhcong',
-        position: toast.POSITION.TOP_CENTER,
-        autoClose: 2000,
+  
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        const user = result.user;
+  
+        // Check if the email already exists
+        axios.get(`http://localhost:3000/googleAccount?email=${user.email}`)
+          .then((response) => {
+            if (response.data.length === 0) {
+              // If email doesn't exist, proceed to post user information to your API
+              axios.post('http://localhost:3000/googleAccount', {
+                displayName: user.displayName,
+                email: user.email,
+                photoURL: user.photoURL,
+                // Add other user information as needed
+              })
+              .then((response) => {
+                // Handle success if needed
+                console.log('User information sent to API:', response.data);
+                toast.success('Đăng nhập thành công!', {
+                  className: 'thongbaothanhcong',
+                  position: toast.POSITION.TOP_CENTER,
+                  autoClose: 2000,
+                });
+              })
+              .catch((error) => {
+                // Handle error if needed
+                console.error('Error sending user information to API:', error);
+                alert('Không thành công');
+              });
+            } else {
+              // Email already exists, handle accordingly
+              console.log('Email already exists:', user.email);
+            }
+          })
+          .catch((error) => {
+            // Handle error if needed
+            console.error('Error checking email existence:', error);
+            alert('Không thành công');
+          });
+      })
+      .catch((error) => {
+        console.error('Authentication failed:', error);
+        alert('Không thành công');
       });
-    } catch (error) {
-      console.error('Authentication failed:', error);
-      alert('Không thành công');
-    }
   };
+  
 
 
   useEffect(() => {

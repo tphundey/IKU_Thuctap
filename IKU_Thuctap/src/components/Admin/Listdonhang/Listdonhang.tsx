@@ -39,7 +39,7 @@ const Listdonhang = () => {
                     <tr>
                         <th style={{ width: 130 }}>Mã đơn hàng</th>
 
-                        <th style={{ width: 130 }}>Phương thức</th>
+                        <th style={{ width: 160 }}>Phương thức</th>
                         <th style={{ width: 160 }}>Tổng giá trị</th>
                         <th style={{ width: 130 }}>Trạng thái đơn hàng</th>
                         <th style={{ width: 230 }}>Trạng thái thanh toán</th>
@@ -64,7 +64,7 @@ const Listdonhang = () => {
                                 </select>
                             </td>
                             <td>{order.paymentStatus}</td>
-                            <td>{order.amountDone}</td>
+                            <td>{parseInt(order.amountDone).toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}</td>
                             <td>
                                 <button onClick={() => setSelectedOrder(order)} className='text-blue-600'>Xem chi tiết</button>
                                 {selectedOrder && (

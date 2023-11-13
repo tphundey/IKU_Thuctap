@@ -83,7 +83,7 @@ const Home = () => {
                                 <div className="product text-center p-6">
                                     <Link to={`/products/${item.id}`} >
                                         <div className="image">
-                                            <img src={item.img} alt="" />
+                                            <img  src={item.img} alt="" />
                                         </div>
                                         <div className="name mt-2">{item.name}</div>
                                         <div className="price">{item.price}.000đ</div>

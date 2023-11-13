@@ -37,18 +37,22 @@ const Header = () => {
         setSearchResults([]);
     };
 
-    // Hàm tìm kiếm sản phẩm dựa trên từ khóa
     const searchProducts = () => {
-        // Gửi yêu cầu API để lấy danh sách sản phẩm dựa trên từ khóa tìm kiếm
-        axios.get(`http://localhost:3000/products?name_like=${searchKeyword}`)
-            .then((response) => {
-                const searchResults = response.data;
-                setSearchResults(searchResults);
-            })
-            .catch((error) => {
-                console.error('Lỗi khi tìm kiếm sản phẩm:', error);
-            });
-    };
+        // Gửi yêu cầu API để lấy danh sách sản phẩm
+        axios.get('http://localhost:3000/products')
+          .then((response) => {
+            const allProducts = response.data;
+            // Lọc các sản phẩm phù hợp với từ khóa tìm kiếm
+            const filteredProducts = allProducts.filter(product =>
+              product.name.toLowerCase().includes(searchKeyword.toLowerCase())
+            );
+            setSearchResults(filteredProducts);
+          })
+          .catch((error) => {
+            console.error('Lỗi khi tìm kiếm sản phẩm:', error);
+          });
+      };
+      
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -139,34 +143,34 @@ const Header = () => {
                     </div>
                 </nav>
                 {isSearchOpen && (
-                    <div className="search-overlay">
-                        <div className="search-box">
-                            <Input
-                                placeholder="Tìm kiếm sản phẩm..."
-                                value={searchKeyword}
-                                onChange={(e) => setSearchKeyword(e.target.value)}
-                            />
-                       <button
-    className="search-btn"
-    onClick={searchProducts}
->
-    Tìm kiếm
-</button>
-<button
-    className="close-btn"
-    onClick={closeSearch}
->
-    Đóng
-</button>
-                        </div>
-                        {searchResults.length > 0 && (
-                            <SearchResults searchResults={searchResults} onItemClick={handleProductClick} />
-                        )}
-                        {productId && (
-                            <a href={`/products/${productId}`} className="hidden-link"></a>
-                        )}
-                    </div>
-                )}
+        <div className="search-overlay">
+          <div className="search-box">
+            <Input
+              placeholder="Tìm kiếm sản phẩm..."
+              value={searchKeyword}
+              onChange={(e) => setSearchKeyword(e.target.value)}
+            />
+            <button
+              className="search-btn"
+              onClick={searchProducts}
+            >
+              Tìm kiếm
+            </button>
+            <button
+              className="close-btn"
+              onClick={closeSearch}
+            >
+              Đóng
+            </button>
+          </div>
+          {searchResults.length > 0 && (
+            <SearchResults searchResults={searchResults} onItemClick={handleProductClick} />
+          )}
+          {productId && (
+            <a href={`/products/${productId}`} className="hidden-link"></a>
+          )}
+        </div>
+      )}
                 <ToastContainer />
             </div>
             <div className="formobile">
