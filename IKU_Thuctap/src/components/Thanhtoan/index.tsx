@@ -311,7 +311,7 @@ const Thanhtoan = () => {
                             render={({ field }) => (
                                 <div>
                                     <input {...field} type="text" placeholder="Nhập mã giảm giá" value={voucher} onChange={(e) => setVoucher(e.target.value)} />
-                                    <button type="button" onClick={handleApplyVoucher}>Áp dụng</button>
+                                    <button type="button" className='text-blue-500; font-bold' onClick={handleApplyVoucher}>Áp dụng mã giảm giá</button>
                                     {voucherError && <p>{voucherError}</p>}
                                 </div>
                             )}
@@ -330,7 +330,7 @@ const Thanhtoan = () => {
                                 </div>
                             ) : (
                                 <div>
-                                   <p>Bạn sẽ được chuyển tới trang thanh toán. Vui lòng nhập đúng số tiền tương ứng thanh toán</p>
+                                   <p className='text-red-500'>Bạn sẽ được chuyển tới trang thanh toán. Vui lòng nhập đúng số tiền tương ứng thanh toán. Mọi vấn đề về sai số dư chuyển khoản hãy liên hệ 0878571203 để được xử lý !</p>
                                 </div>
                             )}
                         </div>
@@ -345,7 +345,7 @@ const Thanhtoan = () => {
                                     <div className="imgcart">
                                         <img src={productItem.product.img} alt="" />
                                     </div>
-                                    <div className="thongtin">
+                                    <div className="thongtinss">
                                         <div className="tencart">{productItem.product.name}</div>
                                         <div className="carttt">
                                             <div className="soluong">{productItem.quantity} x</div>

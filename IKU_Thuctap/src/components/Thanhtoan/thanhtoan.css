@@ -132,3 +132,17 @@ p {
     border: none;
     margin-top: 5px
 }
+
+.imgcart img{
+    width: 90px;
+    height: 120px;
+}
+
+.imgcart{
+    width: 220px;
+}
+
+
+.thongtinss{
+    width: 320px;
+}
