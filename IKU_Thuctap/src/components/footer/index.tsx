@@ -9,10 +9,9 @@ const Footer = () => {
                         <div className="col">
                             <ul>
                                 <li className='footer-light'>Tất cả sản phẩm</li>
-                                <li>Gọng kính</li>
-                                <li>Tròng kính</li>
-                                <li>Kinh râm</li>
-                                <li>Phụ kiện</li>
+                                <li>Sách y được</li>
+                                <li>Truyện tranh</li>
+                                <li>Sách văn học</li>
                             </ul>
                         </div>
                         <div className="col">
@@ -27,8 +26,8 @@ const Footer = () => {
                             <ul>
                                 <li className='footer-light'>Thông tin liên hệ</li>
                                 <li>Điện thoại: 1900 0359</li>
-                                <li>Email: marketing@kinhmatanna.com</li>
-                                <li>Website: kinhmatanna.com</li>
+                                <li>Email: marketing@bookstore.com</li>
+                                <li>Website: bookstore.com</li>
                                 <li>
                                     <div className="icon"></div>
                                     <div className="icon"></div>
@@ -39,7 +38,7 @@ const Footer = () => {
                         </div>
                         <div className="col">
                             <ul>
-                                <li className='footer-light'>Về Anna</li>
+                                <li className='footer-light'>Về BookStore</li>
                                 <li>Mã số thuế: 0108195925</li>
                                 <li>
                                     <div className="img_logo">

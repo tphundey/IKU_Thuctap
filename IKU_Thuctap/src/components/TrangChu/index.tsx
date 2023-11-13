@@ -43,14 +43,14 @@ const Home = () => {
             <div className="container responsive-div">
                 <div className="list-tc">
                     <Slider {...settings2}>
-                        <div>
-                            <img src="https://theme.hstatic.net/200000343865/1001052087/14/ms_banner_img1.jpg?v=411" alt="" />
+                    <div>
+                            <img src="https://theme.hstatic.net/200000343865/1001052087/14/ms_banner_img1.jpg?v=438" alt="" />
                         </div>
                         <div>
-                            <img src="https://theme.hstatic.net/200000343865/1001052087/14/ms_banner_img1.jpg?v=411" alt="" />
+                            <img src="https://theme.hstatic.net/200000343865/1001052087/14/ms_banner_img3.jpg?v=438" alt="" />
                         </div>
                         <div>
-                            <img src="https://theme.hstatic.net/200000343865/1001052087/14/ms_banner_img1.jpg?v=411" alt="" />
+                            <img src="https://theme.hstatic.net/200000343865/1001052087/14/ms_banner_img4.jpg?v=438" alt="" />
                         </div>
                         <div>
                             <img src="https://theme.hstatic.net/200000343865/1001052087/14/ms_banner_img1.jpg?v=411" alt="" />
@@ -100,13 +100,13 @@ const Home = () => {
                 <div className="list-tc">
                     <Slider {...settings2}>
                         <div>
-                            <img src="https://theme.hstatic.net/200000343865/1001052087/14/ms_banner_img1.jpg?v=411" alt="" />
+                            <img src="https://theme.hstatic.net/200000343865/1001052087/14/ms_banner_img1.jpg?v=438" alt="" />
                         </div>
                         <div>
-                            <img src="https://theme.hstatic.net/200000343865/1001052087/14/ms_banner_img1.jpg?v=411" alt="" />
+                            <img src="https://theme.hstatic.net/200000343865/1001052087/14/ms_banner_img3.jpg?v=438" alt="" />
                         </div>
                         <div>
-                            <img src="https://theme.hstatic.net/200000343865/1001052087/14/ms_banner_img1.jpg?v=411" alt="" />
+                            <img src="https://theme.hstatic.net/200000343865/1001052087/14/ms_banner_img4.jpg?v=438" alt="" />
                         </div>
                         <div>
                             <img src="https://theme.hstatic.net/200000343865/1001052087/14/ms_banner_img1.jpg?v=411" alt="" />

@@ -139,7 +139,7 @@ const Header = () => {
                 </header>
                 <nav>
                     <div className="value">
-                        SEE BETTER THAN YESTERDAY - ANNA LOVE YOU!
+                        SEE BETTER THAN YESTERDAY - BOOKSTORE LOVE YOU!
                     </div>
                 </nav>
                 {isSearchOpen && (
