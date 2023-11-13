@@ -26,7 +26,24 @@ const ProductDetail = () => {
   const [reviews, setReviews] = useState([]);
   const [averageRating, setAverageRating] = useState(0);
   const [user, setUser] = useState(null);
+  const [categoryName, setCategoryName] = useState('');
 
+  useEffect(() => {
+    const getCategoryName = async () => {
+      try {
+        const response = await axios.get(`http://localhost:3000/Categories`);
+        // Assuming your product object has a categoryId property
+        const categoryId = product.categoriesId; // Update this based on your actual data structure
+        const category = response.data.find((category) => category.id === categoryId);
+        setCategoryName(category ? category.name : 'Unknown Category');
+      } catch (error) {
+        console.error('Error fetching category:', error);
+        setCategoryName('Unknown Category');
+      }
+    };
+  
+    getCategoryName(); // Call the function to fetch category name
+  }, [product]); // Add product to the dependency array
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser: any) => {
       if (currentUser) {
@@ -256,7 +273,7 @@ const ProductDetail = () => {
               <div className="price">{product.price}.000₫</div>
               <div className="mt-5">
                 <p>Mã sản phẩm: {product.id}</p>
-                <p>Danh mục: Sách</p>
+                <p>Danh mục: {categoryName}</p>
                 <p>Ngày phát hành: 13/11/2023</p>
               </div>
               <div className="ship">

@@ -36,9 +36,9 @@
 }
 
 .img-primary img {
-    width: 100%;
+    width: 60%;
+    margin-left: 10%;
     height: 100%;
-    object-fit: cover;
 }
 
 .detail_info-right .info-top {
