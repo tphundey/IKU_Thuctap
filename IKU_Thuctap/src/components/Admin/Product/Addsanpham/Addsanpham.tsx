@@ -8,16 +8,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { FaSpinner } from 'react-icons/fa';
 
-interface Product {
-  id: number;
-  name: string;
-  price: number;
-  img: string;
-  categoriesId: string;
-  color: string;
-  quantity: number;
-  info: string;
-}
+
 
 interface Material {
   id: number;
@@ -25,7 +16,7 @@ interface Material {
 }
 
 interface AddProductFormProps {
-  onAddProduct: (product: Product) => void;
+  onAddProduct: (product: any) => void;
 }
 
 const AddProductForm: React.FC<AddProductFormProps> = () => {
@@ -39,7 +30,7 @@ const AddProductForm: React.FC<AddProductFormProps> = () => {
     handleSubmit,
     formState: { errors },
     reset: formReset,
-  } = useForm<Product>({
+  } = useForm<any>({
     defaultValues: {}
   });
 
@@ -56,7 +47,7 @@ const AddProductForm: React.FC<AddProductFormProps> = () => {
     fetchMaterials();
   }, []);
 
-  const onSubmit = async (data: Product) => {
+  const onSubmit = async (data: any) => {
     setIsLoading(true);
 
     try {
@@ -68,10 +59,6 @@ const AddProductForm: React.FC<AddProductFormProps> = () => {
         position: toast.POSITION.TOP_CENTER,
         autoClose: 3000,
       });
-
-      setTimeout(() => {
-        navigate('/admin')
-      }, 3000);
 
     } catch (error) {
       console.error('Error adding product:', error);
@@ -91,15 +78,13 @@ const AddProductForm: React.FC<AddProductFormProps> = () => {
       <form onSubmit={handleSubmit(onSubmit)}>
         <div>
           <label>
-            Tên sản phẩm:
+            Tên sách:
             <Controller
               name="name"
               control={control}
               rules={{
                 required: 'Không được để trống dữ liệu',
-                validate: {
-                  noSpace: (value) => containsSpace(value) || 'Không nhận dữ liệu space',
-                },
+               
               }}
               render={({ field }) => <input type="text" {...field} />}
             />
@@ -121,7 +106,7 @@ const AddProductForm: React.FC<AddProductFormProps> = () => {
         </div>
         <div>
           <label>
-            Đường dẫn:
+            Đường dẫn hình ảnh:
             <Controller
               name="img"
               control={control}
@@ -143,7 +128,7 @@ const AddProductForm: React.FC<AddProductFormProps> = () => {
             rules={{ required: 'Vui lòng chọn chất liệu' }}
             render={({ field }) => (
               <select {...field}>
-                <option value="">-- Chọn chất liệu --</option>
+                <option value="">-- Chọn danh mục --</option>
                 {materials.map((material) => (
                   <option key={material.id} value={material.id}>
                     {material.name}
@@ -157,15 +142,13 @@ const AddProductForm: React.FC<AddProductFormProps> = () => {
 
         <div>
           <label>
-            Màu sắc:
+            Mô tả:
             <Controller
               name="color"
               control={control}
               rules={{
                 required: 'Không được để trống dữ liệu',
-                validate: {
-                  noSpace: (value) => containsSpace(value) || 'Không nhận dữ liệu space',
-                },
+               
               }}
               render={({ field }) => <input type="text" {...field} />}
             />
@@ -184,23 +167,7 @@ const AddProductForm: React.FC<AddProductFormProps> = () => {
 
           </label>{errors.quantity && <div className="error">{errors.quantity.message}</div>}
         </div>
-        <div>
-          <label>
-            Mô tả:
-            <Controller
-              name="info"
-              control={control}
-              rules={{
-                required: 'Không được để trống dữ liệu',
-                validate: {
-                  noSpace: (value) => containsSpace(value) || 'Không nhận dữ liệu space',
-                },
-              }}
-              render={({ field }) => <textarea {...field} />}
-            />
-          </label>
-          {errors.info && <div className="error">{errors.info.message}</div>}
-        </div>
+       
         <button type="submit" disabled={isLoading}>
           {isLoading ? <FaSpinner className="icon-spin" /> : 'Add Product'}
         </button>

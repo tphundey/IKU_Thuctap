@@ -36,7 +36,7 @@ const Dashboard = () => {
     }, []); // Mảng phụ thuộc rỗng để chạy useEffect này một lần khi component được mount
     useEffect(() => {
         // Gọi API để lấy danh sách tài khoản Google
-        axios.get('http://localhost:3000/googleAccount')
+        axios.get('http://localhost:3000/categories')
             .then((response) => {
                 // Đặt số lượng tài khoản Google dựa trên dữ liệu trả về
                 setGoogleAccountCount(response.data.length);

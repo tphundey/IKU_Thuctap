@@ -23,7 +23,7 @@ const Listproduct = () => {
             render: (text) => <img width={120} src={text} alt="" />,
         },
         {
-            title: 'Tên sản phẩm',
+            title: 'Tên sách',
             dataIndex: 'name',
             key: 'name',
         },
@@ -35,8 +35,8 @@ const Listproduct = () => {
 
         {
             title: 'Mô tả',
-            dataIndex: 'info',
-            key: 'info',
+            dataIndex: 'color',
+            key: 'color',
         },
         {
             title: 'Số lượng',
@@ -77,7 +77,7 @@ const Listproduct = () => {
 
     return (
         <div >
-            <a className='themspmoi' href="admin/addsanpham">Thêm sản phẩm mới !</a>
+            <Link className='themspmoi' to="/addsanpham">Thêm sách mới!</Link>
             <Table columns={columns} dataSource={currentItems} />
             <Pagination
                 current={currentPage}

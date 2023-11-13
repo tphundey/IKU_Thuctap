@@ -19,7 +19,7 @@ const Listdanhmuc = () => {
     fetchCategories();
   }, []);
 
-  const handleDeleteCategory = async (id) => {
+  const handleDeleteCategory = async (id:any) => {
     try {
       await axios.delete(`http://localhost:3000/Categories/${id}`);
       setCategories(categories.filter((category) => category.id !== id));
@@ -35,7 +35,7 @@ const Listdanhmuc = () => {
       key: 'id',
     },
     {
-      title: 'Loại kính',
+      title: 'Danh mục sách',
       dataIndex: 'name',
       key: 'name',
     },
