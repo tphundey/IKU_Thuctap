@@ -12,7 +12,7 @@ import { Rate } from 'antd';
 import { Button, Form, Input } from 'antd';
 import type { FormInstance } from 'antd/es/form';
 import { onAuthStateChanged } from 'firebase/auth';
-import { auth } from '../AuthFirebase/auth';
+import { auth } from '../../components/AuthFirebase/auth';
 
 const ProductDetail = () => {
   const desc = ['terrible', 'bad', 'normal', 'good', 'wonderful'];

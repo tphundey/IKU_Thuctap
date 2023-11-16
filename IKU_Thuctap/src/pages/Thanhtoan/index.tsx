@@ -7,7 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import './thanhtoan.css';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { onAuthStateChanged } from 'firebase/auth';
-import { auth } from '../AuthFirebase/auth';
+import { auth } from '../../components/AuthFirebase/auth';
 
 const Thanhtoan = () => {
     const navigate = useNavigate();

@@ -10,7 +10,6 @@ import './res.css'
 
 const Home = () => {
 
-
     const settings1 = {
         arrows: true,
         infinite: true,

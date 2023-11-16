@@ -2,15 +2,15 @@ import "react-loading-skeleton/dist/skeleton.css";
 import "./App.css";
 import { useState, useEffect } from 'react';
 import { Routes, Route, BrowserRouter as Router } from "react-router-dom";
-import BaseLayout from "./components/Layout/BaseLayoutUser/BaseLayout";
-import Home from "./components/TrangChu";
-import ProductDetail from "./components/ProductDetail/ProductDetail";
-import Sanpham from "./components/Sanpham";
-import Thanhtoan from "./components/Thanhtoan";
-import Signup from "./components/Signup/Signup";
-import Signin from "./components/Signin/Signin";
-import Hoadon from "./components/HoaDon/Hoadon";
-import BaseLayoutadmin from "./components/Layout/BaseLayoutAdmin/BaseAdmin";
+import BaseLayout from "./layouts/BaseLayoutUser/BaseLayout";
+import Home from "./pages/TrangChu";
+import ProductDetail from "./pages/ProductDetail/ProductDetail";
+import Sanpham from "./pages/Sanpham";
+import Thanhtoan from "./pages/Thanhtoan";
+import Signup from "./pages/Signup/Signup";
+import Signin from "./pages/Signin/Signin";
+import Hoadon from "./pages/HoaDon/Hoadon";
+import BaseLayoutadmin from "./layouts/BaseLayoutAdmin/BaseAdmin";
 import Listproduct from "./components/Admin/Product/Listproduct/Listproduct";
 import Listdanhmuc from "./components/Admin/Category/Listdanhmuc/Listdanhmuc";
 import Listuser from "./components/Admin/Listuser/Listuser";
@@ -22,7 +22,6 @@ import UpdateCategory from "./components/Admin/Category/UpdateCategory/UpdateCat
 import { auth } from "./components/AuthFirebase/auth";
 import { onAuthStateChanged } from 'firebase/auth';
 import Dashboard from "./components/Admin/Thongke/Thongke";
-import PaymentForm from "./components/PaymentForm";
 
 interface Product {
   id: number;
@@ -81,7 +80,6 @@ function App() {
           <Route path="/signin" element={<Signin />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/hoadon" element={<Hoadon />} />
-          <Route path="/payment" element={<PaymentForm />} />
         </Route>
 
         {/* router admin */}

@@ -2,7 +2,7 @@ import "./Hoadon.css"
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { onAuthStateChanged } from 'firebase/auth';
-import { auth } from '../AuthFirebase/auth';
+import { auth } from '../../components/AuthFirebase/auth';
 
 const Hoadon = () => {
     const [email, setEmail] = useState([]);

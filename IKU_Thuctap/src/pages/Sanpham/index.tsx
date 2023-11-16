@@ -67,7 +67,68 @@ const Sanpham = () => {
 
     return (
         <div>
-            <div className="container">
+            <div className="container fordesktop">
+                <div className="title">
+                    <div className="tl1">HOT TREND</div>
+                </div>
+                <div className="flex">
+                    <div className="filter">
+                        <div className="th">
+                            Danh mục
+                        </div>
+                        <div className="danhmuc">
+                            {/* Display categories fetched using Axios */}
+                            {categories.map((category) => (
+                                <div key={category.id} className="ft">
+                                    <input
+                                        type="checkbox"
+                                        name=""
+                                        id=""
+                                        checked={selectedCategoryIds.includes(category.id)}
+                                        onChange={() => handleCategoryChange(category.id)}
+                                    />
+                                    <label htmlFor="">{category.name}</label>
+                                </div>
+                            ))}
+                        </div>
+                        <br /><br />
+                        <div className="th">
+                            Khoảng giá
+                        </div>
+                        <div className="danhmuc">
+                            {/* Display price options */}
+                            {priceOptions.map((option) => (
+                                <div key={option.id} className="ft">
+                                    <input
+                                        type="checkbox"
+                                        name=""
+                                        id=""
+                                        checked={selectedPriceIds.includes(option.id)}
+                                        onChange={() => handlePriceChange(option.id)}
+                                    />
+                                    <label htmlFor="">{option.label}</label>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                    <div className="list">
+                        {/* Display filtered products */}
+                        {filteredProducts.map((item: any) => (
+                            <div key={item.id} className="product">
+                                <Link to={`/products/${item.id}`} >
+                                    <div className="image">
+                                        <img src={item.img} alt="" />
+                                    </div>
+                                    <div className="name mt-2">{item.name}</div>
+                                    <div className="price">{item.price}.000đ</div>
+                                </Link>
+                            </div>
+                        ))}
+
+                    </div>
+                </div>
+            </div>
+            <div className="container formobile">
                 <div className="title">
                     <div className="tl1">HOT TREND</div>
                 </div>
