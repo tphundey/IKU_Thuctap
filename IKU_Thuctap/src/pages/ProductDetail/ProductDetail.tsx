@@ -41,7 +41,7 @@ const ProductDetail = () => {
         setCategoryName('Unknown Category');
       }
     };
-  
+
     getCategoryName(); // Call the function to fetch category name
   }, [product]); // Add product to the dependency array
   useEffect(() => {
@@ -245,105 +245,189 @@ const ProductDetail = () => {
   };
 
   return (
-    <div className="container">
-      <Breadcrumb style={{ backgroundColor: 'white', marginTop: 7 }}
-        items={[
-          {
-            title: 'Trang chủ',
-          },
-          {
-            title: <a href="">Sản phẩm</a>,
-          },
-          {
-            title: <p>{product.name}</p>,
-          },
-        ]}
-      />
+    <div>
+      <div className="container fordesktop">
+        <Breadcrumb style={{ backgroundColor: 'white', marginTop: 7 }}
+          items={[
+            {
+              title: 'Trang chủ',
+            },
+            {
+              title: <a href="">Sản phẩm</a>,
+            },
+            {
+              title: <p>{product.name}</p>,
+            },
+          ]}
+        />
 
-      <div className="product_detail">
-        <div className="product_detail-info">
-          <div className="detail_info-left">
-            <div className="img-primary">
-              <img src={product.img} alt="" />
+        <div className="product_detail">
+          <div className="product_detail-info">
+            <div className="detail_info-left">
+              <div className="img-primary">
+                <img src={product.img} alt="" />
+              </div>
             </div>
-          </div>
-          <div className="detail_info-right">
-            <div className="info-top">
-              <div className="name">{product.name}</div> <br />
-              <div className="price">{product.price}.000₫</div>
-              <div className="mt-5">
-                <p>Mã sản phẩm: {product.id}</p>
-                <p>Danh mục: {categoryName}</p>
-                <p>Ngày phát hành: 13/11/2023</p>
+            <div className="detail_info-right">
+              <div className="info-top">
+                <div className="name">{product.name}</div> <br />
+                <div className="price">{product.price}.000₫</div>
+                <div className="mt-5">
+                  <p>Mã sản phẩm: {product.id}</p>
+                  <p>Danh mục: {categoryName}</p>
+                  <p>Ngày phát hành: 13/11/2023</p>
+                </div>
+                <div className="ship">
+                  Miễn phí giao hàng từ 500k ( vận chuyển 3 - 5 ngày )
+                </div>
+                <div className="input">
+                  <button className="btn_quantily down" onClick={handleDecrease}>-</button>
+                  <input defaultValue={1} min={1} max={5} type="number" className="input_quantily" value={quantity} />
+                  <button className="btn_quantily up" onClick={handleIncrease}>+</button>
+                </div>
+                <div className="add_cart">
+                  <button onClick={handleAddToCart}>Thêm Vào Giỏ Hàng</button>
+                </div>
+                <hr />
               </div>
-              <div className="ship">
-                Miễn phí giao hàng từ 500k ( vận chuyển 3 - 5 ngày )
-              </div>
-              <div className="input">
-                <button className="btn_quantily down" onClick={handleDecrease}>-</button>
-                <input defaultValue={1} min={1} max={5} type="number" className="input_quantily" value={quantity} />
-                <button className="btn_quantily up" onClick={handleIncrease}>+</button>
-              </div>
-              <div className="add_cart">
-                <button onClick={handleAddToCart}>Thêm Vào Giỏ Hàng</button>
-              </div>
-              <hr />
             </div>
           </div>
         </div>
-      </div>
-      <h2 className="font-bold text-xl mb-10">Thông tin chi tiết</h2>
-      <p> {product.color}</p>
-      <div className="reviewPro">
-        <h2 className="font-bold text-xl mb-10 mt-5">Đánh giá sách  ( {calculateAverageRating(reviews)}⭐)</h2>
-        {reviews.map((review) => (
-          <div className="review-user">
-            <div className="imgUser">
-              <img src={review.img} alt="" />
+        <h2 className="font-bold text-xl mb-10">Thông tin chi tiết</h2>
+        <p> {product.color}</p>
+        <div className="reviewPro">
+          <h2 className="font-bold text-xl mb-10 mt-5">Đánh giá sách  ( {calculateAverageRating(reviews)}⭐)</h2>
+          {reviews.map((review) => (
+            <div className="review-user">
+              <div className="imgUser">
+                <img src={review.img} alt="" />
+              </div>
+              <div className="review">
+                <div className="commentName font-bold">{review.name}</div>
+                <div className="commentText">{review.comment}</div>
+                <div className="reviewRate"><Rate disabled defaultValue={review.rating} /></div>
+              </div>
             </div>
-            <div className="review">
-              <div className="commentName font-bold">{review.name}</div>
-              <div className="commentText">{review.comment}</div>
-              <div className="reviewRate"><Rate disabled defaultValue={review.rating} /></div>
+          ))}
+
+          {hasUserReviewed ? (
+            <p>Bạn chỉ được đánh giá 1 lần!</p>
+          ) : (
+            <div>
+              <span>
+                <Rate tooltips={desc} onChange={setValue} value={value} />
+                {value ? <span className="ant-rate-text">{desc[value - 1]}</span> : ''}
+              </span>
+              <Form
+                {...layout}
+                ref={formRef}
+                name="control-ref"
+                onFinish={onFinish}
+                className="mt-5"
+                style={{ maxWidth: 500 }}
+              >
+                <Form.Item name="note" rules={[{ required: true }]}>
+                  <Input style={{ float: 'left' }} />
+                </Form.Item>
+                <Form.Item {...tailLayout}>
+                  <Button type="primary" htmlType="submit" className="text-green-700">
+                    Submit
+                  </Button>
+                  <Button htmlType="button" onClick={onReset}>
+                    Reset
+                  </Button>
+                </Form.Item>
+              </Form>
+            </div>
+          )}
+
+        </div>
+        <ToastContainer />
+      </div>
+      <div className=" formobile">
+        <div className="product_detail">
+          <div className="product_detail-info">
+            <div className="detail_info-left">
+              <div className="img-primary">
+                <img src={product.img} alt="" />
+              </div>
+            </div>
+            <div className="detail_info-right">
+              <div className="info-top">
+                <div className="name">{product.name}</div> <br />
+                <div className="price">{product.price}.000₫</div>
+                <div className="mt-5">
+                  <p>Mã sản phẩm: {product.id}</p>
+                  <p>Danh mục: {categoryName}</p>
+                  <p>Ngày phát hành: 13/11/2023</p>
+                </div>
+                <div className="ship">
+                  Miễn phí giao hàng từ 500k ( vận chuyển 3 - 5 ngày )
+                </div>
+                <div className="input">
+                  <button className="btn_quantily down" onClick={handleDecrease}>-</button>
+                  <input defaultValue={1} min={1} max={5} type="number" className="input_quantily" value={quantity} />
+                  <button className="btn_quantily up" onClick={handleIncrease}>+</button>
+                </div>
+                <div className="add_cart">
+                  <button onClick={handleAddToCart}>Thêm Vào Giỏ Hàng</button>
+                </div>
+                <hr />
+              </div>
             </div>
           </div>
-        ))}
+        </div>
+        <h2 className="ttct font-bold text-xl mb-10">Thông tin chi tiết</h2>
+        <p className="ttct"> {product.color}</p>
+        <div className="reviewPro ttct">
+          <h2 className="font-bold text-xl mb-10 mt-5">Đánh giá sách  ( {calculateAverageRating(reviews)}⭐)</h2>
+          {reviews.map((review) => (
+            <div className="review-user">
+              <div className="imgUser">
+                <img src={review.img} alt="" />
+              </div>
+              <div className="review">
+                <div className="commentName font-bold">{review.name}</div>
+                <div className="commentText">{review.comment}</div>
+                <div className="reviewRate"><Rate disabled defaultValue={review.rating} /></div>
+              </div>
+            </div>
+          ))}
 
-        {hasUserReviewed ? (
-          <p>Bạn chỉ được đánh giá 1 lần!</p>
-        ) : (
-          <div>
-            <span>
-              <Rate tooltips={desc} onChange={setValue} value={value} />
-              {value ? <span className="ant-rate-text">{desc[value - 1]}</span> : ''}
-            </span>
-            <Form
-              {...layout}
-              ref={formRef}
-              name="control-ref"
-              onFinish={onFinish}
-              className="mt-5"
-              style={{ maxWidth: 500 }}
-            >
-              <Form.Item name="note" rules={[{ required: true }]}>
-                <Input style={{ float: 'left' }} />
-              </Form.Item>
-              <Form.Item {...tailLayout}>
-                <Button type="primary" htmlType="submit" className="text-green-700">
-                  Submit
-                </Button>
-                <Button htmlType="button" onClick={onReset}>
-                  Reset
-                </Button>
-              </Form.Item>
-            </Form>
-          </div>
-        )}
-
+          {hasUserReviewed ? (
+            <p>Bạn chỉ được đánh giá 1 lần!</p>
+          ) : (
+            <div>
+              <span>
+                <Rate tooltips={desc} onChange={setValue} value={value} />
+                {value ? <span className="ant-rate-text">{desc[value - 1]}</span> : ''}
+              </span>
+              <Form
+                {...layout}
+                ref={formRef}
+                name="control-ref"
+                onFinish={onFinish}
+                className="mt-5"
+                style={{ maxWidth: 500 }}
+              >
+                <Form.Item name="note" rules={[{ required: true }]}>
+                  <Input style={{ float: 'left' }} />
+                </Form.Item>
+                <Form.Item {...tailLayout}>
+                  <Button type="primary" htmlType="submit" className="text-green-700">
+                    Submit
+                  </Button>
+                  <Button htmlType="button" onClick={onReset}>
+                    Reset
+                  </Button>
+                </Form.Item>
+              </Form>
+            </div>
+          )}
+        </div>
+        <ToastContainer />
       </div>
-      <ToastContainer />
     </div>
-
   );
 };
 

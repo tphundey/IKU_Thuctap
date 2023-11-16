@@ -149,3 +149,93 @@ hr {
     width: 60px;
     border-radius: 100px;
 }
+
+
+
+@media (max-width: 600px) {
+    .responsive-div {
+        display: none;
+    }
+
+    .product_detail-info {
+        margin-top: 10%;
+        display: flex;
+        height: 700px;
+        overflow: hidden;
+    }
+
+    .detail_info-left {
+        width: 50%;
+        margin-right: 20px;
+    }
+
+    .detail_info-right {
+        width: 45%;
+    }
+
+    .detail_info-left .img-primary {
+        height: 460px;
+    }
+
+    .img-primary img {
+        width: 100%;
+        margin-left: 10%;
+        height: 100%;
+    }
+
+    .detail_info-right .info-top {
+        height: 450px;
+    }
+
+    .detail_info-right .info-top .name {
+        font-size: 25px;
+    }
+
+    .detail_info-right .info-top .price {
+        margin: 0px;
+        padding: 0px;
+        font-size: 30px;
+    }
+
+    .detail_info-right .info-top .title p {
+        line-height: 25px;
+    }
+
+    .detail_info-right .input {
+        position: relative;
+        margin: 10px -15px;
+    }
+
+    .detail_info-right .btn_quantily {
+        position: absolute;
+        background-color: rgb(209, 209, 209);
+        border: none;
+        width: 20px;
+        height: 65%;
+    }
+
+    .detail_info-right .input_quantily {
+        color: black;
+        position: relative;
+        left: 20px;
+        width: 40px;
+        padding: 0px 5px;
+        background-color: rgb(209, 209, 209);
+        height: 30px;
+        outline: none;
+        border: none;
+    }
+
+    .detail_info-right .add_cart button {
+        margin-top: 10px;
+        padding: 15px 18px;
+        background-color: black;
+        color: white;
+        margin: 20px 0px 30px 0px;
+        border-radius: 10px;
+    }
+
+    .ttct {
+        padding: 30px;
+    }
+}
