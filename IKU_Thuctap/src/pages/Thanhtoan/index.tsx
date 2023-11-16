@@ -244,7 +244,8 @@ const Thanhtoan = () => {
             });
     };
     return (
-        <div className="container2">
+      <div>
+          <div className="container2 fordesktop">
             <div className='layout'>
                 <div className="left">
                     <h2>THANH TOÁN</h2>
@@ -374,6 +375,137 @@ const Thanhtoan = () => {
             {/* Component ToastContainer để hiển thị thông báo */}
             <ToastContainer />
         </div>
+        <div className="thanhtoan-mb formobile">
+            <div className='layout'>
+                <div className="left">
+                    <h2>THANH TOÁN</h2>
+                    <form onSubmit={handleSubmit(onSubmit)}>
+
+                        <Controller
+
+                            name="name"
+                            control={control}
+                            defaultValue=""
+                            render={({ field }) => <input {...field} type="text" placeholder="Họ và tên" />}
+                        />
+                        <Controller
+                            name="email"
+                            control={control}
+                            defaultValue=""
+                            render={({ field }) => <input {...field} type="email" placeholder="Email" />}
+                        />
+                        <Controller
+                            name="phone"
+                            control={control}
+                            defaultValue=""
+                            render={({ field }) => <input {...field} type="tel" placeholder="Số điện thoại" />}
+                        />
+                        {/* ...Các trường input khác */}
+                        <Controller
+                            name="city"
+                            control={control}
+                            defaultValue={cities[0]} // Khởi tạo với thành phố đầu tiên
+                            rules={{ required: true }}
+                            render={({ field }) => (
+                                <Select
+                                    {...field}
+                                    options={cities}
+                                    value={selectedCity}
+                                    onChange={handleCityChange}
+                                    isClearable
+                                    placeholder="Thành phố/Huyện"
+                                />
+                            )}
+                        /> <br />
+                        <Controller
+                            name="ward"
+                            control={control}
+                            defaultValue=""
+                            rules={{ required: true }}
+                            render={({ field }) => (
+                                <Select
+                                    {...field}
+                                    options={wardsOptions} // Thiết lập các lựa chọn động dựa trên thành phố được chọn
+                                    isClearable
+                                    placeholder="Xã/Phường"
+                                />
+                            )}
+                        /><br />
+                        <Controller
+                            name="address"
+                            control={control}
+                            defaultValue=""
+                            render={({ field }) => <input {...field} type="text" placeholder="Số nhà và đường" />}
+                        />
+                        <br />
+                        <Controller
+                            name="voucher"
+                            control={control}
+                            defaultValue=""
+                            render={({ field }) => (
+                                <div>
+                                    <input {...field} type="text" placeholder="Nhập mã giảm giá" value={voucher} onChange={(e) => setVoucher(e.target.value)} />
+                                    <button type="button" className='text-blue-500; font-bold' onClick={handleApplyVoucher}>Áp dụng mã giảm giá</button>
+                                    {voucherError && <p>{voucherError}</p>}
+                                </div>
+                            )}
+                        />
+                        <br />
+                        <div>
+                            <h2>Phương thức thanh toán</h2>
+                            <select className='phuongthuc' value={paymentMethod} onChange={handlePaymentMethodChange}>
+                                <option value="cash">Tiền mặt</option>
+                                <option value="transfer">Chuyển khoản</option>
+                            </select>
+
+                            {paymentMethod === 'cash' ? (
+                                <div>
+                                    <p>Thanh toán tiền mặt với Shipper</p>
+                                </div>
+                            ) : (
+                                <div>
+                                   <p className='text-red-500'>Bạn sẽ được chuyển tới trang thanh toán. Vui lòng nhập đúng số tiền tương ứng thanh toán. Mọi vấn đề về sai số dư chuyển khoản hãy liên hệ 0878571203 để được xử lý !</p>
+                                </div>
+                            )}
+                        </div>
+                        <button style={{ height: 40 }} type="submit">Buy</button>
+                    </form>
+                </div>
+                <div className="right">
+                    <div className="listcart">
+                        <div className="listcart">
+                            {userCart.map((productItem, index) => (
+                                <div className="cart" key={index}>
+                                    <div className="imgcart">
+                                        <img src={productItem.product.img} alt="" />
+                                    </div>
+                                    <div className="thongtinss">
+                                        <div className="tencart">{productItem.product.name}</div>
+                                        <div className="carttt">
+                                            <div className="soluong">{productItem.quantity} x</div>
+                                            <div className="giatien">{productItem.product.price}.000đ</div>
+                                        </div>
+                                        <button
+                                            className='removecart'
+                                            onClick={() => handleRemoveProduct(productItem.product.id)}
+                                        >
+                                            Xóa
+                                        </button>
+
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                    <div className="tongtien">
+                        <b>Tạm tính:</b> {totalPrice - (isDiscountApplied ? discountAmount : 0)}.000đ
+                    </div>
+                </div>
+            </div>
+            {/* Component ToastContainer để hiển thị thông báo */}
+            <ToastContainer />
+        </div>
+      </div>
     );
 };
 
