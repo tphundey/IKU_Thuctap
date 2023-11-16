@@ -128,11 +128,8 @@ const Sanpham = () => {
                     </div>
                 </div>
             </div>
-            <div className="container formobile">
-                <div className="title">
-                    <div className="tl1">HOT TREND</div>
-                </div>
-                <div className="flex">
+            <div className="formobile">
+            <div className="flex">
                     <div className="filter">
                         <div className="th">
                             Danh mục
