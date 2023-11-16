@@ -191,34 +191,98 @@ const Signin = () => {
     }
 
   ];
+  // Định nghĩa cột cho bảng Ant Design
+  const columns2 = [
+    {
+      title: 'Mã đơn hàng',
+      dataIndex: 'id',
+      key: 'id',
+    },
+    {
+      title: 'Trạng thái',
+      dataIndex: 'status',
+      key: 'status',
+      render: (status) => (
+        <Tag color={status === 'Hủy' ? 'red' : 'blue'}>{status}</Tag>
+      ),
+    },
+    {
+      title: 'Tổng giá trị',
+      dataIndex: 'totalPrice',
+      key: 'totalPrice',
+      render: (totalPrice: any) => (
+        <span>{totalPrice}.000đ</span>
+      ),
+    },
+    {
+      title: 'Hành động',
+      key: 'action',
+      render: (_, record) => (
+        record.status !== 'Hủy' && (
+          <Button type="primary" danger onClick={() => handleCancelOrder(record.id)}>
+            Hủy
+          </Button>
+        )
+      ),
+    }
 
+  ];
   return (
-    <div className="container_signin">
-      {user ? (
-        <div>
-          <div className="flex gap-3 idki">
-            <p className='font-bold'>Xin chào, {user.displayName}!</p>
-            {user.photoURL && <img width={80} style={{ borderRadius: 100 }} src={user.photoURL} alt="Ảnh đại diện" />}
+    <div>
+      <div className="container_signin fordesktop">
+        {user ? (
+          <div>
+            <div className="flex gap-3 idki">
+              <p className='font-bold'>Xin chào, {user.displayName}!</p>
+              {user.photoURL && <img width={80} style={{ borderRadius: 100 }} src={user.photoURL} alt="Ảnh đại diện" />}
+            </div>
+            {user.email === "maitranthi651@gmail.com" && (
+
+              <Button className='mr-4 mb-3' onClick={() => navigate('/admin')}>
+                Đăng nhập trang quản trị
+              </Button>
+
+            )}
+            <Button onClick={() => auth.signOut()}>Đăng xuất</Button>
           </div>
-          {user.email === "maitranthi651@gmail.com" && (
+        ) : (
+          <button className="signin_google" onClick={googleSignIn}>
+            <div className="icon"></div>
+            Đăng nhập bằng Google
+          </button>
+        )}
+        <h2>Lịch sử đơn hàng của bạn</h2>
+        <Table dataSource={orders} columns={columns} />
 
-            <Button className='mr-4 mb-3' onClick={() => navigate('/admin')}>
-              Đăng nhập trang quản trị
-            </Button>
+        <ToastContainer />
+      </div>
+      <div className="formobile">
+        {user ? (
+          <div>
+            <div className="flex gap-3 idki">
+              <p className='font-bold'>Xin chào, {user.displayName}!</p>
 
-          )}
-          <Button onClick={() => auth.signOut()}>Đăng xuất</Button>
-        </div>
-      ) : (
-        <button className="signin_google" onClick={googleSignIn}>
-          <div className="icon"></div>
-          Đăng nhập bằng Google
-        </button>
-      )}
-      <h2>Lịch sử đơn hàng của bạn</h2>
-      <Table dataSource={orders} columns={columns} />
+            </div>
+            {user.email === "maitranthi651@gmail.com" && (
 
-      <ToastContainer />
+              <Button className='mr-4 mb-3' onClick={() => navigate('/admin')}>
+                Đăng nhập trang quản trị
+              </Button>
+
+            )}
+            <Button onClick={() => auth.signOut()}>Đăng xuất</Button>
+          </div>
+        ) : (
+          <button className="signin_google" onClick={googleSignIn}>
+            <div className="icon"></div>
+            Đăng nhập bằng Google
+          </button>
+        )}
+        <h2>Lịch sử đơn hàng của bạn</h2>
+        <Table dataSource={orders} columns={columns2} />
+
+        <ToastContainer />
+      </div>
     </div>
   );
 };
