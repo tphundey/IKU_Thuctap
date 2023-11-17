@@ -15,3 +15,48 @@
     padding: 20px;
     border-radius: 8px;
 }
+
+.status-dadathang {
+    color: green;
+}
+
+.status-dangxuly {
+    color: orange;
+}
+
+.status-danggiao {
+    color: blue;
+}
+
+.status-dagiao {
+    color: purple;
+}
+
+.status-huy {
+    color: red;
+}
+/* CSS */
+.label-info {
+    background-color: #5bc0de; /* Màu xanh nước biển */
+    color: #fff; /* Màu chữ trắng */
+  }
+  
+  .label-warning {
+    background-color: #f0ad4e; /* Màu cam đậm */
+    color: #fff;
+  }
+  
+  .label-primary {
+    background-color: #337ab7; /* Màu xanh da trời */
+    color: #fff;
+  }
+  
+  .label-success {
+    background-color: #5cb85c; /* Màu xanh lá cây */
+    color: #fff;
+  }
+  
+  .label-danger {
+    background-color: #d9534f; /* Màu đỏ */
+    color: #fff;
+  }

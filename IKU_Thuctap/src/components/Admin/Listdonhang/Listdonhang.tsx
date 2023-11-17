@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import  { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Spin } from 'antd';
 import './donhang.css'
@@ -6,10 +6,25 @@ import './donhang.css'
 const Listdonhang = () => {
     const [orderData, setOrderData] = useState([]);
     const [selectedOrder, setSelectedOrder] = useState(null);
-    const [loading, setLoading] = useState(true); // Thêm biến loading
+    const [loading, setLoading] = useState(true);
 
+    const getStatusLabel = (status: any) => {
+        switch (status) {
+            case 'Đã đặt hàng':
+                return <span className="label label-info">{status}</span>;
+            case 'Đang xử lý':
+                return <span className="label label-warning">{status}</span>;
+            case 'Đang giao':
+                return <span className="label label-primary">{status}</span>;
+            case 'Đã giao':
+                return <span className="label label-success">{status}</span>;
+            case 'Hủy':
+                return <span className="label label-danger">{status}</span>;
+            default:
+                return status;
+        }
+    };
     useEffect(() => {
-        // Fetch data from the API
         axios.get('http://localhost:3000/hoadon')
             .then((response) => {
                 setOrderData(response.data);
@@ -17,10 +32,10 @@ const Listdonhang = () => {
             .catch((error) => {
                 console.error('Error fetching data:', error);
             })
-            .finally(() => setLoading(false)); // Kết thúc loading khi dữ liệu đã được nhận
+            .finally(() => setLoading(false));
     }, []);
 
-    const updateOrderStatus = (orderId, newStatus) => {
+    const updateOrderStatus = (orderId:any, newStatus:any) => {
         axios.patch(`http://localhost:3000/hoadon/${orderId}`, { status: newStatus })
             .then((response) => {
                 const updatedOrders = orderData.map(order => {
@@ -67,17 +82,21 @@ const Listdonhang = () => {
                     {Array.isArray(orderData) && orderData.map((order) => (
                         <tr key={order.id}>
                             <td>{order.id}</td>
-
                             <td>{order.paymentMethod}</td>
                             <td>{order.totalPrice}.000đ</td>
                             <td style={{ width: 80 }}>
-                                <select style={{ width: 180 }} value={order.status} onChange={(e) => updateOrderStatus(order.id, e.target.value)}>
+                                <select
+                                    style={{ width: 180 }}
+                                    value={order.status}
+                                    onChange={(e) => updateOrderStatus(order.id, e.target.value)}
+                                >
                                     <option value="Đã đặt hàng">Đã đặt hàng</option>
                                     <option value="Đang xử lý">Đang xử lý</option>
                                     <option value="Đang giao">Đang giao</option>
                                     <option value="Đã giao">Đã giao</option>
                                     <option value="Hủy">Hủy</option>
                                 </select>
+                                {getStatusLabel(order.status)}
                             </td>
                             <td>{order.paymentStatus}</td>
                             <td>
