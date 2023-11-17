@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import { Table, Button, Popconfirm } from 'antd';
+import { Table, Button, Popconfirm, Spin } from 'antd';
 
 const Listdanhmuc = () => {
   const [categories, setCategories] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -13,6 +14,8 @@ const Listdanhmuc = () => {
         setCategories(response.data);
       } catch (error) {
         console.error('Có lỗi xảy ra khi lấy dữ liệu: ', error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -21,10 +24,13 @@ const Listdanhmuc = () => {
 
   const handleDeleteCategory = async (id: any) => {
     try {
+      setLoading(true);
       await axios.delete(`http://localhost:3000/Categories/${id}`);
       setCategories(categories.filter((category) => category.id !== id));
     } catch (error) {
       console.error('Có lỗi xảy ra khi xóa danh mục: ', error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -55,6 +61,20 @@ const Listdanhmuc = () => {
       ),
     },
   ];
+
+  if (loading) {
+    return (
+      <Spin
+        size="large"
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          minHeight: "100vh",
+        }}
+      />
+    );
+  }
 
   return (
     <div>

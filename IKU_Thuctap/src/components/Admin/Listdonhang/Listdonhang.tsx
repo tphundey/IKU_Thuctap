@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { Spin } from 'antd';
 import './donhang.css'
+
 const Listdonhang = () => {
     const [orderData, setOrderData] = useState([]);
     const [selectedOrder, setSelectedOrder] = useState(null);
+    const [loading, setLoading] = useState(true); // Thêm biến loading
 
     useEffect(() => {
         // Fetch data from the API
@@ -13,7 +16,8 @@ const Listdonhang = () => {
             })
             .catch((error) => {
                 console.error('Error fetching data:', error);
-            });
+            })
+            .finally(() => setLoading(false)); // Kết thúc loading khi dữ liệu đã được nhận
     }, []);
 
     const updateOrderStatus = (orderId, newStatus) => {
@@ -30,6 +34,20 @@ const Listdonhang = () => {
             .catch((error) => {
                 console.error('Lỗi cập nhật trạng thái đơn hàng:', error);
             });
+    }
+
+    if (loading) {
+        return (
+            <Spin
+                size="large"
+                style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    minHeight: "100vh",
+                }}
+            />
+        );
     }
 
     return (
