@@ -27,28 +27,21 @@ const auth = getAuth(app);
 const Signin = () => {
   const [user, setUser] = useState(null);
   const [email, setEmail] = useState(null);
-  const [userOrders, setUserOrders] = useState([]);
-  const [canceledOrders, setCanceledOrders] = useState([]);
   const navigate = useNavigate();
   const [orders, setOrders] = useState([]);
   useEffect(() => {
     // Sử dụng onAuthStateChanged để kiểm tra trạng thái xác thực của người dùng
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser:any) => {
       if (currentUser) {
 
         setUser(currentUser);
-        // Người dùng đã đăng nhậpd
         setEmail(currentUser.email)
-        console.log(email);
-
       } else {
-        // Người dùng chưa đăng nhập
         setUser(null);
       }
     });
 
     return () => {
-      // Hủy đăng ký sự kiện khi component unmount
       unsubscribe();
     };
   }, [auth]);
@@ -106,7 +99,7 @@ const Signin = () => {
 
   useEffect(() => {
     // Sử dụng onAuthStateChanged để kiểm tra trạng thái xác thực của người dùng
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser:any) => {
       if (currentUser) {
         setUser(currentUser);
         // Khi người dùng đã đăng nhập, lấy danh sách đơn hàng của họ
@@ -121,41 +114,45 @@ const Signin = () => {
   }, []);
 
 
-  // Hàm để lấy đơn hàng dựa trên email người dùng
-  const fetchUserOrders = (userEmail) => {
-    axios.get('http://localhost:3000/hoadon')
-      .then(response => {
+  const fetchUserOrders = (userEmail: any) => {
+    axios
+      .get('http://localhost:3000/hoadon')
+      .then(function (response) {
         const allOrders = response.data;
+  
         // Lọc các đơn hàng phù hợp với email người dùng
         const userOrders = allOrders.filter(order => order.email === userEmail);
-        setOrders(userOrders);
+        
+        // Đảo ngược thứ tự của mảng
+        const reversedOrders = userOrders.reverse();
+        
+        setOrders(reversedOrders);
       })
-      .catch(error => {
-        toast.error('Lỗi khi lấy thông tin đơn hàng');
+      .catch(function (error) {
+        toast.error('Lỗi khi lấy thông tin');
         console.error('Error fetching orders:', error);
       });
   };
-  // Hàm hủy đơn hàng
-  const handleCancelOrder = (orderId) => {
-    axios.delete(`http://localhost:3000/hoadon/${orderId}`)
-      .then(() => {
-        // Loại bỏ đơn hàng đã hủy khỏi state
-        const remainingOrders = orders.filter(order => order.id !== orderId);
-        setOrders(remainingOrders);
-        toast.success('Đơn hàng đã được hủy thành công!');
-      })
-      .catch((error) => {
-        console.error('Error canceling order:', error);
-        toast.error('Không thể hủy đơn hàng.');
-      });
+
+  const handleCancelOrder = (orderId: any) => {
+    // Sử dụng hộp thoại xác nhận trình duyệt
+    const isConfirmed = window.confirm('Bạn có chắc chắn muốn hủy đơn hàng này?');
+  
+    if (isConfirmed) {
+      axios
+        .delete(`http://localhost:3000/hoadon/${orderId}`)
+        .then(() => {
+          // Loại bỏ đơn hàng đã hủy khỏi state
+          const remainingOrders = orders.filter(order => order.id !== orderId);
+          setOrders(remainingOrders);
+          toast.success('Đơn hàng đã được hủy!');
+        })
+        .catch(error => {
+          console.error('Error canceling order:', error);
+          toast.error('Không thể hủy đơn hàng.');
+        });
+    }
   };
-
-
-
-
-
-
-  // Định nghĩa cột cho bảng Ant Design
   const columns = [
     {
       title: 'Mã đơn hàng',
@@ -166,7 +163,7 @@ const Signin = () => {
       title: 'Trạng thái',
       dataIndex: 'status',
       key: 'status',
-      render: (status) => (
+      render: (status:any) => (
         <Tag color={status === 'Hủy' ? 'red' : 'blue'}>{status}</Tag>
       ),
     },
@@ -181,7 +178,7 @@ const Signin = () => {
     {
       title: 'Hành động',
       key: 'action',
-      render: (_, record) => (
+      render: (_, record:any) => (
         record.status !== 'Hủy' && (
           <Button type="primary" danger onClick={() => handleCancelOrder(record.id)}>
             Hủy đơn hàng
@@ -191,7 +188,7 @@ const Signin = () => {
     }
 
   ];
-  // Định nghĩa cột cho bảng Ant Design
+ 
   const columns2 = [
     {
       title: 'Mã đơn hàng',
