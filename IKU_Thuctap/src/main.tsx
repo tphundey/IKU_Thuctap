@@ -1,13 +1,24 @@
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
-import App from "./App.tsx";
-import store from "./store/index.ts";
+import App from "./App";
+import store from "./store/index";
 import { useEffect, useState } from 'react';
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import { initializeApp } from "firebase/app";
+import { getAuth, onAuthStateChanged, User } from 'firebase/auth';
+import { initializeApp, FirebaseApp } from "firebase/app";
 import { Spin } from 'antd';
 
-const firebaseConfig: any = {
+interface FirebaseConfig {
+    apiKey: string;
+    authDomain: string;
+    projectId: string;
+    storageBucket: string;
+    messagingSenderId: string;
+    appId: string;
+    measurementId?: string;
+}
+
+
+const firebaseConfig: FirebaseConfig = {
     apiKey: "AIzaSyB1EWRdSA6tMWHHB-2nHwljjQIGDL_-x_E",
     authDomain: "course23-c0a29.firebaseapp.com",
     projectId: "course23-c0a29",
@@ -17,15 +28,15 @@ const firebaseConfig: any = {
     measurementId: "G-51L48W6PCB"
 };
 
-const app: any = initializeApp(firebaseConfig);
-const auth: any = getAuth(app);
+const app: FirebaseApp = initializeApp(firebaseConfig);
+const auth = getAuth(app);
 
 const Root = () => {
-    const [user, setUser] = useState<any>(null);
+    const [user, setUser] = useState<User | null>(null);
     const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
 
     useEffect(() => {
-        const unsubscribe: any = onAuthStateChanged(auth, (currentUser: any) => {
+        const unsubscribe = onAuthStateChanged(auth, (currentUser: User | null) => {
             if (currentUser) {
                 setUser(currentUser);
                 setIsAuthenticated(true);
@@ -58,6 +69,4 @@ const Root = () => {
     );
 };
 
-ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
-    <Root />
-);
+ReactDOM.render(<Root />, document.getElementById("root"));

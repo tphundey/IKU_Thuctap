@@ -4,29 +4,45 @@ import { useAppDispatch, useAppSelector } from "@/store/hook";
 import { getProduct } from '@/actions/product';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { Spin } from 'antd';
 
 const Sanpham = () => {
-    const dispatch = useAppDispatch();
-    const { products, isLoading, error } = useAppSelector((state: any) => state.products);
-    const [categories, setCategories] = useState([]);
-    const [selectedCategoryIds, setSelectedCategoryIds] = useState([]);
-    const [filteredProducts, setFilteredProducts] = useState([]);
 
+    interface Product {
+        id: number;
+        img: string;
+        name: string;
+        price: number;
+        categoriesId: number;
+    }
+
+    interface Category {
+        id: number;
+        name: string;
+    }
+
+    const dispatch = useAppDispatch();
+    const { products } = useAppSelector((state: any) => state.products);
+    const [categories, setCategories] = useState<Category[]>([]);
+    const [selectedCategoryIds, setSelectedCategoryIds] = useState<number[]>([]);
+    const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
     const [priceOptions] = useState([
         { id: 1, value: 1, label: "< 100.000" },
         { id: 2, value: 2, label: "< 200.000" },
         { id: 3, value: 3, label: "< 300.000" },
     ]);
 
-    const [selectedPriceIds, setSelectedPriceIds] = useState([]);
+    const [selectedPriceIds, setSelectedPriceIds] = useState<number[]>([]);
     const [isLoadingDelay, setIsLoadingDelay] = useState(true);
+
     useEffect(() => {
         setTimeout(() => {
             setIsLoadingDelay(false);
         }, 1000);
+
         dispatch(getProduct());
 
-        axios.get('http://localhost:3000/categories')
+        axios.get<Category[]>('http://localhost:3000/categories') // Sử dụng kiểu dữ liệu cho categories
             .then(response => {
                 setCategories(response.data);
             })
@@ -36,7 +52,7 @@ const Sanpham = () => {
     }, []);
 
     useEffect(() => {
-        const updatedFilteredProducts = products.filter(product => {
+        const updatedFilteredProducts = products.filter((product: Product) => {
             const isInSelectedCategories = selectedCategoryIds.length === 0 || selectedCategoryIds.includes(product.categoriesId);
             const isInSelectedPriceRanges = (
                 selectedPriceIds.length === 0 ||
@@ -49,7 +65,7 @@ const Sanpham = () => {
         setFilteredProducts(updatedFilteredProducts);
     }, [selectedCategoryIds, selectedPriceIds, products]);
 
-    const handlePriceChange = (priceId: any) => {
+    const handlePriceChange = (priceId: number) => {
         if (selectedPriceIds.includes(priceId)) {
             setSelectedPriceIds(selectedPriceIds.filter(id => id !== priceId));
         } else {
@@ -57,13 +73,15 @@ const Sanpham = () => {
         }
     };
 
-    const handleCategoryChange = (categoryId: any) => {
+    const handleCategoryChange = (categoryId: number) => {
         if (selectedCategoryIds.includes(categoryId)) {
             setSelectedCategoryIds(selectedCategoryIds.filter(id => id !== categoryId));
         } else {
             setSelectedCategoryIds([...selectedCategoryIds, categoryId]);
         }
     };
+
+
 
     return (
         <div>
@@ -129,7 +147,7 @@ const Sanpham = () => {
                 </div>
             </div>
             <div className="formobile">
-            <div className="flex">
+                <div className="flex">
                     <div className="filter">
                         <div className="th">
                             Danh mục

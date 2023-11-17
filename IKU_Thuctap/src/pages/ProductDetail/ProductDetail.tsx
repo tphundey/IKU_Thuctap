@@ -13,11 +13,12 @@ import { Button, Form, Input } from 'antd';
 import type { FormInstance } from 'antd/es/form';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../../components/AuthFirebase/auth';
+import { Spin } from "antd";
 
 const ProductDetail = () => {
   const desc = ['terrible', 'bad', 'normal', 'good', 'wonderful'];
   const navigate = useNavigate();
-  const cartItems = useSelector((state) => state.cart.cartItems);
+  const cartItems = useSelector((state:any) => state.cart.cartItems);
   const dispatch = useDispatch();
   const [product, setProduct] = useState<any | null>(null);
   const [quantity, setQuantity] = useState(1);
@@ -34,16 +35,16 @@ const ProductDetail = () => {
         const response = await axios.get(`http://localhost:3000/Categories`);
         // Assuming your product object has a categoryId property
         const categoryId = product.categoriesId; // Update this based on your actual data structure
-        const category = response.data.find((category) => category.id === categoryId);
+        const category = response.data.find((category: any) => category.id === categoryId);
         setCategoryName(category ? category.name : 'Unknown Category');
       } catch (error) {
         console.error('Error fetching category:', error);
         setCategoryName('Unknown Category');
       }
     };
+    getCategoryName();
+  }, [product]);
 
-    getCategoryName(); // Call the function to fetch category name
-  }, [product]); // Add product to the dependency array
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser: any) => {
       if (currentUser) {
@@ -86,14 +87,14 @@ const ProductDetail = () => {
     if (reviews.length === 0) {
       return 0;
     }
-    const totalRating = reviews.reduce((acc, review) => acc + review.rating, 0);
+    const totalRating = reviews.reduce((acc: any, review: any) => acc + review.rating, 0);
     return totalRating / reviews.length;
   };
 
   useEffect(() => {
     axios.get(`http://localhost:3000/Reviews`)
       .then((response) => {
-        const filteredReviews = response.data.filter((review) => review.bookId === id);
+        const filteredReviews = response.data.filter((review: any) => review.bookId === id);
         setReviews(filteredReviews);
       })
       .catch((error) => {
@@ -102,8 +103,19 @@ const ProductDetail = () => {
   }, [id]);
 
   if (!product) {
-    return <div>Đang tải...</div>;
+    return (
+      <Spin
+        size="large"
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          minHeight: "100vh",
+        }}
+      />
+    );
   }
+
   const handleDecrease = () => {
     if (quantity > 1) {
       setQuantity(quantity - 1);
@@ -115,13 +127,13 @@ const ProductDetail = () => {
       setQuantity(quantity + 1);
     }
   }
-  const checkEmailAlreadyReviewed = async (email, id) => {
+  const checkEmailAlreadyReviewed = async (email:any, id:any) => {
     try {
       const response = await axios.get(`http://localhost:3000/Reviews`);
       const allReviews = response.data;
 
       // Check if the user has already reviewed the specified product
-      const hasReviewed = allReviews.some((review) => review.email === email && review.bookId === id);
+      const hasReviewed = allReviews.some((review:any) => review.email === email && review.bookId === id);
 
       return hasReviewed;
     } catch (error) {
@@ -130,8 +142,7 @@ const ProductDetail = () => {
     }
   };
 
-  const hasUserReviewed = reviews.some((review) => review.email === user?.email);
-  console.log(id);
+  const hasUserReviewed = reviews.some((review:any) => review.email === user?.email);
 
   const onFinish = async (values: any) => {
     if (hasUserReviewed) {
@@ -168,7 +179,7 @@ const ProductDetail = () => {
 
     // Gửi dữ liệu lên API
     axios.post('http://localhost:3000/Reviews', reviewData)
-      .then((response) => {
+      .then((response:any) => {
         onReset();
         // Update the reviews state with the new review data
         setReviews((prevReviews) => [...prevReviews, reviewData]);
