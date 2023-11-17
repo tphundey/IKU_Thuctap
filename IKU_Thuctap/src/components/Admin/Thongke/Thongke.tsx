@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import  { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Line } from '@ant-design/charts';
 import { ArrowDownOutlined, ArrowUpOutlined } from '@ant-design/icons';
@@ -8,21 +8,23 @@ const Dashboard = () => {
     const [googleAccountCount, setGoogleAccountCount] = useState(0);
     const [data, setData] = useState([]);
     const [productCount, setProductCount] = useState(0);
-    const formatter = (value: number) => <CountUp end={value} separator="," />;
+  
     useEffect(() => {
-        axios.get('http://localhost:3000/hoadon')
-            .then((response) => {
-                const chartData = response.data.map((order) => ({
-                    date: order.date, // Sử dụng trường 'date' từ dữ liệu API
-                    value: order.totalPrice, // Sử dụng trường 'totalPrice' từ dữ liệu API
-                }));
-
-                setData(chartData); // Đặt dữ liệu cho biểu đồ
-            })
-            .catch((error) => {
-                console.error('Error fetching data:', error);
-            });
-    }, []);
+        axios
+          .get('http://localhost:3000/hoadon')
+          .then((response) => {
+            const chartData = response.data.map((order:any) => ({
+              date: order.date,
+              value: order.totalPrice,
+            }));  
+            chartData.sort((a:any, b:any) => new Date(b.date) - new Date(a.date));
+            setData(chartData);
+          })
+          .catch((error) => {
+            console.error('Error fetching data:', error);
+          });
+      }, []);
+      
     useEffect(() => {
         // Gọi API để lấy danh sách sản phẩm
         axios.get('http://localhost:3000/products')

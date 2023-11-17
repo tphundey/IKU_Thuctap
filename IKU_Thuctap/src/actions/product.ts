@@ -4,14 +4,15 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 export const getProduct = createAsyncThunk(
     'product/getProduct',
     async () => {
-        try {
-            const data = await instance.get(`/products`);
-            return data;
-        } catch (error) {
-
-        }
+      try {
+        const data = await instance.get(`/products`);
+        // Đảo ngược mảng dữ liệu trước khi trả về
+        return data.reverse();
+      } catch (error) {
+        throw error;
+      }
     }
-);
+  );
 export const getProductById = createAsyncThunk(
     'product/getProductById',
     async (id, { rejectWithValue }) => {

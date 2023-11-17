@@ -210,6 +210,7 @@ const ProductDetail = () => {
         price: product.price,
         color: product.color,
         info: product.info,
+        author:product.author,
         img: product.img
       },
       quantity: quantity
@@ -286,7 +287,7 @@ const ProductDetail = () => {
                 <div className="mt-5">
                   <p>Mã sản phẩm: {product.id}</p>
                   <p>Danh mục: {categoryName}</p>
-                  <p>Ngày phát hành: 13/11/2023</p>
+                  <p>Tác giả: {product.author}</p>
                 </div>
                 <div className="ship">
                   Miễn phí giao hàng từ 500k ( vận chuyển 3 - 5 ngày )

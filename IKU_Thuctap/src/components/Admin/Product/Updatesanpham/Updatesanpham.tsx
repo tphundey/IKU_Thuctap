@@ -3,10 +3,12 @@ import { useParams } from 'react-router-dom';
 import { useForm, Controller } from 'react-hook-form';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
-
+import { Spin } from 'antd';
 const SuaSanPham: React.FC = () => {
     const { id } = useParams<{ id: string }>();
     const [product, setProduct] = useState<any>({});
+    const [loading, setLoading] = useState<boolean>(true);
+
     const { control, handleSubmit, formState: { errors }, reset } = useForm({
         defaultValues: {
             name: '',
@@ -14,17 +16,20 @@ const SuaSanPham: React.FC = () => {
             img: '',
             color: '',
             quantity: 0,
+            author: 'null',
         }
     });
 
     useEffect(() => {
+        setLoading(true); // Bắt đầu loading
         // Lấy dữ liệu sản phẩm từ API và đặt vào form
         axios.get(`http://localhost:3000/products/${id}`)
             .then(response => {
                 setProduct(response.data);
                 reset(response.data); // Reset form values với dữ liệu sản phẩm
             })
-            .catch(error => toast.error(error.message));
+            .catch(error => toast.error(error.message))
+            .finally(() => setLoading(false)); // Kết thúc loading khi dữ liệu đã được nhận
     }, [id, reset]);
 
     const onSubmit = (data: any) => {
@@ -34,9 +39,23 @@ const SuaSanPham: React.FC = () => {
             })
             .catch(error => toast.error(error.message));
     };
-
+    if (loading) {
+        return (
+            <Spin
+                size="large"
+                style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    minHeight: "100vh",
+                }}
+            />
+        );
+    }
     return (
         <div className="formadd">
+
+
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div>
                     <label>
@@ -108,6 +127,20 @@ const SuaSanPham: React.FC = () => {
                                 min: { value: 0, message: 'Số lượng phải lớn hơn 0' },
                             }}
                             render={({ field }) => <input type="number" {...field} />}
+                        />
+                    </label>
+                    {errors.quantity && <div className="error">{errors.quantity.message}</div>}
+                </div>
+                <div>
+                    <label>
+                        Tác giả:
+                        <Controller
+                            name="author"
+                            control={control}
+                            rules={{
+                                required: 'Không được để trống dữ liệu',
+                            }}
+                            render={({ field }) => <input  {...field} />}
                         />
                     </label>
                     {errors.quantity && <div className="error">{errors.quantity.message}</div>}

@@ -74,8 +74,8 @@ const Listproduct = () => {
     const dispatch = useAppDispatch();
     const { products } = useAppSelector((state: any) => state.products);
     const [currentPage, setCurrentPage] = useState(1);
-    const navigate = useNavigate();
     const itemsPerPage = 4;
+    
     useEffect(() => {
         dispatch(getProduct());
     }, []);

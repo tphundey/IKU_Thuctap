@@ -3,7 +3,7 @@ import { useForm, Controller } from 'react-hook-form';
 import { useAppDispatch } from "@/store/hook";
 import { addProduct } from '@/actions/product';
 import './add.css';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { FaSpinner } from 'react-icons/fa';
@@ -67,6 +67,7 @@ const AddProductForm: React.FC<AddProductFormProps> = () => {
         autoClose: 3000,
       });
     } finally {
+      navigate('/admin/products')
       setTimeout(() => {
         setIsLoading(false);
       }, 3000);
@@ -84,7 +85,7 @@ const AddProductForm: React.FC<AddProductFormProps> = () => {
               control={control}
               rules={{
                 required: 'Không được để trống dữ liệu',
-               
+
               }}
               render={({ field }) => <input type="text" {...field} />}
             />
@@ -148,7 +149,22 @@ const AddProductForm: React.FC<AddProductFormProps> = () => {
               control={control}
               rules={{
                 required: 'Không được để trống dữ liệu',
-               
+
+              }}
+              render={({ field }) => <input type="text" {...field} />}
+            />
+          </label>
+          {errors.color && <div className="error">{errors.color.message}</div>}
+        </div>
+        <div>
+          <label>
+            Tác giả:
+            <Controller
+              name="author"
+              control={control}
+              rules={{
+                required: 'Không được để trống dữ liệu',
+
               }}
               render={({ field }) => <input type="text" {...field} />}
             />
@@ -167,7 +183,7 @@ const AddProductForm: React.FC<AddProductFormProps> = () => {
 
           </label>{errors.quantity && <div className="error">{errors.quantity.message}</div>}
         </div>
-       
+
         <button type="submit" disabled={isLoading}>
           {isLoading ? <FaSpinner className="icon-spin" /> : 'Add Product'}
         </button>
