@@ -2,14 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { useAppDispatch } from "@/store/hook";
 import { addProduct } from '@/actions/product';
-import './add.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { FaSpinner } from 'react-icons/fa';
-
-
-
+import { useDropzone } from 'react-dropzone';
+import './add.css'
 interface Material {
   id: number;
   name: string;
@@ -30,8 +28,33 @@ const AddProductForm: React.FC<AddProductFormProps> = () => {
     handleSubmit,
     formState: { errors },
     reset: formReset,
+    setValue,
   } = useForm<any>({
-    defaultValues: {}
+    defaultValues: {},
+  });
+
+  const onDrop = async (acceptedFiles: File[]) => {
+    const file = acceptedFiles[0];
+
+    const formData = new FormData();
+    formData.append('file', file);
+
+    try {
+      const response = await fetch(`https://api.cloudinary.com/v1_1/dsk9jrxzf/image/upload?upload_preset=movies`, {
+        method: 'POST',
+        body: formData,
+      });
+
+      const data = await response.json();
+      setValue('img', data.secure_url);
+    } catch (error) {
+      console.error('Error uploading file to Cloudinary:', error);
+    }
+  };
+
+  const { getRootProps, getInputProps } = useDropzone({
+    onDrop,
+    accept: 'image/*',
   });
 
   const fetchMaterials = async () => {
@@ -43,6 +66,7 @@ const AddProductForm: React.FC<AddProductFormProps> = () => {
       console.error('Error fetching materials:', error);
     }
   };
+
   useEffect(() => {
     fetchMaterials();
   }, []);
@@ -67,13 +91,13 @@ const AddProductForm: React.FC<AddProductFormProps> = () => {
         autoClose: 3000,
       });
     } finally {
-      navigate('/admin/products')
+      navigate('/admin/products');
       setTimeout(() => {
         setIsLoading(false);
       }, 3000);
     }
-
   };
+
   return (
     <div className="formadd">
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -85,42 +109,33 @@ const AddProductForm: React.FC<AddProductFormProps> = () => {
               control={control}
               rules={{
                 required: 'Không được để trống dữ liệu',
-
               }}
               render={({ field }) => <input type="text" {...field} />}
             />
-
+            {errors.name && <div className="error">{errors.name.message}</div>}
           </label>
-          {errors.name && <div className="error">{errors.name.message}</div>}
         </div>
         <div>
           <label>
-            Giá thành:<Controller
+            Giá thành:
+            <Controller
               name="price"
               control={control}
               rules={{ required: 'Không được để trống dữ liệu', min: { value: 0, message: 'Price must be greater than 0' } }}
               render={({ field }) => <input type="number" {...field} />}
             />
-
+            {errors.price && <div className="error">{errors.price.message}</div>}
           </label>
-          {errors.price && <div className="error">{errors.price.message}</div>}
         </div>
         <div>
           <label>
-            Đường dẫn hình ảnh:
-            <Controller
-              name="img"
-              control={control}
-              rules={{
-                required: 'Không được để trống dữ liệu',
-                validate: {
-                  noSpace: (value) => containsSpace(value) || 'Không nhận dữ liệu space',
-                },
-              }}
-              render={({ field }) => <input type="text" {...field} />}
-            />
+            Upload hình ảnh:
+            <div {...getRootProps()} className="dropzone">
+              <input {...getInputProps()} />
+              <p>Drag 'n' drop an image here, or click to select one</p>
+            </div>
+            {errors.img && <div className="error">{errors.img.message}</div>}
           </label>
-          {errors.img && <div className="error">{errors.img.message}</div>}
         </div>
         <div>
           <Controller
@@ -140,7 +155,6 @@ const AddProductForm: React.FC<AddProductFormProps> = () => {
           />
           {errors.categoriesId && <div className="error">{errors.categoriesId.message}</div>}
         </div>
-
         <div>
           <label>
             Mô tả:
@@ -149,12 +163,11 @@ const AddProductForm: React.FC<AddProductFormProps> = () => {
               control={control}
               rules={{
                 required: 'Không được để trống dữ liệu',
-
               }}
               render={({ field }) => <input type="text" {...field} />}
             />
+            {errors.color && <div className="error">{errors.color.message}</div>}
           </label>
-          {errors.color && <div className="error">{errors.color.message}</div>}
         </div>
         <div>
           <label>
@@ -164,7 +177,6 @@ const AddProductForm: React.FC<AddProductFormProps> = () => {
               control={control}
               rules={{
                 required: 'Không được để trống dữ liệu',
-
               }}
               render={({ field }) => <input type="text" {...field} />}
             />
@@ -180,16 +192,13 @@ const AddProductForm: React.FC<AddProductFormProps> = () => {
               rules={{ required: 'Không được để trống dữ liệu', min: { value: 0, message: 'Quantity must be greater than 0' } }}
               render={({ field }) => <input type="number" {...field} />}
             />
-
-          </label>{errors.quantity && <div className="error">{errors.quantity.message}</div>}
+            {errors.quantity && <div className="error">{errors.quantity.message}</div>}
+          </label>
         </div>
-
         <button type="submit" disabled={isLoading}>
           {isLoading ? <FaSpinner className="icon-spin" /> : 'Add Product'}
         </button>
-
       </form>
-      {/* Component ToastContainer để hiển thị thông báo */}
       <ToastContainer />
     </div>
   );

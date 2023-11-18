@@ -1,13 +1,15 @@
+// Listproduct.tsx
+
 import './Listproduct.css';
 import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from "@/store/hook";
 import { getProduct, removeProduct } from '@/actions/product';
 import { Link } from 'react-router-dom';
-import { Pagination } from 'antd';
+import { Pagination, Table } from 'antd';
 import { useNavigate } from 'react-router-dom';
-import { Space, Table, Tag } from 'antd';
+import { Space, Tag } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
-
+import { Spin } from 'antd';
 const Listproduct = () => {
     const columns: ColumnsType<any> = [
         {
@@ -33,7 +35,6 @@ const Listproduct = () => {
             dataIndex: 'price',
             key: 'price',
         },
-
         {
             title: 'Mô tả',
             dataIndex: 'color',
@@ -70,15 +71,23 @@ const Listproduct = () => {
             ),
         },
     ];
+
     const [expandedRows, setExpandedRows] = useState([]);
     const dispatch = useAppDispatch();
     const { products } = useAppSelector((state: any) => state.products);
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 4;
-    
+    const [loading, setLoading] = useState(true); // Thêm state để kiểm soát trạng thái loading
+
     useEffect(() => {
-        dispatch(getProduct());
-    }, []);
+        // Khi bắt đầu fetch dữ liệu
+        setLoading(true);
+
+        dispatch(getProduct()).then(() => {
+            // Khi fetch dữ liệu hoàn tất
+            setLoading(false);
+        });
+    }, [dispatch]);
 
     const totalItems = products.length;
     const totalPages = Math.ceil(totalItems / itemsPerPage);
@@ -92,15 +101,30 @@ const Listproduct = () => {
     };
 
     return (
-        <div >
+        <div>
             <Link className='themspmoi' to="/admin/addsanpham">Thêm sách mới!</Link>
-            <Table columns={columns} dataSource={currentItems} />
-            <Pagination
-                current={currentPage}
-                onChange={handlePageChange}
-                total={totalItems}
-                pageSize={itemsPerPage}
-            />
+
+            {loading ? (
+                <Spin
+                    size="large"
+                    style={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        minHeight: "100vh",
+                    }}
+                />
+            ) : (
+                <>
+                    <Table columns={columns} dataSource={currentItems} />
+                    <Pagination
+                        current={currentPage}
+                        onChange={handlePageChange}
+                        total={totalItems}
+                        pageSize={itemsPerPage}
+                    />
+                </>
+            )}
         </div>
     );
 };

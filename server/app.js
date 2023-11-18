@@ -6,11 +6,29 @@ const fs = require('fs');
 const path = require('path');
 const moment = require('moment');
 const fetch = require('node-fetch');
-
 const app = express();
 const router = express.Router();
+const fileUpload = require('express-fileupload');
 
 const mongoDBUrl = "mongodb+srv://root:123@cluster0.zq6tyry.mongodb.net/thuctap?retryWrites=true&w=majority";
+const cloudinary = require('cloudinary').v2;
+cloudinary.config({
+    cloud_name: 'dsk9jrxzf',
+    api_key: '612129235538518',
+    api_secret: 'FZkzoeuEcvkqDZmbiqrpmoKSEVA',
+
+});
+
+cloudinary.uploader.upload("https://s120-ava-talk.zadn.vn/f/1/7/8/139/120/c5debf8a117bcbf7a86ed9ab75f1dc10.jpg",
+  { public_id: "olympic_flag" }, 
+  function(error, result) {
+    if (error) {
+      console.error(error);
+    } else {
+      console.log(result);
+    }
+  }
+);
 
 mongoose.connect(mongoDBUrl, { useNewUrlParser: true, useUnifiedTopology: true });
 const db = mongoose.connection;
@@ -30,7 +48,6 @@ app.use(cors({
 }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Import các router
 const productsRouter = require('./products');
 const cartRouter = require('./cart');
 const googleAccountRouter = require('./googleAccount');
@@ -48,6 +65,8 @@ app.use('/reviews', reviewRouter);
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
+// Endpoint để hiển thị form upload
+
 
 // Route chính
 app.get('/', (req, res) => {
@@ -56,9 +75,9 @@ app.get('/', (req, res) => {
 
 app.get('/order', (req, res) => {
     try {
-        const orderData = fs.readFileSync('order.txt', 'utf-8');
-        const amountData = fs.readFileSync('amount.txt', 'utf-8');
-
+        const orderData = fs.readFileSync(path.join(__dirname, 'order.txt'), 'utf-8');
+        const amountData = fs.readFileSync(path.join(__dirname, 'amount.txt'), 'utf-8');
+        
         const orderLines = orderData.split('\n');
         const amountLines = amountData.split('\n');
 
@@ -70,16 +89,10 @@ app.get('/order', (req, res) => {
 
         res.render('order', { title: 'Thông tin thanh toán', orderId, amount });
     } catch (error) {
-        console.error('Error rendering order.jade:', error);
-        res.status(500).send('Internal Server Error');
-    }
+        console.error(error);
+        res.status(500).json({ error: 'Internal Server Error', message: error.message });
+      }
 });
-
-
-
-
-
-
 
 app.post('/create_payment_url', function (req, res, next) {
 
