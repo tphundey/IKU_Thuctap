@@ -1,5 +1,5 @@
 # Bookstore Management System
-
+[Watch the Video Demo](https://www.loom.com/share/2412a697e0ce4591b3135da4211844af?sid=0bd70950-44ec-4b1d-a7f5-9886ec9cd925)
 ## Overview
 
 Welcome to our Bookstore Management System repository! This project utilizes Firebase for user authentication and login, providing a comprehensive platform for selling books with enhanced user features and streamlined administrative tasks.
